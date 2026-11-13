@@ -18,7 +18,7 @@ docs/skills/foundry-character/
 
 ## Commands
 
-No dependencies to install. Node 18 or newer.
+The character tooling has no dependencies. Node 18 or newer.
 
 ```bash
 npm run validate -- goblin   # check character.json against the schema
@@ -27,6 +27,25 @@ npm run build    -- goblin   # regenerate foundry-export.json
 npm run audit    -- goblin   # compare the build against the sheet
 npm run check    -- goblin   # validate + audit
 ```
+
+## The viewer
+
+A one page React app that shows the character and runs the tooling against it.
+
+```bash
+npm run setup     # install the viewer's dependencies, once
+npm run dev       # http://localhost:5173
+```
+
+It shows the character as the repo stores it: identity, attributes, skills with
+the build value beside the sheet value and the difference, features, inventory,
+declared bonuses and the open questions. The right hand rail has the five
+commands - Check, Validate, Audit, Render and Build - and every run's output,
+so you can see what each command did without leaving the page.
+
+The app talks to a small Express server (`app/server.mjs`) that reads the
+character files and shells out to `tools/foundry.mjs`. Only the five commands
+above can be run; anything else is rejected.
 
 ## How a character is modelled
 

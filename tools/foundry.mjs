@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
 
 import { buildActor } from "./lib/export.mjs";
 import { renderMarkdown } from "./lib/render.mjs";
-import { computeDerived, observedAsDerived, STATISTIC_LABELS } from "./lib/rules.mjs";
+import { buildAudit } from "./lib/audit.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const charactersDir = path.join(repoRoot, "characters");
@@ -197,30 +197,7 @@ function labelFor(key) {
 
 async function runAudit(target) {
   const { file, data } = await loadCharacter(target);
-  const derived = computeDerived(data);
-  const observed = observedAsDerived(data);
-
-  const rows = Object.keys(observed).map((key) => {
-    const expected = derived[key];
-    const actual = observed[key];
-    return {
-      key,
-      label: labelFor(key),
-      expected,
-      actual,
-      residual: expected === undefined ? null : actual - expected,
-    };
-  });
-
-  if (data.resources?.heroPoints && observed.heroPoints) {
-    rows.push({
-      key: "heroPoints",
-      label: "Hero points",
-      expected: data.resources.heroPoints.value,
-      actual: observed.heroPoints.value,
-      residual: data.resources.heroPoints.value - observed.heroPoints.value,
-    });
-  }
+  const audit = buildAudit(data);
 
   console.log(`\n${data.name} - build vs sheet`);
   console.log(`source: ${data.observed?.source ?? "not recorded"}`);
@@ -228,13 +205,13 @@ async function runAudit(target) {
   console.log("statistic".padEnd(22) + "expected".padStart(10) + "sheet".padStart(9) + "residual".padStart(11));
   console.log("-".repeat(52));
 
-  let mismatches = 0;
-  for (const row of rows) {
+  for (const row of audit.rows) {
     if (row.residual === null) {
-      console.log(row.label.padEnd(22) + "n/a".padStart(10) + String(row.actual).padStart(9) + "n/a".padStart(11));
+      console.log(
+        row.label.padEnd(22) + "n/a".padStart(10) + String(row.actual).padStart(9) + "n/a".padStart(11),
+      );
       continue;
     }
-    if (row.residual !== 0) mismatches += 1;
     const flag = row.residual === 0 ? "" : `  <-- ${row.residual > 0 ? "+" : ""}${row.residual}`;
     console.log(
       row.label.padEnd(22) +
@@ -246,24 +223,23 @@ async function runAudit(target) {
   }
 
   console.log("");
-  if (mismatches === 0) {
+  if (audit.mismatches.length === 0) {
     console.log("every statistic the sheet shows is reproduced by the build");
   } else {
-    console.log(`${mismatches} statistic(s) are not reproduced by the build`);
+    console.log(`${audit.mismatches.length} statistic(s) are not reproduced by the build`);
   }
 
-  const open = (data.audit?.openQuestions ?? []).filter((question) => question.status !== "resolved");
-  if (open.length > 0) {
+  if (audit.openQuestions.length > 0) {
     console.log("");
     console.log("open questions");
-    for (const question of open) {
+    for (const question of audit.openQuestions) {
       console.log(`  [${question.id}] ${question.question}`);
     }
   }
 
   console.log("");
   console.log(`character file: ${path.relative(repoRoot, file)}`);
-  return mismatches === 0 ? 0 : 1;
+  return audit.mismatches.length === 0 ? 0 : 1;
 }
 
 /* ------------------------------------------------------------------ */

@@ -28,6 +28,8 @@ docs/
     references/
 schema/character.schema.json
 tools/foundry.mjs      build | validate | render | check | audit
+tools/lib/             rules, audit, export and render helpers
+app/                   the viewer: Vite + React frontend and an API server
 ```
 
 Markdown lives under `docs/`. Code, schema and character data live at the root.
@@ -41,9 +43,16 @@ npm run render   -- <slug>   # regenerate docs/characters/<slug>/character.md
 npm run build    -- <slug>   # regenerate foundry-export.json
 npm run audit    -- <slug>   # build versus sheet
 npm run check    -- <slug>   # validate + audit
+
+npm run setup                # install the viewer's dependencies
+npm run dev                  # viewer on http://localhost:5173
+npm run app:build            # production build of the viewer
+npm run app:lint             # lint the viewer
+npm run app:typecheck        # typecheck the viewer
 ```
 
-Omit the slug when there is only one character. No dependencies to install.
+Omit the slug when there is only one character. The character tooling has no
+dependencies; only the viewer does.
 
 ## Conventions
 

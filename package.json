@@ -5,6 +5,11 @@
   "type": "module",
   "description": "Foundry VTT characters as reviewable source files.",
   "scripts": {
+    "setup": "npm install --prefix app",
+    "dev": "npm --prefix app run dev",
+    "app:build": "npm --prefix app run build",
+    "app:lint": "npm --prefix app run lint",
+    "app:typecheck": "npm --prefix app run typecheck",
     "build": "node tools/foundry.mjs build",
     "validate": "node tools/foundry.mjs validate",
     "render": "node tools/foundry.mjs render",
