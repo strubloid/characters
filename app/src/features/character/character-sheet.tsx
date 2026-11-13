@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import type { Audit, Character, Feature, InventoryItem } from "@/lib/api";
 
@@ -278,54 +279,29 @@ function InventoryCard({ character }: { character: Character }) {
   );
 }
 
-function QuestionsCard({ character, audit }: { character: Character; audit: Audit }) {
-  const questions = audit.openQuestions;
-
-  if (questions.length === 0) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Open questions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-sm">Nothing open. Every question is answered.</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          Open questions
-          <Badge variant="secondary">{questions.length}</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        {questions.map((question) => (
-          <div key={question.id} className="border-l-2 pl-3">
-            <p className="text-sm font-medium">{question.question}</p>
-            {question.why && <p className="text-muted-foreground mt-0.5 text-xs">{question.why}</p>}
-          </div>
-        ))}
-        {character.audit?.notes && (
-          <p className="text-muted-foreground border-t pt-3 text-xs">{character.audit.notes}</p>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
-
 export function CharacterSheet({ character, audit }: { character: Character; audit: Audit }) {
+  const tabs = [
+    { value: "identity", label: "Identity", content: <IdentityCard character={character} /> },
+    { value: "attributes", label: "Attributes", content: <AttributesCard character={character} audit={audit} /> },
+    { value: "skills", label: "Skills", content: <SkillsCard character={character} audit={audit} /> },
+    { value: "features", label: "Features", content: <FeaturesCard character={character} /> },
+    { value: "inventory", label: "Inventory", content: <InventoryCard character={character} /> },
+  ];
+
   return (
-    <div className="space-y-4">
-      <IdentityCard character={character} />
-      <AttributesCard character={character} audit={audit} />
-      <SkillsCard character={character} audit={audit} />
-      <FeaturesCard character={character} />
-      <InventoryCard character={character} />
-      <QuestionsCard character={character} audit={audit} />
-    </div>
+    <Tabs defaultValue="identity" className="space-y-4">
+      <TabsList className="w-full">
+        {tabs.map((tab) => (
+          <TabsTrigger key={tab.value} value={tab.value}>
+            {tab.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {tabs.map((tab) => (
+        <TabsContent key={tab.value} value={tab.value}>
+          {tab.content}
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 }

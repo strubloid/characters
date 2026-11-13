@@ -212,19 +212,6 @@ export function renderMarkdown(character) {
     out.push("");
   }
 
-  const openQuestions = (character.audit?.openQuestions ?? []).filter(
-    (question) => question.status !== "resolved",
-  );
-  if (openQuestions.length > 0) {
-    out.push("## Open questions");
-    out.push("");
-    for (const question of openQuestions) {
-      out.push(`- **${question.id}** - ${question.question}`);
-      if (question.why) out.push(`  - Why it matters: ${question.why}`);
-    }
-    out.push("");
-  }
-
   if (observed?.source) {
     out.push("---");
     out.push("");

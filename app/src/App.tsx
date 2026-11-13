@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { CharacterSheet } from "@/features/character/character-sheet";
@@ -66,6 +67,51 @@ function AuditSummary({ audit }: { audit: Audit }) {
             ))}
           </ul>
         )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function AuditTable({ audit }: { audit: Audit }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Build versus sheet</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Statistic</TableHead>
+              <TableHead className="text-right">Build</TableHead>
+              <TableHead className="text-right">Sheet</TableHead>
+              <TableHead className="text-right">Diff</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {audit.rows.map((row) => (
+              <TableRow key={row.key}>
+                <TableCell className="font-medium capitalize">{row.label}</TableCell>
+                <TableCell className="text-right tabular-nums">
+                  {row.expected === null ? "-" : row.expected}
+                </TableCell>
+                <TableCell className="text-right tabular-nums">{row.actual}</TableCell>
+                <TableCell className="text-right">
+                  {row.residual === null ? (
+                    <span className="text-muted-foreground">-</span>
+                  ) : row.residual === 0 ? (
+                    <span className="text-muted-foreground/50">0</span>
+                  ) : (
+                    <Badge variant="destructive">
+                      {row.residual > 0 ? "+" : ""}
+                      {row.residual}
+                    </Badge>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );
@@ -187,6 +233,7 @@ export default function App() {
                 </TabsTrigger>
                 <TabsTrigger value="markdown">Markdown</TabsTrigger>
                 <TabsTrigger value="bonuses">Bonuses</TabsTrigger>
+                <TabsTrigger value="audit">Audit</TabsTrigger>
               </TabsList>
 
               <TabsContent value="sheet" className="mt-4">
@@ -236,12 +283,16 @@ export default function App() {
                   </CardContent>
                 </Card>
               </TabsContent>
+
+              <TabsContent value="audit" className="mt-4 space-y-4">
+                <AuditSummary audit={audit} />
+                <AuditTable audit={audit} />
+              </TabsContent>
             </Tabs>
           )}
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
-          {audit && <AuditSummary audit={audit} />}
           <RunPanel runs={runs} running={running} onRun={handleRun} />
         </aside>
       </main>

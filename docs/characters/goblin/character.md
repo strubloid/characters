@@ -154,23 +154,6 @@ Speed 20 ft. darkvision 60 ft
 
 Currency 0 pp, 0 gp, 0 sp, 0 cp. Total wealth 32.3 gp.
 
-## Open questions
-
-- **global-plus-5** - What grants the +5 that sits on armor class, all three saves, Perception, both class DCs, every trained skill and every attack roll, while untrained skills stay at the bare ability modifier?
-  - Why it matters: It does not match any published feat, ancestry trait, or class feature for this build. A campaign boon, a homebrew item, or a Foundry world setting are the likely candidates. Until it is explained, the build cannot tell a real character from a hand-edited sheet.
-- **dexterity-skills-minus-2** - Why do Acrobatics, Stealth and Thievery read 2 lower than the other trained skills?
-  - Why it matters: All three are trained Dexterity skills, as are none of the others, and all three sit 2 below the trained-skill baseline. Either there is a -2 penalty on Dexterity-based skill checks, or their proficiency ranks differ from the badges shown.
-- **nature-religion-minus-2** - Why do Nature and Religion read 0 while Arcana, Occultism and Society read +2?
-  - Why it matters: All five are untrained Intelligence skills, so they should all show the same modifier.
-- **initiative-minus-2** - Why does initiative read +11 when Perception (+9) plus Dexterity (+4) is +13?
-  - Why it matters: The Ten Paces deed adds a +2 circumstance bonus to initiative, so the sheet may be showing a value from before the deed was picked up, or before some other effect was applied.
-- **athletics-minus-2** - Where does the -2 on Athletics come from?
-  - Why it matters: The Remaster Goblin ancestry lists no Athletics penalty, so this is a house rule, a condition, or an error on the sheet.
-- **attribute-boost-allocation** - Which boosts went where? The build assumes base scores of Str 10, Dex 18, Con 14, Int 14, Wis 10, Cha 18.
-  - Why it matters: Dexterity +4 and Charisma +4 are pinned by the sheet, but 24 points of boosts at 5th level is more than the Remaster progression allows, so some of the scores likely come from somewhere the sheet does not show. The Foundry export stores the real allocation.
-- **armor-magic** - Is the Breastplate a magic item, and does it carry runes?
-  - Why it matters: A plain breastplate is +3 AC. The sheet shows AC 22, of which 7 is covered by the unattributed bonuses above.
-
 ---
 
 Sheet values transcribed from: Foundry sheet screenshots in images/*.jpeg, read 2026-11-13
