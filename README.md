@@ -30,22 +30,25 @@ npm run check    -- goblin   # validate + audit
 
 ## The viewer
 
-A one page React app that shows the character and runs the tooling against it.
+A dark-mode-ready character workshop for editing character documents, reviewing
+builds, keeping AI conversations, and learning Pathfinder rules.
 
 ```bash
 npm run setup     # install the viewer's dependencies, once
 npm run dev       # http://localhost:5173
 ```
 
-It shows the character as the repo stores it: identity, attributes, skills with
-the build value beside the sheet value and the difference, features, inventory,
-declared bonuses and the open questions. The right hand rail has the five
-commands - Check, Validate, Audit, Render and Build - and every run's output,
-so you can see what each command did without leaving the page.
+The **Edit** workspace edits every schema field in the character document,
+validates it before saving, and regenerates the Foundry import and Markdown
+sheet. It can merge a Foundry actor export, preserve the original native export,
+and download either file for Foundry. The **Learn** workspace has searchable
+Pathfinder primers, Archives of Nethys links, bookmarks, and personal notes.
+Ask, AI chat, the audit, and tool runs are also available from the workspace.
 
-The app talks to a small Express server (`app/server.mjs`) that reads the
-character files and shells out to `tools/foundry.mjs`. Only the five commands
-above can be run; anything else is rejected.
+The app talks to a small Express server (`app/server.mjs`) and stores application
+history, preferences, character snapshots, and Pathfinder notes in
+`app/data/questions.sqlite` (ignored by git). `character.json` remains the
+reviewable source used by the existing CLI and Foundry generation workflow.
 
 ### Chat with OpenCode Zen
 

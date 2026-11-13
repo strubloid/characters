@@ -99,10 +99,10 @@ export function bonusFor(character, target, rank) {
 /** Which attack proficiency a weapon falls under. */
 export function attackCategoryFor(item) {
   const traits = item.traits ?? [];
-  const isFirearm = traits.includes("firearm");
-  const isCrossbow = traits.includes("crossbow");
-  const isMartial = traits.includes("martial");
-  const isAdvanced = traits.includes("advanced");
+  const isFirearm = traits.includes("firearm") || item.group === "firearm";
+  const isCrossbow = traits.includes("crossbow") || item.group === "crossbow";
+  const isMartial = traits.includes("martial") || item.category === "martial";
+  const isAdvanced = traits.includes("advanced") || item.category === "advanced";
 
   if (isFirearm || isCrossbow) {
     if (isAdvanced) return "advanced-firearms-and-crossbows";
@@ -153,9 +153,6 @@ export function computeDerived(character) {
     proficiencyBonus(proficiencies.perception) +
     bonusFor(character, "perception", proficiencies.perception);
 
-  // Initiative in PF2e is the Perception statistic plus Dexterity.
-  derived.initiative = derived.perception + mods.dex + bonusFor(character, "initiative");
-
   for (const [name, rank] of Object.entries(proficiencies.classDC ?? {})) {
     derived[`classDC:${name}`] =
       10 +
@@ -172,6 +169,14 @@ export function computeDerived(character) {
       proficiencyBonus(rank) +
       bonusFor(character, `skill:${name}`, rank);
   }
+
+  const initiativeStatistic = build.initiativeStatistic;
+  const initiativeBase = initiativeStatistic
+    ? initiativeStatistic === "perception"
+      ? derived.perception
+      : derived[`skill:${initiativeStatistic}`] ?? derived.perception
+    : derived.perception + mods.dex;
+  derived.initiative = initiativeBase + bonusFor(character, "initiative");
 
   const seen = new Map();
   for (const item of character.inventory ?? []) {

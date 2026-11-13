@@ -117,6 +117,14 @@
           "type": "string",
           "enum": ["str", "dex", "con", "int", "wis", "cha"]
         },
+        "initiativeStatistic": { "type": "string" },
+        "boosts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["str", "dex", "con", "int", "wis", "cha"] }
+          }
+        },
         "abilities": {
           "type": "object",
           "required": ["str", "dex", "con", "int", "wis", "cha"],
@@ -281,6 +289,7 @@
       "additionalProperties": false,
       "properties": {
         "ancestry": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "background": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
         "class": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
         "ancestryFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
         "classFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
@@ -307,6 +316,7 @@
         "required": ["name", "type"],
         "additionalProperties": false,
         "properties": {
+          "id": { "type": "string" },
           "name": { "type": "string" },
           "type": { "type": "string" },
           "quantity": { "type": "integer", "minimum": 0 },
@@ -322,6 +332,26 @@
               "dice": { "type": "integer" },
               "die": { "type": "string" },
               "damageType": { "type": "string" }
+            }
+          },
+          "category": { "type": "string" },
+          "acBonus": { "type": "integer" },
+          "dexCap": { "type": ["integer", "null"] },
+          "checkPenalty": { "type": "integer" },
+          "group": { "type": "string" },
+          "range": { "type": "number" },
+          "reload": { "type": "string" },
+          "baseItem": { "type": "string" },
+          "carryType": { "type": "string" },
+          "handsHeld": { "type": "integer", "minimum": 0 },
+          "runes": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "potency": { "type": "integer", "minimum": 0 },
+              "striking": { "type": "integer", "minimum": 0 },
+              "resilient": { "type": "integer", "minimum": 0 },
+              "property": { "type": "array", "items": { "type": "string" } }
             }
           },
           "notes": { "type": "string" }

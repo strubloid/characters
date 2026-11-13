@@ -3,9 +3,10 @@ import { Bot } from "@/components/animate-ui/icons/bot";
 import { CircleCheck } from "@/components/animate-ui/icons/circle-check";
 import { LoaderCircle } from "@/components/animate-ui/icons/loader-circle";
 import { TriangleAlert } from "@/components/animate-ui/icons/triangle-alert";
-import { MessagesSquare, ScrollText } from "lucide-react";
+import { BookOpen, Boxes, FileJson, MessagesSquare, Moon, ScrollText, Sun } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -18,15 +19,21 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { CharacterSheet } from "@/features/character/character-sheet";
+import { CharacterEditor } from "@/features/character/character-editor";
 import { AskPanel } from "@/features/ask/ask-panel";
 import { ChatPanel } from "@/features/chat/chat-panel";
+import { PathfinderLibrary } from "@/features/learn/pathfinder-library";
 import { RunPanel } from "@/features/runs/run-panel";
 
 import {
   fetchCharacter,
   fetchCharacters,
   fetchSheet,
+  fetchThemePreference,
+  fetchToolRuns,
   runTool,
+  saveThemePreference,
+  type ThemePreference,
   type Audit,
   type Character,
   type CharacterSummary,
@@ -122,23 +129,52 @@ export default function App() {
   const [characters, setCharacters] = useState<CharacterSummary[]>([]);
   const [slug, setSlug] = useState<string>("");
   const [character, setCharacter] = useState<Character | null>(null);
+  const [hasNativeExport, setHasNativeExport] = useState(false);
   const [audit, setAudit] = useState<Audit | null>(null);
   const [markdown, setMarkdown] = useState<string>("");
   const [runs, setRuns] = useState<ToolRun[]>([]);
   const [running, setRunning] = useState<ToolCommand | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [themePreference, setThemePreference] = useState<ThemePreference>("system");
+  const [themeError, setThemeError] = useState<string | null>(null);
 
   const load = useCallback(async (target: string) => {
     try {
-      const [result, sheet] = await Promise.all([fetchCharacter(target), fetchSheet(target)]);
+      const [result, sheet, savedRuns] = await Promise.all([fetchCharacter(target), fetchSheet(target), fetchToolRuns(target)]);
       setCharacter(result.character);
       setAudit(result.audit);
+      setHasNativeExport(result.hasNativeExport ?? false);
       setMarkdown(sheet);
+      setRuns(savedRuns.runs);
       setError(null);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : String(loadError));
     }
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    fetchThemePreference()
+      .then(({ theme }) => {
+        if (active) setThemePreference(theme);
+      })
+      .catch((themeLoadError) => {
+        if (active) setThemeError(themeLoadError instanceof Error ? themeLoadError.message : String(themeLoadError));
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const apply = () => root.classList.toggle("dark", themePreference === "dark" || (themePreference === "system" && media.matches));
+    apply();
+    if (themePreference !== "system") return;
+    media.addEventListener("change", apply);
+    return () => media.removeEventListener("change", apply);
+  }, [themePreference]);
 
   useEffect(() => {
     fetchCharacters()
@@ -157,6 +193,27 @@ export default function App() {
     void load(next);
   }
 
+  async function handleThemeToggle() {
+    const isDark = themePreference === "dark" || (themePreference === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    const next = isDark ? "light" : "dark";
+    setThemePreference(next);
+    setThemeError(null);
+    try {
+      await saveThemePreference(next);
+    } catch (saveError) {
+      setThemeError(saveError instanceof Error ? saveError.message : String(saveError));
+    }
+  }
+
+  function handleCharacterSaved(result: { character: Character; audit: Audit; hasNativeExport: boolean }) {
+    setCharacter(result.character);
+    setAudit(result.audit);
+    setHasNativeExport(result.hasNativeExport);
+    setError(null);
+    void fetchSheet(slug).then(setMarkdown).catch((sheetError) => setError(String(sheetError)));
+    void fetchCharacters().then(setCharacters).catch((listError) => setError(String(listError)));
+  }
+
   async function handleRun(command: ToolCommand) {
     if (!slug) return;
     setRunning(command);
@@ -172,18 +229,21 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen">
-      <header className="bg-background/95 sticky top-0 z-10 border-b backdrop-blur">
-        <div className="mx-auto flex max-w-[110rem] flex-wrap items-center gap-3 px-4 py-3">
-          <div className="mr-auto">
-            <h1 className="text-lg leading-tight font-semibold">Foundry Characters</h1>
-            <p className="text-muted-foreground text-xs">
-              characters/ is the source of truth · docs/ holds the markdown
-            </p>
+    <div className="min-h-screen bg-muted/20">
+      <header className="bg-background/95 sticky top-0 z-20 border-b backdrop-blur">
+        <div className="mx-auto flex max-w-[100rem] flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
+          <div className="mr-auto flex items-center gap-3">
+            <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+              <Boxes className="size-5" />
+            </div>
+            <div>
+              <h1 className="text-base leading-tight font-semibold">Character workshop</h1>
+              <p className="text-muted-foreground text-xs">Build, reference, and prepare Foundry actors</p>
+            </div>
           </div>
 
           <Select value={slug} onValueChange={handleSelect}>
-            <SelectTrigger className="w-64">
+            <SelectTrigger className="w-full sm:w-72">
               <SelectValue placeholder="Select a character" />
             </SelectTrigger>
             <SelectContent>
@@ -194,22 +254,28 @@ export default function App() {
               ))}
             </SelectContent>
           </Select>
+          <Button variant="outline" size="icon" onClick={() => void handleThemeToggle()} aria-label="Toggle dark mode" title="Toggle dark mode">
+            {themePreference === "dark" || (themePreference === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+              ? <Sun className="size-4" />
+              : <Moon className="size-4" />}
+          </Button>
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-[110rem] gap-4 px-4 py-4 lg:grid-cols-[minmax(0,1fr)_26rem]">
+      <main className="mx-auto grid max-w-[100rem] gap-5 px-4 py-5 sm:px-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="min-w-0">
           {error && (
-            <Card className="border-destructive mb-4">
+            <Card className="mb-4 border-destructive/50">
               <CardContent className="text-destructive flex items-center gap-2 text-sm">
-                <TriangleAlert className="size-4" />
+                <TriangleAlert className="size-4 shrink-0" />
                 {error}
               </CardContent>
             </Card>
           )}
+          {themeError && <p role="status" className="text-muted-foreground mb-3 text-xs">Theme preference could not be saved: {themeError}</p>}
 
           {running && (
-            <div className="text-muted-foreground mb-4 flex items-center gap-2 text-sm">
+            <div role="status" className="text-muted-foreground mb-4 flex items-center gap-2 text-sm">
               <LoaderCircle className="size-4" />
               Running {running}…
             </div>
@@ -217,91 +283,97 @@ export default function App() {
 
           {!character || !audit ? (
             <Card>
-              <CardContent className="text-muted-foreground py-12 text-center text-sm">
-                {characters.length === 0 ? "No characters found." : "Loading character…"}
+              <CardContent className="text-muted-foreground flex min-h-72 items-center justify-center gap-2 text-sm">
+                <LoaderCircle className="size-4" />
+                {characters.length === 0 ? "No characters found. Add a character folder to begin." : "Loading character…"}
               </CardContent>
             </Card>
           ) : (
-            <Tabs defaultValue="sheet">
-              <TabsList>
-                <TabsTrigger value="sheet">
-                  <ScrollText />
-                  Sheet
-                </TabsTrigger>
-                <TabsTrigger value="ask">
-                  <Bot />
-                  Ask
-                </TabsTrigger>
-                <TabsTrigger value="chat">
-                  <MessagesSquare />
-                  Chat
-                </TabsTrigger>
-                <TabsTrigger value="markdown">Markdown</TabsTrigger>
-                <TabsTrigger value="bonuses">Bonuses</TabsTrigger>
-                <TabsTrigger value="audit">Audit</TabsTrigger>
+            <Tabs defaultValue="sheet" orientation="vertical" className="flex min-w-0 flex-col gap-4 lg:flex-row lg:items-start">
+              <TabsList className="sticky top-[4.5rem] z-10 grid h-auto w-full grid-cols-3 justify-start gap-1 border bg-background/95 p-2 shadow-sm backdrop-blur lg:top-24 lg:flex lg:w-48 lg:flex-col lg:items-stretch lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none">
+                <TabsTrigger value="sheet" className="justify-start gap-2 px-3 py-2"><ScrollText />Overview</TabsTrigger>
+                <TabsTrigger value="edit" className="justify-start gap-2 px-3 py-2"><FileJson />Edit</TabsTrigger>
+                <TabsTrigger value="learn" className="justify-start gap-2 px-3 py-2"><BookOpen />Learn</TabsTrigger>
+                <TabsTrigger value="ask" className="justify-start gap-2 px-3 py-2"><Bot />Ask</TabsTrigger>
+                <TabsTrigger value="chat" className="justify-start gap-2 px-3 py-2"><MessagesSquare />Chat</TabsTrigger>
+                <TabsTrigger value="records" className="justify-start gap-2 px-3 py-2">Records</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="sheet" className="mt-4">
-                <CharacterSheet character={character} audit={audit} />
-              </TabsContent>
+              <div className="min-w-0 flex-1">
+                <TabsContent value="sheet" className="mt-0 space-y-4">
+                  <div className="flex flex-wrap items-end justify-between gap-3">
+                    <div>
+                      <p className="text-muted-foreground text-sm">{character.identity.ancestry} {character.identity.class} · level {character.identity.level}</p>
+                      <h2 className="text-2xl font-semibold tracking-tight">{character.name}</h2>
+                    </div>
+                    <Badge variant={audit.mismatches.length ? "destructive" : "secondary"}>
+                      {audit.mismatches.length ? `${audit.mismatches.length} audit mismatches` : "Build matches sheet"}
+                    </Badge>
+                  </div>
+                  <CharacterSheet character={character} audit={audit} />
+                </TabsContent>
 
-              <TabsContent value="ask" className="mt-4">
-                <AskPanel slug={slug} />
-              </TabsContent>
+                <TabsContent value="edit" className="mt-0">
+                  <CharacterEditor key={slug} slug={slug} character={character} hasNativeExport={hasNativeExport} onSaved={handleCharacterSaved} />
+                </TabsContent>
 
-              <TabsContent value="chat" className="mt-4">
-                <ChatPanel />
-              </TabsContent>
+                <TabsContent value="learn" className="mt-0">
+                  <PathfinderLibrary />
+                </TabsContent>
 
-              <TabsContent value="markdown" className="mt-4">
-                <Card>
-                  <CardContent>
-                    <pre className="max-h-[70vh] overflow-auto font-mono text-xs leading-relaxed whitespace-pre-wrap">
-                      {markdown || "Run Render to generate the markdown sheet."}
-                    </pre>
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                <TabsContent value="ask" className="mt-0">
+                  <AskPanel slug={slug} characterName={character.name} />
+                </TabsContent>
 
-              <TabsContent value="bonuses" className="mt-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Declared bonuses</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {(character.bonuses ?? []).map((bonus) => (
-                      <div key={bonus.id} className="border-l-2 pl-3">
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-sm font-medium">{bonus.id}</span>
-                          <Badge variant={bonus.source === "unattributed" ? "destructive" : "outline"}>
-                            {bonus.source}
-                          </Badge>
-                          <Badge variant="secondary">
-                            {bonus.value >= 0 ? "+" : ""}
-                            {bonus.value}
-                          </Badge>
-                        </div>
-                        {bonus.note && (
-                          <p className="text-muted-foreground mt-1 text-xs">{bonus.note}</p>
-                        )}
-                        <p className="text-muted-foreground mt-1 font-mono text-xs">
-                          applies to {bonus.appliesTo.join(", ")}
-                        </p>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                <TabsContent value="chat" className="mt-0">
+                  <ChatPanel />
+                </TabsContent>
 
-              <TabsContent value="audit" className="mt-4 space-y-4">
-                <AuditSummary audit={audit} />
-                <AuditTable audit={audit} />
-              </TabsContent>
+                <TabsContent value="records" className="mt-0">
+                  <Tabs defaultValue="audit" className="space-y-4">
+                    <TabsList variant="line" className="w-full justify-start overflow-x-auto">
+                      <TabsTrigger value="audit">Audit</TabsTrigger>
+                      <TabsTrigger value="bonuses">Bonuses</TabsTrigger>
+                      <TabsTrigger value="markdown">Readable sheet</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="audit" className="space-y-4">
+                      <AuditSummary audit={audit} />
+                      <AuditTable audit={audit} />
+                    </TabsContent>
+                    <TabsContent value="bonuses">
+                      <Card>
+                        <CardHeader><CardTitle>Declared bonuses</CardTitle></CardHeader>
+                        <CardContent className="space-y-3">
+                          {(character.bonuses ?? []).map((bonus) => (
+                            <div key={bonus.id} className="rounded-lg border p-3">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="font-mono text-sm font-medium">{bonus.id}</span>
+                                <Badge variant={bonus.source === "unattributed" ? "destructive" : "outline"}>{bonus.source}</Badge>
+                                <Badge variant="secondary">{bonus.value >= 0 ? "+" : ""}{bonus.value}</Badge>
+                              </div>
+                              {bonus.note && <p className="text-muted-foreground mt-2 text-sm">{bonus.note}</p>}
+                              <p className="text-muted-foreground mt-2 font-mono text-xs">Applies to {bonus.appliesTo.join(", ")}</p>
+                            </div>
+                          ))}
+                          {(character.bonuses ?? []).length === 0 && <p className="text-muted-foreground text-sm">No declared bonuses.</p>}
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    <TabsContent value="markdown">
+                      <Card>
+                        <CardContent>
+                          <pre className="max-h-[70vh] overflow-auto font-mono text-xs leading-relaxed whitespace-pre-wrap">{markdown || "Run Render to generate the markdown sheet."}</pre>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  </Tabs>
+                </TabsContent>
+              </div>
             </Tabs>
           )}
         </div>
 
-        <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
+        <aside className="space-y-4 xl:sticky xl:top-24 xl:self-start">
           <RunPanel runs={runs} running={running} onRun={handleRun} />
         </aside>
       </main>

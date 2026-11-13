@@ -1,7 +1,7 @@
 {
   "id": "rafa",
   "type": "Actor",
-  "name": "Rafa",
+  "name": "Zé Cangapé",
   "img": "icons/svg/mystery-man.svg",
   "system": {
     "abilities": {
@@ -10,7 +10,7 @@
         "mod": 0
       },
       "dex": {
-        "base": 18,
+        "base": 19,
         "mod": 4
       },
       "con": {
@@ -56,10 +56,8 @@
       },
       "languages": {
         "value": [
-          "common",
           "dwarven",
-          "goblin",
-          "kelsh"
+          "kelish"
         ],
         "details": ""
       },
@@ -107,6 +105,9 @@
         }
       }
     },
+    "initiative": {
+      "statistic": "stealth"
+    },
     "skills": {
       "acrobatics": {
         "rank": 1
@@ -148,15 +149,15 @@
         "rank": 0
       },
       "stealth": {
-        "rank": 1
+        "rank": 2
       },
       "survival": {
         "rank": 0
       },
       "thievery": {
-        "rank": 1
+        "rank": 2
       },
-      "spellscar-desert": {
+      "spellscar-desert-lore": {
         "rank": 1
       }
     },
@@ -174,13 +175,23 @@
             "value": []
           },
           "1": {
-            "value": []
+            "value": [
+              "dex",
+              "cha",
+              "con",
+              "int"
+            ]
           },
           "2": {
             "value": []
           },
           "5": {
-            "value": []
+            "value": [
+              "cha",
+              "wis",
+              "con",
+              "dex"
+            ]
           },
           "10": {
             "value": []
@@ -367,16 +378,16 @@
         "savingThrows": {
           "fortitude": 2,
           "reflex": 2,
-          "will": 0
+          "will": 2
         },
         "attacks": {
           "simple": 2,
-          "martial": 0,
-          "advanced": 1,
-          "unarmed": 1,
+          "martial": 2,
+          "advanced": 2,
+          "unarmed": 2,
           "other": {
-            "name": "",
-            "rank": 0
+            "name": "Simple Firearms, Martial Firearms",
+            "rank": 3
           }
         },
         "defenses": {
@@ -473,11 +484,11 @@
     },
     {
       "name": "Gunslinger's Way",
-      "type": "action",
+      "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Way of the Pistolero: hold the line at ten paces and talk while you reload.",
+          "value": "All gunslingers have a particular way they follow, a combination of philosophy and combat style that defines both how they fight and the weapons they excel with. At 1st level, your way grants you an initial deed, a unique reload action called a slinger's reload, and proficiency with a particular skill. You also gain advanced and greater deeds at later levels, as well as access to way-specific feats.\n\n@UUID[Compendium.pf2e.classfeatures.Item.a3pSIKkDVTvvNSRO]{Way of the Drifter} You wander across the battlefield, equally at home in and out of the fray.\n\n@UUID[Compendium.pf2e.classfeatures.Item.qRLRrHf0kzaJ7xt0]{Way of the Pistolero} You carefully maintain your distance at a duelist's 10 paces with pistol in hand.\n\n@UUID[Compendium.pf2e.classfeatures.Item.QWXvksGJhOjXbBqi]{Way of the Sniper} You practice a methodical style of shooting, striking from far cover.\n\n@UUID[Compendium.pf2e.classfeatures.Item.vB0yVFxJVZwalt2g]{Way of the Vanguard} You rely on a brutal combat style that uses heavy weapons and explosive attacks.\n\n@UUID[Compendium.pf2e.classfeatures.Item.YryaWAGcHeaRnXzS]{Way of the Triggerbrand} You prefer firearms that work well as weapons in both melee and ranged combat",
           "gm": ""
         },
         "slug": "gunslinger-s-way",
@@ -485,7 +496,30 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Guns & Gears",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Way of the Pistolero",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Whether you're a professional duelist or a pistol-twirling entertainer, you have quick feet and quicker hands that never seem to let you down, and an equally sharp wit and tongue that jab your foes. You might leave a hand free or cultivate the ambidexterity for twin weapons. Either way, you stay close enough to your enemies to leverage your superior reflexes while leaving enough space to safely fire.\n\nSlinger's Reload @UUID[Compendium.pf2e.actionspf2e.Item.RADNqsvAt4gP9FOX]{Raconteur's Reload}\n\nDeeds Initial @UUID[Compendium.pf2e.actionspf2e.Item.EeM0Czaep7G5ZSh5]{Ten Paces}; Advanced @UUID[Compendium.pf2e.actionspf2e.Item.bCDMuu3tE4d6KHrJ]{Pistolero's Retort}; Greater @UUID[Compendium.pf2e.actionspf2e.Item.rI2MSXR1MQzgQUO7]{Grim Swagger}\n\nWay Skill choose Deception or Intimidation",
+          "gm": ""
+        },
+        "slug": "way-of-the-pistolero",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "Pathfinder Guns & Gears",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -496,11 +530,11 @@
     },
     {
       "name": "Slinger's Precision",
-      "type": "action",
+      "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "+2 precision damage with non-repeating crossbows and an extra 1d4 precision damage on Strikes with non-repeating firearms.",
+          "value": "You deal an extra +2 precision damage with Strikes made using non-repeating crossbows and you deal an extra 1d4 precision damage on Strikes using non-repeating firearms.\n\nIf you have gunslinging legend, you instead deal +3 additional precision damage with Strikes using non-repeating crossbows and an additional 1d6 precision damage with Strikes using non-repeating firearms.\n\nIf you are using a combination weapon whose ranged form is a firearm or crossbow, you use your proficiency with firearms and crossbows for attacks made with the melee configuration of that weapon.",
           "gm": ""
         },
         "slug": "slinger-s-precision",
@@ -508,45 +542,48 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Guns & Gears",
           "authors": "",
           "license": "OGL",
           "remaster": false
         },
         "level": 1,
-        "rules": []
-      }
-    },
-    {
-      "name": "Singular Expertise",
-      "type": "action",
-      "img": "icons/svg/item-bag.svg",
-      "system": {
-        "description": {
-          "value": "+1 circumstance bonus to damage rolls with firearms and crossbows. Caps proficiency with other weapons and unarmed attacks.",
-          "gm": ""
-        },
-        "slug": "singular-expertise",
-        "traits": {
-          "value": []
-        },
-        "publication": {
-          "title": "",
-          "authors": "",
-          "license": "OGL",
-          "remaster": false
-        },
-        "level": 1,
-        "rules": []
+        "rules": [
+          {
+            "key": "PF2E.RuleElementFlatModifier",
+            "value": 2,
+            "domain": "damage",
+            "predicate": {
+              "in": [
+                "weapon:category:crossbow",
+                "not:weapon:traits:repeating"
+              ]
+            },
+            "label": "Slinger's Precision: crossbow"
+          },
+          {
+            "key": "PF2E.RuleElementDice",
+            "dice": 1,
+            "die": "d4",
+            "domain": "damage",
+            "predicate": {
+              "in": [
+                "weapon:category:firearm",
+                "not:weapon:traits:repeating"
+              ]
+            },
+            "label": "Slinger's Precision: firearm"
+          }
+        ]
       }
     },
     {
       "name": "Stubborn",
-      "type": "action",
+      "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Your proficiency rank for Will saves increases to expert.",
+          "value": "You don't like being told what to do, and you don't give up. Your proficiency rank for Will saves increases to expert. When you fail, but don't critically fail, a Will save against an effect that would give you the controlled condition, you can attempt a second save against the effect at the start of your next turn. On a successful second save, the controlled condition ends, though any other effects remain. As normal, failing this second save doesn't allow you to attempt a third save on the subsequent turn.",
           "gm": ""
         },
         "slug": "stubborn",
@@ -554,7 +591,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Guns & Gears",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -576,11 +613,11 @@
     },
     {
       "name": "Gunslinger Weapon Mastery",
-      "type": "action",
+      "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Master with simple and martial firearms and crossbows; expert with advanced firearms and crossbows, simple and martial weapons, and unarmed attacks.",
+          "value": "You fully understand the best way to utilize your unique weapons. Your proficiency rank increases to master with simple and martial firearms and crossbows. Your proficiency rank for advanced firearms and crossbows, simple weapons, martial weapons, and unarmed attacks increases to expert. You gain access to the critical specialization effects for firearms and crossbows.",
           "gm": ""
         },
         "slug": "gunslinger-weapon-mastery",
@@ -588,7 +625,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Guns & Gears",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -603,7 +640,7 @@
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Trained proficiency in Acrobatics and a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.",
+          "value": "You have a particular elasticity that makes it easy for you to bounce and squish. You gain the trained proficiency rank in Acrobatics (or another skill of your choice, if you were already trained in Acrobatics). You also gain a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.",
           "gm": ""
         },
         "slug": "bouncy-goblin",
@@ -611,13 +648,34 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Lost Omens Character Guide",
           "authors": "",
           "license": "OGL",
           "remaster": false
         },
         "level": 1,
-        "rules": []
+        "rules": [
+          {
+            "key": "PF2E.RuleElementProficiency",
+            "rank": "trained",
+            "predicate": {
+              "in": [
+                "acrobatics"
+              ]
+            }
+          },
+          {
+            "key": "PF2E.RuleElementFlatModifier",
+            "value": 2,
+            "domain": "acrobatics",
+            "predicate": {
+              "in": [
+                "action:tumble-through"
+              ]
+            },
+            "label": "Bouncy Goblin: Tumble Through"
+          }
+        ]
       }
     },
     {
@@ -626,7 +684,7 @@
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "You become trained in Thievery.",
+          "value": "You have a knack for breaking and dismantling things. Putting them back together is the boring part, so you largely don't bother with that. You become trained in Thievery. If you would automatically become trained in Thievery (from your background or class, for example), you instead become trained in a skill of your choice.\n\nIn addition, whenever you hit with a Strike against a trap or an unattended object, you ignore the first 5 points of the object's Hardness.",
           "gm": ""
         },
         "slug": "vandal",
@@ -634,7 +692,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -659,7 +717,7 @@
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Reload a one-handed ranged weapon without needing a free hand while wielding two one-handed weapons.",
+          "value": "You carry your ammunition in a way that allows you to reload while holding two weapons. While you're wielding two one-handed weapons, each in a different hand, you don't need a free hand to reload a one-handed ranged weapon you're wielding.",
           "gm": ""
         },
         "slug": "dual-weapon-reload",
@@ -667,7 +725,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Guns & Gears",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -677,35 +735,12 @@
       }
     },
     {
-      "name": "Quick Draw",
-      "type": "feat",
-      "img": "icons/svg/item-bag.svg",
-      "system": {
-        "description": {
-          "value": "Draw a weapon as a free action when you roll initiative.",
-          "gm": ""
-        },
-        "slug": "quick-draw",
-        "traits": {
-          "value": []
-        },
-        "publication": {
-          "title": "",
-          "authors": "",
-          "license": "OGL",
-          "remaster": false
-        },
-        "level": 2,
-        "rules": []
-      }
-    },
-    {
       "name": "Alchemical Shot",
       "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Soak ammunition in an alchemical bomb for bonus damage and persistent damage on a failed shot.",
+          "value": "Requirements You have an alchemical bomb worn or in one hand, and are wielding a firearm or crossbow.\nYou've practiced a technique for mixing alchemical bombs with your loaded shot. You Interact to retrieve the bomb (if it's not already in your hand) and pour its contents onto your ammunition, consuming the bomb, then resume your grip on the required weapon. Next, Strike with your firearm. The Strike deals damage of the same type as the bomb (for instance, fire damage for alchemist's fire), and it deals an additional 1d6 persistent damage of the same type as the bomb. If the Strike is a failure, you take 1d6 damage of the same type as the bomb you used, and the firearm misfires.\n\nThe persistent damage increases to 2d6 if the bomb is 11th level or higher, or 3d6 if it's 17th level or higher.",
           "gm": ""
         },
         "slug": "alchemical-shot",
@@ -713,7 +748,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Guns & Gears",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -723,12 +758,35 @@
       }
     },
     {
+      "name": "Munitions Crafter",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Bullets and bombs can be scarce in some parts, so you've learned to make your own. You become trained in Crafting and gain the advanced alchemy benefits. You can use the advanced alchemy benefits to create a number of daily consumables equal to 4 + half your level (rounded up); these consumables must be bombs or alchemical ammunition.\n\nYou gain a formula book that includes the formula for black powder and four 1st-level types of common or uncommon alchemical ammunition or bombs of your choice.\n\nWhen crafting alchemical ammunition, including black powder in doses or rounds, using advanced alchemy, you create the ammunition in batches of 4 (meaning that if you were 4th level and used all of your advanced alchemy consumables to create alchemical ammunition, you could create a maximum of 24 rounds). You cannot use advanced alchemy to Craft horns or kegs of black powder.",
+          "gm": ""
+        },
+        "slug": "munitions-crafter",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "Pathfinder Guns & Gears",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
       "name": "Rogue Dedication",
       "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Take the Rogue archetype at 2nd level.",
+          "value": "You gain a skill feat and the rogue's @UUID[Compendium.pf2e.classfeatures.Item.w6rMqmGzhUahdnA7]{Surprise Attack} class feature. You become trained in light armor. In addition, you become trained in Stealth or Thievery plus one skill of your choice; if you are already trained in both Stealth and Thievery, you become trained in an additional skill of your choice. You become trained in rogue class DC.\n\n@UUID[Compendium.pf2e.journals.JournalEntry.vx5FGEG34AxI2dow.JournalEntryPage.kVC4kgYKbhqPsaDt]{Rogue}",
           "gm": ""
         },
         "slug": "rogue-dedication",
@@ -736,7 +794,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -751,7 +809,7 @@
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Exploit a target's distracted state.",
+          "value": "You spring into combat faster than foes can react. On the first round of combat, if you roll Deception or Stealth for initiative, creatures that haven't acted are @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} to you.",
           "gm": ""
         },
         "slug": "surprise-attack",
@@ -759,53 +817,30 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core",
           "authors": "",
           "license": "OGL",
           "remaster": false
         },
-        "level": 2,
+        "level": 1,
         "rules": []
       }
     },
     {
-      "name": "Assurance (Intimidation)",
+      "name": "Basic Trickery",
       "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Intimidation checks that fail but do not critically fail may be retried.",
+          "value": "You gain a 1st- or 2nd-level rogue feat.",
           "gm": ""
         },
-        "slug": "assurance-intimidation",
+        "slug": "basic-trickery",
         "traits": {
           "value": []
         },
         "publication": {
-          "title": "",
-          "authors": "",
-          "license": "OGL",
-          "remaster": false
-        },
-        "level": 2,
-        "rules": []
-      }
-    },
-    {
-      "name": "Mobility",
-      "type": "feat",
-      "img": "icons/svg/item-bag.svg",
-      "system": {
-        "description": {
-          "value": "Improved mobility in close quarters.",
-          "gm": ""
-        },
-        "slug": "mobility",
-        "traits": {
-          "value": []
-        },
-        "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -815,12 +850,35 @@
       }
     },
     {
+      "name": "Quick Draw",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "You draw your weapon and attack with the same motion. You Interact to draw a weapon, then Strike with that weapon.",
+          "gm": ""
+        },
+        "slug": "quick-draw",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "Pathfinder Player Core",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 2,
+        "rules": []
+      }
+    },
+    {
       "name": "Group Coercion",
       "type": "feat",
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Coerce a group instead of a single target.",
+          "value": "You can strong-arm people effectively, even when you don't have them isolated. When you @UUID[Compendium.pf2e.actionspf2e.Item.tHCqgwjtQtzNqVvd]{Coerce}, you can compare your Intimidation check result to the Will DCs of up to five targets instead of one.\n\nIt's possible to get a different degree of success for each target. The number of targets you can Coerce in a single action increases to 10 if you're an expert, 25 if you're a master, and 50 if you're legendary.",
           "gm": ""
         },
         "slug": "group-coercion",
@@ -828,7 +886,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -843,7 +901,7 @@
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Pickpocket with less fuss.",
+          "value": "You can @UUID[Compendium.pf2e.actionspf2e.Item.RDXXE7wMrSPCLv5k]{Steal} or @UUID[Compendium.pf2e.actionspf2e.Item.ijZ0DDFpMkWqaShd]{Palm an Object} that's closely guarded, such as in a pocket, without taking the –5 penalty. You can't steal objects that would be extremely noticeable or time consuming to remove (like worn shoes or armor or actively wielded objects). If you're a master in Thievery, you can attempt to Steal from a creature in combat or otherwise on guard. When doing so, Stealing requires 2 actions instead of 1, and you take a –5 penalty.",
           "gm": ""
         },
         "slug": "pickpocket",
@@ -851,12 +909,12 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core",
           "authors": "",
           "license": "OGL",
           "remaster": false
         },
-        "level": 2,
+        "level": 1,
         "rules": []
       }
     },
@@ -866,7 +924,7 @@
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Steal without drawing attention.",
+          "value": "When you successfully @UUID[Compendium.pf2e.actionspf2e.Item.RDXXE7wMrSPCLv5k]{Steal} something, observers (creatures other than the creature you stole from) take a –2 circumstance penalty to their Perception DCs to detect your theft. Additionally, if you first @UUID[Compendium.pf2e.actionspf2e.Item.GkmbTGfg8KcgynOA]{Create a Diversion} using Deception, taking a single @UUID[Compendium.pf2e.actionspf2e.Item.ijZ0DDFpMkWqaShd]{Palm an Object} or Steal action doesn't end your @UUID[Compendium.pf2e.conditionitems.Item.VRSef5y1LmL2Hkjf]{Undetected} condition.",
           "gm": ""
         },
         "slug": "subtle-theft",
@@ -874,12 +932,58 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core",
           "authors": "",
           "license": "OGL",
           "remaster": false
         },
-        "level": 4,
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Alchemical Crafting",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "You can use the Craft activity to create alchemical items. When you select this feat, you immediately add the formulas for four common 1st-level alchemical items to your formula book.",
+          "gm": ""
+        },
+        "slug": "alchemical-crafting",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "Pathfinder Player Core",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Experienced Smuggler",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "You often smuggle things past the authorities. When the GM rolls your Stealth check to see if a passive observer notices a small item you've concealed, the GM uses the number rolled or 10—whichever is higher—as the result of your die roll, adding it to your Stealth modifier to determine your Stealth check result. If you're a master in Stealth, the GM uses the number rolled or 15, and if you're legendary in Stealth, you automatically succeed at hiding a small concealed item from passive observers. This provides no benefits when a creature attempts a Perception check while actively searching you for hidden items.\n\n\nPFS Note This feat allows you to Earn Income with Underworld Lore with tasks of your level -1 (instead of the normal level -2).",
+          "gm": ""
+        },
+        "slug": "experienced-smuggler",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "Pathfinder Player Core",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
         "rules": []
       }
     },
@@ -889,7 +993,7 @@
       "img": "icons/svg/item-bag.svg",
       "system": {
         "description": {
-          "value": "Search for hidden things more effectively.",
+          "value": "You take your time searching to ensure you find everything. When Searching, you can take twice as long to search. Normally this means you @UUID[Compendium.pf2e.actionspf2e.Item.TiNDYUGlMmxzxBYU]{Search} at up to one quarter of your Speed, to a maximum of 150 feet per minute to check everything, or 75 feet per minute to check everything before you walk into an area. If you do and the GM rolls your secret check to @UUID[Compendium.pf2e.actionspf2e.Item.BlAOM2X92SI6HMtJ]{Seek} to notice something, you gain a +2 circumstance bonus to that Perception check and if you succeed, you get a critical success instead.",
           "gm": ""
         },
         "slug": "thorough-search",
@@ -897,7 +1001,7 @@
           "value": []
         },
         "publication": {
-          "title": "",
+          "title": "Pathfinder Player Core 2",
           "authors": "",
           "license": "OGL",
           "remaster": false
@@ -907,22 +1011,70 @@
       }
     },
     {
-      "name": "Dueling Pistol",
-      "type": "weapon",
-      "img": "icons/svg/weapon.svg",
+      "name": "Raconteur's Reload",
+      "type": "action",
+      "img": "icons/svg/item-bag.svg",
       "system": {
+        "actionType": {
+          "value": "action"
+        },
+        "actions": {
+          "value": 1
+        },
+        "category": "offensive",
+        "slug": "raconteur-s-reload",
         "description": {
-          "value": "One in each hand. 10 ft range increment (10/20/30/40/50), reload 1.",
+          "value": "Your rapid or forceful words draw the enemy's attention away from your hands long enough to chamber another bullet. Interact to reload and then attempt a Deception check to [[/act create-a-diversion variant=distracting-words]]{Create a Diversion} or an Intimidation check to [[/act demoralize]].",
           "gm": ""
         },
-        "slug": "dueling-pistol",
         "traits": {
-          "value": [
-            "simple",
-            "firearm",
-            "one-handed",
-            "pistol"
-          ]
+          "value": []
+        },
+        "rules": []
+      }
+    },
+    {
+      "name": "Ten Paces",
+      "type": "action",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "actionType": {
+          "value": "free"
+        },
+        "actions": {
+          "value": null
+        },
+        "category": "offensive",
+        "slug": "ten-paces",
+        "description": {
+          "value": "Trigger You roll initiative.\n\n\nYou react to trouble with lightning speed, positioning yourself just right. You gain a +2 circumstance bonus to your initiative roll, and you can Interact to draw a one-handed firearm or one-handed crossbow. As your first action on your first turn, you can Step up to 10 feet as a free action.",
+          "gm": ""
+        },
+        "traits": {
+          "value": []
+        },
+        "rules": [
+          {
+            "key": "PF2E.RuleElementFlatModifier",
+            "value": 2,
+            "domain": "initiative",
+            "label": "Ten Paces"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Spellscar Desert Lore",
+      "type": "lore",
+      "img": "icons/svg/book.svg",
+      "system": {
+        "description": {
+          "value": "",
+          "gm": ""
+        },
+        "slug": "spellscar-desert-lore",
+        "traits": {
+          "otherTags": []
         },
         "publication": {
           "title": "",
@@ -930,103 +1082,26 @@
           "license": "OGL",
           "remaster": false
         },
-        "level": 2,
-        "quantity": 2,
-        "bulk": {
-          "value": 0.1
-        },
-        "price": {
-          "value": {
-            "gp": 2
-          }
-        },
-        "hp": {
-          "value": 0,
-          "max": 0
-        },
-        "hardness": 0,
-        "size": "med",
-        "material": {
-          "type": null,
-          "grade": null
-        },
-        "equipped": {
-          "carryType": "worn",
-          "handsHeld": 1,
-          "invested": null
-        },
-        "containerId": null,
-        "identification": {
-          "status": "identified",
-          "unidentified": {
-            "name": "",
-            "img": "",
-            "data": {
-              "description": {
-                "value": ""
-              }
-            }
-          },
-          "misidentified": {}
-        },
-        "category": "simple",
-        "group": "firearm",
-        "usage": {
-          "value": "held-in-one-hand"
-        },
-        "bonus": {
+        "mod": {
           "value": 0
         },
-        "bonusDamage": {
-          "value": 0
-        },
-        "splashDamage": {
-          "value": 0
-        },
-        "range": null,
-        "reload": {
+        "proficient": {
           "value": 1
-        },
-        "runes": {
-          "potency": 0,
-          "striking": 0,
-          "property": []
-        },
-        "specific": null,
-        "subitems": [],
-        "damage": {
-          "dice": 1,
-          "die": "d6",
-          "damageType": "piercing",
-          "persistent": null
-        },
-        "property1": {
-          "value": "",
-          "dice": 0,
-          "die": "",
-          "damageType": "",
-          "critDice": 0,
-          "critDie": "",
-          "critDamage": "",
-          "critDamageType": ""
         }
       }
     },
     {
-      "name": "Breastplate",
+      "name": "Leather Armor",
       "type": "armor",
       "img": "icons/svg/armor.svg",
       "system": {
         "description": {
-          "value": "+3 AC, Dex cap +5, no check penalty.",
+          "value": "A mix of flexible and molded boiled leather, a suit of this type of armor provides some protection with maximum flexibility.",
           "gm": ""
         },
-        "slug": "breastplate",
+        "slug": "leather-armor",
         "traits": {
-          "value": [
-            "light",
-            "armor"
-          ]
+          "value": []
         },
         "publication": {
           "title": "",
@@ -1034,14 +1109,14 @@
           "license": "OGL",
           "remaster": false
         },
-        "level": 1,
+        "level": 0,
         "quantity": 1,
         "bulk": {
-          "value": 2
+          "value": 1
         },
         "price": {
           "value": {
-            "gp": 10
+            "gp": 2
           }
         },
         "hp": {
@@ -1074,10 +1149,10 @@
         },
         "category": "light",
         "group": null,
-        "acBonus": 3,
+        "acBonus": 1,
         "strength": 0,
-        "dexCap": 5,
-        "checkPenalty": 0,
+        "dexCap": 4,
+        "checkPenalty": -1,
         "speedPenalty": 0,
         "runes": {
           "potency": 0,
@@ -1088,12 +1163,222 @@
       }
     },
     {
+      "name": "Dueling Pistol",
+      "type": "weapon",
+      "img": "icons/svg/weapon.svg",
+      "system": {
+        "description": {
+          "value": "Made for settling disputes when diplomacy fails, dueling pistols are finely crafted and made to fit easily into a holster or pocket. Noble and wealthy merchants in both Alkenstar and Dongun Hold often own matching pairs of dueling pistols in case they're called upon to address a challenge-though this practice has become increasingly rare in the modern age.",
+          "gm": ""
+        },
+        "slug": "dueling-pistol",
+        "traits": {
+          "value": [
+            "concealable",
+            "concussive",
+            "fatal-d10"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 12
+          }
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "size": "med",
+        "material": {
+          "type": null,
+          "grade": null
+        },
+        "equipped": {
+          "carryType": "held",
+          "handsHeld": 1,
+          "invested": null
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          },
+          "misidentified": {}
+        },
+        "category": "martial",
+        "group": "firearm",
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "bonus": {
+          "value": 0
+        },
+        "bonusDamage": {
+          "value": 0
+        },
+        "splashDamage": {
+          "value": 0
+        },
+        "range": 60,
+        "reload": {
+          "value": "1"
+        },
+        "runes": {
+          "potency": 1,
+          "striking": 1,
+          "property": []
+        },
+        "specific": null,
+        "subitems": [],
+        "damage": {
+          "dice": 1,
+          "die": "d6",
+          "damageType": "piercing",
+          "persistent": null
+        },
+        "property1": {
+          "value": "",
+          "dice": 0,
+          "die": "",
+          "damageType": "",
+          "critDice": 0,
+          "critDie": "",
+          "critDamage": "",
+          "critDamageType": ""
+        }
+      }
+    },
+    {
+      "name": "Dueling Pistol",
+      "type": "weapon",
+      "img": "icons/svg/weapon.svg",
+      "system": {
+        "description": {
+          "value": "Made for settling disputes when diplomacy fails, dueling pistols are finely crafted and made to fit easily into a holster or pocket. Noble and wealthy merchants in both Alkenstar and Dongun Hold often own matching pairs of dueling pistols in case they're called upon to address a challenge-though this practice has become increasingly rare in the modern age.",
+          "gm": ""
+        },
+        "slug": "dueling-pistol",
+        "traits": {
+          "value": [
+            "concealable",
+            "concussive",
+            "fatal-d10"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 12
+          }
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "size": "med",
+        "material": {
+          "type": null,
+          "grade": null
+        },
+        "equipped": {
+          "carryType": "held",
+          "handsHeld": 1,
+          "invested": null
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          },
+          "misidentified": {}
+        },
+        "category": "martial",
+        "group": "firearm",
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "bonus": {
+          "value": 0
+        },
+        "bonusDamage": {
+          "value": 0
+        },
+        "splashDamage": {
+          "value": 0
+        },
+        "range": 60,
+        "reload": {
+          "value": "1"
+        },
+        "runes": {
+          "potency": 1,
+          "striking": 1,
+          "property": []
+        },
+        "specific": null,
+        "subitems": [],
+        "damage": {
+          "dice": 1,
+          "die": "d6",
+          "damageType": "piercing",
+          "persistent": null
+        },
+        "property1": {
+          "value": "",
+          "dice": 0,
+          "die": "",
+          "damageType": "",
+          "critDice": 0,
+          "critDie": "",
+          "critDamage": "",
+          "critDamageType": ""
+        }
+      }
+    },
+    {
       "name": "Rounds (Dueling Pistol)",
-      "type": "consumable",
+      "type": "ammo",
       "img": "icons/svg/ammo.svg",
       "system": {
         "description": {
-          "value": "10 rounds per bulk.",
+          "value": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the @UUID[Compendium.pf2e.feats-srd.Item.is3Oz9wt11lNq62K]{Alchemical Crafting} skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items.",
           "gm": ""
         },
         "slug": "rounds-dueling-pistol",
@@ -1108,10 +1393,10 @@
           "license": "OGL",
           "remaster": false
         },
-        "level": 1,
-        "quantity": 30,
+        "level": 0,
+        "quantity": 50,
         "bulk": {
-          "value": 3
+          "value": 0.1
         },
         "price": {
           "value": {
@@ -1158,12 +1443,444 @@
         },
         "rules": []
       }
+    },
+    {
+      "name": "Saddlebags",
+      "type": "backpack",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Saddlebags come in a pair. Each can hold up to 3 Bulk of items, and the first 1 Bulk of items in each doesn't count against your mount's Bulk limit. The Bulk value given is for saddlebags worn by a mount. If you are carrying or stowing saddlebags, they count as 1 Bulk instead of light Bulk.",
+          "gm": ""
+        },
+        "slug": "saddlebags",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 0,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 0.2
+          }
+        },
+        "equipped": {
+          "carryType": "worn",
+          "handsHeld": 0
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          }
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "material": {
+          "type": null,
+          "grade": null
+        }
+      }
+    },
+    {
+      "name": "Rations",
+      "type": "consumable",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "",
+          "gm": ""
+        },
+        "slug": "rations",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 0,
+        "quantity": 2,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 0.4
+          }
+        },
+        "equipped": {
+          "carryType": "worn",
+          "handsHeld": 0
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          }
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "material": {
+          "type": null,
+          "grade": null
+        }
+      }
+    },
+    {
+      "name": "Rope",
+      "type": "equipment",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "50 feet of rope.",
+          "gm": ""
+        },
+        "slug": "rope",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 0,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 0.5
+          }
+        },
+        "equipped": {
+          "carryType": "stowed",
+          "handsHeld": 0
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          }
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "material": {
+          "type": null,
+          "grade": null
+        }
+      }
+    },
+    {
+      "name": "Waterskin",
+      "type": "equipment",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "When it's full, a waterskin contains roughly 1 day's worth of water for a Small or Medium creature.",
+          "gm": ""
+        },
+        "slug": "waterskin",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 0,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 0.05
+          }
+        },
+        "equipped": {
+          "carryType": "stowed",
+          "handsHeld": 0
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          }
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "material": {
+          "type": null,
+          "grade": null
+        }
+      }
+    },
+    {
+      "name": "Healing Potion (Minor)",
+      "type": "consumable",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Activate A (manipulate)\nA healing potion is a vial of a ruby-red liquid that imparts a tingling sensation as the drinker's wounds heal rapidly. When you drink a healing potion, you regain @Damage[1d8[healing]] Hit Points.",
+          "gm": ""
+        },
+        "slug": "healing-potion-minor",
+        "traits": {
+          "value": [
+            "consumable",
+            "healing",
+            "magical",
+            "potion",
+            "vitality"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 4
+          }
+        },
+        "equipped": {
+          "carryType": "worn",
+          "handsHeld": 0
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          }
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "material": {
+          "type": null,
+          "grade": null
+        }
+      }
+    },
+    {
+      "name": "Healing Potion (Lesser)",
+      "type": "consumable",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Activate A (manipulate)\nA healing potion is a vial of a ruby-red liquid that imparts a tingling sensation as the drinker's wounds heal rapidly. When you drink a healing potion, you regain @Damage[(2d8+5)[healing]] Hit Points.",
+          "gm": ""
+        },
+        "slug": "healing-potion-lesser",
+        "traits": {
+          "value": [
+            "consumable",
+            "healing",
+            "magical",
+            "potion",
+            "vitality"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 3,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 12
+          }
+        },
+        "equipped": {
+          "carryType": "worn",
+          "handsHeld": 0
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          }
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "material": {
+          "type": null,
+          "grade": null
+        }
+      }
+    },
+    {
+      "name": "Thieves' Toolkit",
+      "type": "equipment",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "You need a thieves' toolkit to @UUID[Compendium.pf2e.actionspf2e.Item.2EE4aF4SZpYf0R6H]{Pick Locks} or @UUID[Compendium.pf2e.actionspf2e.Item.cYdz2grcOcRt4jk6]{Disable Devices} (of some types) using the Thievery skill.\n\nIf your thieves' toolkit is broken, you can repair it by replacing the lock picks with @UUID[Compendium.pf2e.equipment-srd.Item.Sw7MBLASN3xK4Y44]{Replacement Picks} appropriate to your toolkit; this doesn't require using the Repair action. If you wear your thieves' toolkit, you can draw and replace it as part of the action that uses it.",
+          "gm": ""
+        },
+        "slug": "thieves-toolkit",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 0,
+        "quantity": 1,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 3
+          }
+        },
+        "equipped": {
+          "carryType": "stowed",
+          "handsHeld": 0
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          }
+        },
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "material": {
+          "type": null,
+          "grade": null
+        }
+      }
     }
   ],
   "effects": [],
   "flags": {},
   "prototypeToken": {
-    "name": "Rafa",
+    "name": "Zé Cangapé",
     "texture": {
       "scaleX": 0.5,
       "scaleY": 0.5,

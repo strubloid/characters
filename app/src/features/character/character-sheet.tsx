@@ -186,6 +186,7 @@ function SkillsCard({ character, audit }: { character: Character; audit: Audit }
 
 const FEATURE_GROUPS: [keyof Character["features"], string][] = [
   ["ancestry", "Ancestry"],
+  ["background", "Background"],
   ["class", "Class features"],
   ["ancestryFeats", "Ancestry feats"],
   ["classFeats", "Class feats"],
@@ -253,8 +254,8 @@ function InventoryCard({ character }: { character: Character }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {character.inventory.map((item: InventoryItem) => (
-              <TableRow key={item.name}>
+            {character.inventory.map((item: InventoryItem, index) => (
+              <TableRow key={item.id ?? `${item.type}:${item.name}:${item.quantity ?? 1}:${index}`}>
                 <TableCell>
                   <div className="font-medium">{item.name}</div>
                   {item.notes && <div className="text-muted-foreground text-xs">{item.notes}</div>}

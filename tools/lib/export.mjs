@@ -31,7 +31,7 @@ const LANGUAGE_SLUGS = {
  * is flagged in the character's `features[].automated` field.
  */
 const FEATURE_RULES = {
-  "bouncy goblin": [
+  "bouncy-goblin": [
     {
       key: "PF2E.RuleElementProficiency",
       rank: "trained",
@@ -60,7 +60,7 @@ const FEATURE_RULES = {
       label: "Stubborn: Will save",
     },
   ],
-  "slinger's precision": [
+  "slinger-s-precision": [
     {
       key: "PF2E.RuleElementFlatModifier",
       value: 2,
@@ -77,7 +77,7 @@ const FEATURE_RULES = {
       label: "Slinger's Precision: firearm",
     },
   ],
-  "singular expertise": [
+  "singular-expertise": [
     {
       key: "PF2E.RuleElementFlatModifier",
       value: 1,
@@ -86,7 +86,7 @@ const FEATURE_RULES = {
       label: "Singular Expertise",
     },
   ],
-  "ten paces": [
+  "ten-paces": [
     {
       key: "PF2E.RuleElementFlatModifier",
       value: 2,
@@ -113,12 +113,12 @@ function featureItem(feature, type, extra = {}) {
     img: "icons/svg/item-bag.svg",
     system: {
       description: {
-        value: feature.summary ?? "",
+        value: [feature.summary, feature.notes].filter(Boolean).join("\n\n"),
         gm: "",
       },
       slug,
       traits: { value: [] },
-      publication: { title: "", authors: "", license: "OGL", remaster: false },
+      publication: { title: feature.source ?? "", authors: "", license: "OGL", remaster: false },
       level: feature.level ?? 0,
       rules,
       ...extra,
@@ -190,6 +190,12 @@ function backgroundItem(character) {
 }
 
 function classItem(character) {
+  const { attacks = {}, defenses = {}, saves = {} } = character.proficiencies;
+  const rank = (value, fallback) => RANK_VALUE[value] ?? fallback;
+  const otherFirearmRank = Math.max(
+    rank(attacks["simple-firearms-and-crossbows"], 0),
+    rank(attacks["martial-firearms-and-crossbows"], 0),
+  );
   return {
     name: character.identity.class,
     type: "class",
@@ -202,10 +208,28 @@ function classItem(character) {
       keyAbility: { value: [character.build.keyAbility] },
       hp: 8,
       trainedSkills: { value: [], additional: 0 },
-      perception: 2,
-      savingThrows: { fortitude: 2, reflex: 2, will: 0 },
-      attacks: { simple: 2, martial: 0, advanced: 1, unarmed: 1, other: { name: "", rank: 0 } },
-      defenses: { unarmored: 1, light: 1, medium: 1, heavy: 0 },
+       perception: rank(character.proficiencies.perception, 2),
+       savingThrows: {
+         fortitude: rank(saves.fortitude, 2),
+         reflex: rank(saves.reflex, 2),
+         will: rank(saves.will, 0),
+       },
+       attacks: {
+         simple: rank(attacks["simple-weapons"], 2),
+         martial: rank(attacks["martial-weapons"], 0),
+         advanced: rank(attacks["advanced-firearms-and-crossbows"], 1),
+         unarmed: rank(attacks["unarmed-attacks"], 1),
+         other: {
+           name: otherFirearmRank ? "Simple Firearms, Martial Firearms" : "",
+           rank: otherFirearmRank,
+         },
+       },
+       defenses: {
+         unarmored: rank(defenses.unarmored ?? defenses["unarmored-defense"], 1),
+         light: rank(defenses.light ?? defenses["light-armor"], 1),
+         medium: rank(defenses.medium ?? defenses["medium-armor"], 1),
+         heavy: rank(defenses.heavy ?? defenses["heavy-armor"], 0),
+       },
       spellcasting: 0,
       ancestryFeatLevels: { value: [1, 5, 9, 13, 17] },
       classFeatLevels: { value: [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20] },
@@ -235,18 +259,26 @@ function weaponItem(item) {
       hardness: 0,
       size: "med",
       material: { type: null, grade: null },
-      equipped: { carryType: "worn", handsHeld: 1, invested: null },
+       equipped: {
+         carryType: item.carryType ?? (item.equipped ? "held" : "stowed"),
+         handsHeld: item.handsHeld ?? 1,
+         invested: null,
+       },
       containerId: null,
       identification: { status: "identified", unidentified: { name: "", img: "", data: { description: { value: "" } } }, misidentified: {} },
-      category: (item.traits ?? []).includes("martial") ? "martial" : "simple",
-      group: (item.traits ?? []).includes("firearm") ? "firearm" : null,
+       category: item.category ?? ((item.traits ?? []).includes("martial") ? "martial" : "simple"),
+       group: item.group ?? ((item.traits ?? []).includes("firearm") ? "firearm" : null),
       usage: { value: "held-in-one-hand" },
       bonus: { value: 0 },
       bonusDamage: { value: 0 },
       splashDamage: { value: 0 },
-      range: null,
-      reload: { value: 1 },
-      runes: { potency: 0, striking: 0, property: [] },
+       range: item.range ?? null,
+       reload: { value: item.reload ?? "1" },
+       runes: {
+         potency: item.runes?.potency ?? 0,
+         striking: item.runes?.striking ?? 0,
+         property: item.runes?.property ?? [],
+       },
       specific: null,
       subitems: [],
       damage: {
@@ -278,17 +310,21 @@ function armorItem(item) {
       hardness: 0,
       size: "med",
       material: { type: null, grade: null },
-      equipped: { carryType: "worn", invested: null },
+       equipped: { carryType: item.carryType ?? (item.equipped ? "worn" : "stowed"), invested: null },
       containerId: null,
       identification: { status: "identified", unidentified: { name: "", img: "", data: { description: { value: "" } } }, misidentified: {} },
-      category: item.category ?? "light",
+       category: item.category ?? "light",
       group: null,
-      acBonus: item.acBonus ?? 3,
+       acBonus: item.acBonus ?? 3,
       strength: 0,
-      dexCap: item.dexCap ?? 5,
-      checkPenalty: item.checkPenalty ?? 0,
+       dexCap: item.dexCap ?? 5,
+       checkPenalty: item.checkPenalty ?? 0,
       speedPenalty: 0,
-      runes: { potency: 0, resilient: 0, property: [] },
+       runes: {
+         potency: item.runes?.potency ?? 0,
+         resilient: item.runes?.resilient ?? 0,
+         property: item.runes?.property ?? [],
+       },
       subitems: [],
     },
   };
@@ -297,7 +333,7 @@ function armorItem(item) {
 function ammunitionItem(item) {
   return {
     name: item.name,
-    type: "consumable",
+    type: "ammo",
     img: "icons/svg/ammo.svg",
     system: {
       description: { value: item.notes ?? "", gm: "" },
@@ -321,6 +357,65 @@ function ammunitionItem(item) {
       damage: null,
       usage: { value: "held-in-one-hand" },
       rules: [],
+    },
+  };
+}
+
+function equipmentItem(item) {
+  return {
+    name: item.name,
+    type: item.type === "backpack" ? "backpack" : item.type === "consumable" ? "consumable" : "equipment",
+    img: "icons/svg/item-bag.svg",
+    system: {
+      description: { value: item.notes ?? "", gm: "" },
+      slug: slugify(item.name),
+      traits: { value: item.traits ?? [] },
+      publication: { title: "", authors: "", license: "OGL", remaster: false },
+      level: item.level ?? 0,
+      quantity: item.quantity ?? 1,
+      bulk: { value: item.bulk ?? 0 },
+      price: { value: { gp: item.price ?? 0 } },
+      equipped: { carryType: item.equipped ? "worn" : "stowed", handsHeld: 0 },
+      containerId: null,
+      identification: { status: "identified", unidentified: { name: "", img: "", data: { description: { value: "" } } } },
+      usage: { value: "held-in-one-hand" },
+      hp: { value: 0, max: 0 },
+      hardness: 0,
+      material: { type: null, grade: null },
+    },
+  };
+}
+
+function loreItem(name, proficiency) {
+  return {
+    name: name.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()),
+    type: "lore",
+    img: "icons/svg/book.svg",
+    system: {
+      description: { value: "", gm: "" },
+      slug: slugify(name),
+      traits: { otherTags: [] },
+      publication: { title: "", authors: "", license: "OGL", remaster: false },
+      mod: { value: 0 },
+      proficient: { value: RANK_VALUE[proficiency] ?? 0 },
+    },
+  };
+}
+
+function actionItem(action, actionType) {
+  const numberOfActions = action.actionCost === "two-actions" ? 2 : action.actionCost === "three-actions" ? 3 : 1;
+  return {
+    name: action.name,
+    type: "action",
+    img: "icons/svg/item-bag.svg",
+    system: {
+      actionType: { value: actionType },
+      actions: { value: actionType === "action" ? numberOfActions : null },
+      category: "offensive",
+      slug: slugify(action.name),
+      description: { value: [action.summary, action.notes].filter(Boolean).join("\n\n"), gm: "" },
+      traits: { value: [] },
+      rules: FEATURE_RULES[slugify(action.name)] ?? [],
     },
   };
 }
@@ -367,22 +462,31 @@ export function buildActor(character) {
     });
   }
 
-  for (const group of ["ancestry", "class", "ancestryFeats", "classFeats", "archetypeFeats", "skillFeats", "generalFeats", "bonusFeats"]) {
+  for (const group of ["ancestry", "background", "class", "ancestryFeats", "classFeats", "archetypeFeats", "skillFeats", "generalFeats", "bonusFeats", "backgroundFeats"]) {
     for (const feature of character.features?.[group] ?? []) {
-      // The ancestry and heritage have their own item types and are already
-      // emitted above, so they must not also land here as feats.
+      // Primary character choices have their own item types and must not also
+      // land in the actor as feats.
       if (group === "ancestry") {
         if (feature.name === identity.ancestry || feature.name === identity.heritage) continue;
       }
-      const type = group === "class" ? "action" : "feat";
-      items.push(featureItem(feature, type));
+      if (group === "background" && feature.name === identity.background) continue;
+      items.push(featureItem(feature, "feat"));
     }
+  }
+
+  for (const action of character.actions?.actions ?? []) items.push(actionItem(action, "action"));
+  for (const action of character.actions?.reactions ?? []) items.push(actionItem(action, "reaction"));
+  for (const action of character.actions?.freeActions ?? []) items.push(actionItem(action, "free"));
+
+  for (const [name, proficiency] of Object.entries(character.proficiencies.skills?.lore ?? {})) {
+    items.push(loreItem(name, proficiency));
   }
 
   for (const entry of character.inventory ?? []) {
     if (entry.type === "weapon") items.push(weaponItem(entry));
     else if (entry.type === "armor") items.push(armorItem(entry));
     else if (entry.type === "ammunition") items.push(ammunitionItem(entry));
+    else if (["equipment", "consumable", "backpack", "treasure", "shield"].includes(entry.type)) items.push(equipmentItem(entry));
   }
 
   const actor = {
@@ -400,7 +504,12 @@ export function buildActor(character) {
         },
         speed: {
           value: build.speed?.land ?? 25,
-          otherSpeeds: [],
+          otherSpeeds: [
+            ...(build.speed?.swim ? [{ type: "swim", value: build.speed.swim }] : []),
+            ...(build.speed?.climb ? [{ type: "climb", value: build.speed.climb }] : []),
+            ...(build.speed?.fly ? [{ type: "fly", value: build.speed.fly }] : []),
+            ...(build.speed?.burrow ? [{ type: "burrow", value: build.speed.burrow }] : []),
+          ],
         },
         keyability: { value: build.keyAbility },
       },
@@ -446,6 +555,7 @@ export function buildActor(character) {
           },
         },
       },
+      initiative: { statistic: build.initiativeStatistic ?? "perception" },
       skills,
       resources: {
         heroPoints: {
@@ -457,13 +567,13 @@ export function buildActor(character) {
         attributes: {
           manual: true,
           boosts: {
-            0: { value: [] },
-            1: { value: [] },
-            2: { value: [] },
-            5: { value: [] },
-            10: { value: [] },
-            15: { value: [] },
-            20: { value: [] },
+            0: { value: build.boosts?.["0"] ?? [] },
+            1: { value: build.boosts?.["1"] ?? [] },
+            2: { value: build.boosts?.["2"] ?? [] },
+            5: { value: build.boosts?.["5"] ?? [] },
+            10: { value: build.boosts?.["10"] ?? [] },
+            15: { value: build.boosts?.["15"] ?? [] },
+            20: { value: build.boosts?.["20"] ?? [] },
           },
         },
       },

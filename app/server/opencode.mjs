@@ -48,6 +48,7 @@ export function buildPrompt({ character, audit, question }) {
 
   return [
     `Character: ${character.name} (${character.identity.ancestry} ${character.identity.class} level ${character.identity.level})`,
+    "Use the supplied character data as the context for every answer. Treat character.json as the source of truth, distinguish recorded sheet values from inferred details, and say when the data does not support a conclusion.",
     "",
     `Repository files for this character:`,
     `  characters/${character.id}/character.json  (source of truth)`,

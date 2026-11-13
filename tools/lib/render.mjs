@@ -149,6 +149,7 @@ export function renderMarkdown(character) {
   out.push("");
   const featureGroups = [
     ["Ancestry", features.ancestry],
+    ["Background", features.background],
     ["Class", features.class],
     ["Ancestry feats", features.ancestryFeats],
     ["Class feats", features.classFeats],

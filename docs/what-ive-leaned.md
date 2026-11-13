@@ -267,16 +267,21 @@ fallback would otherwise return `index.html` and the client would die with
 
 ### The layout
 
-One page. A sticky header with the character selector. The left column holds
-the character, with tabs for Sheet, Ask, Markdown and Bonuses. The right rail
-holds the audit verdict and the Runs panel - the five buttons and a log of
-every run with its exit code, duration and full output.
+The workshop uses a sticky character picker and a responsive workspace with
+Overview, Edit, Learn, Ask, Chat, and Records areas. The right rail keeps the
+five build commands and their stored run history in view. The editor validates
+the full character document before saving, rebuilds the Foundry import and
+Markdown sheet, and can merge a native Foundry actor export while preserving
+that complete source export.
 
 ### The ask feature
 
 The Ask tab asks the **bigpickle** opencode agent about the character being
-viewed. Questions and answers persist to `characters/<slug>/questions.json`
-so they survive restarts and can be read in git.
+viewed. Questions and answers persist in `app/data/questions.sqlite`, grouped by
+character and kept across restarts. The same local database stores character
+snapshots, theme preference, successful AI chat sessions, tool runs, Pathfinder
+bookmarks/notes, and complete Foundry imports. Existing `questions.json`
+histories are imported into the database on startup.
 
 The server spawns `opencode run --agent bigpickle --format json <prompt>` with
 the repository as the working directory, parses the JSON event stream, and

@@ -2,19 +2,19 @@
   "$schema": "../../schema/character.schema.json",
   "formatVersion": "1.0.0",
   "id": "rafa",
-  "name": "Rafa",
+  "name": "Zé Cangapé",
   "kind": "player-character",
   "system": {
     "id": "pf2e",
     "ruleset": "remaster",
-    "foundryVersion": "13",
-    "systemVersion": "6.0.0"
+    "foundryVersion": "14.369",
+    "systemVersion": "8.6.1"
   },
   "player": "",
   "summary": "A fifteen-year-old Alkenstar goblin who talks his way through most fights and shoots the rest. Bandit by trade, gunslinger by training, and quietly devout under Desna.",
   "art": {
-    "portrait": null,
-    "token": null,
+    "portrait": "https://assets.forge-vtt.com/64c3f137b1572748e72d0753/worlds/Onaell/IMAGE/Gunslinger%20Goblin.png",
+    "token": "https://assets.forge-vtt.com/64c3f137b1572748e72d0753/worlds/Onaell/IMAGE/Gunslinger%20Goblin.png",
     "notes": "There is no portrait yet. The files in images/ are screenshots of the Foundry sheet, not artwork."
   },
   "identity": {
@@ -38,17 +38,32 @@
     "nationality": "Nex",
     "height": "",
     "weight": "",
-    "languages": ["Common (Taldane)", "Dwarven", "Goblin", "Kelsh"]
+    "languages": [
+      "Dwarven",
+      "Kelish"
+    ]
   },
   "build": {
     "keyAbility": "dex",
     "abilities": {
-      "str": { "score": 10 },
-      "dex": { "score": 18 },
-      "con": { "score": 14 },
-      "int": { "score": 14 },
-      "wis": { "score": 10 },
-      "cha": { "score": 18 }
+      "str": {
+        "score": 10
+      },
+      "dex": {
+        "score": 19
+      },
+      "con": {
+        "score": 14
+      },
+      "int": {
+        "score": 14
+      },
+      "wis": {
+        "score": 10
+      },
+      "cha": {
+        "score": 18
+      }
     },
     "hp": {
       "max": 60,
@@ -58,9 +73,9 @@
     },
     "armor": {
       "category": "light",
-      "acBonus": 3,
-      "dexCap": 5,
-      "checkPenalty": 0
+      "acBonus": 1,
+      "dexCap": 4,
+      "checkPenalty": -1
     },
     "speed": {
       "land": 20,
@@ -69,7 +84,26 @@
       "fly": null,
       "burrow": null
     },
-    "senses": [{ "name": "darkvision", "range": 60 }]
+    "senses": [
+      {
+        "name": "darkvision"
+      }
+    ],
+    "initiativeStatistic": "stealth",
+    "boosts": {
+      "1": [
+        "dex",
+        "cha",
+        "con",
+        "int"
+      ],
+      "5": [
+        "cha",
+        "wis",
+        "con",
+        "dex"
+      ]
+    }
   },
   "proficiencies": {
     "saves": {
@@ -96,11 +130,11 @@
       "performance": "untrained",
       "religion": "untrained",
       "society": "untrained",
-      "stealth": "trained",
+      "stealth": "expert",
       "survival": "untrained",
-      "thievery": "trained",
+      "thievery": "expert",
       "lore": {
-        "spellscar-desert": "trained"
+        "spellscar-desert-lore": "trained"
       }
     },
     "attacks": {
@@ -109,12 +143,22 @@
       "advanced-firearms-and-crossbows": "expert",
       "simple-weapons": "expert",
       "martial-weapons": "expert",
-      "unarmed-attacks": "expert"
+      "unarmed-attacks": "expert",
+      "simple": "trained",
+      "martial": "trained",
+      "advanced": "untrained",
+      "unarmed": "trained",
+      "simple-firearms-martial-firearms": "expert",
+      "advanced-firearms-crossbows": "expert"
     },
     "defenses": {
       "light-armor": "trained",
       "medium-armor": "trained",
-      "unarmored-defense": "trained"
+      "unarmored-defense": "trained",
+      "unarmored": "trained",
+      "light": "trained",
+      "medium": "trained",
+      "heavy": "untrained"
     }
   },
   "resources": {
@@ -131,7 +175,14 @@
       "value": 5,
       "type": "unattributed",
       "requiresRank": true,
-      "appliesTo": ["ac", "saves", "perception", "classDC", "attacks", "skills"]
+      "appliesTo": [
+        "ac",
+        "saves",
+        "perception",
+        "classDC",
+        "attacks",
+        "skills"
+      ]
     },
     {
       "id": "unattributed-dexterity-skills-minus-2",
@@ -139,7 +190,11 @@
       "note": "Acrobatics, Stealth and Thievery read 2 lower than the other trained skills, even though all three are trained Dexterity skills. The other trained skills (Deception, Diplomacy, Intimidation, Crafting) sit on the full +5.",
       "value": -2,
       "type": "unattributed",
-      "appliesTo": ["skill:acrobatics", "skill:stealth", "skill:thievery"]
+      "appliesTo": [
+        "skill:acrobatics",
+        "skill:stealth",
+        "skill:thievery"
+      ]
     },
     {
       "id": "unattributed-nature-religion-minus-2",
@@ -147,7 +202,10 @@
       "note": "Nature and Religion read 0 while the other untrained Intelligence skills (Arcana, Occultism, Society) read +2, which is what an Intelligence modifier of +2 gives. Something is taking 2 off these two skills.",
       "value": -2,
       "type": "unattributed",
-      "appliesTo": ["skill:nature", "skill:religion"]
+      "appliesTo": [
+        "skill:nature",
+        "skill:religion"
+      ]
     },
     {
       "id": "unattributed-athletics-minus-2",
@@ -155,28 +213,31 @@
       "note": "Athletics reads -2 with a Strength modifier of +0. The Remaster Goblin ancestry lists no Athletics penalty, so this may be a house rule, a condition, or a mistake on the sheet.",
       "value": -2,
       "type": "unattributed",
-      "appliesTo": ["skill:athletics"]
-    },
-    {
-      "id": "unattributed-initiative-minus-2",
-      "source": "unattributed",
-      "note": "Initiative reads +11, but Perception (+9) plus Dexterity (+4) is +13. The Ten Paces deed adds a +2 circumstance bonus to initiative, so the sheet may be showing the value before that deed is applied, or before some other effect.",
-      "value": -2,
-      "type": "unattributed",
-      "appliesTo": ["initiative"]
+      "appliesTo": [
+        "skill:athletics"
+      ]
     }
   ],
   "features": {
     "ancestry": [
       {
         "name": "Goblin",
-        "summary": "Small humanoid with darkvision.",
-        "notes": "Remaster ancestry: 6 HP, Small, 25 ft Speed, boosts Dexterity and Charisma, Wisdom flaw, Common and Goblin. The Remaster ancestry has no Goblin Sneak and no Athletics penalty."
+        "source": "Pathfinder Player Core",
+        "summary": "The convoluted histories other people cling to don't interest goblins. These small folk live in the moment, and they prefer tall tales over factual records. The wars of a few decades ago might as well be from the ancient past. Misunderstood by other people, goblins are happy how they are. Goblin virtues are about being present, creative, and honest. They strive to lead fulfilled lives, rather than worrying about how their journeys will end. To tell stories, not nitpick the facts. To be small, but dream big.\n\n@UUID[Compendium.pf2e.journals.JournalEntry.45SK8rdbbxvEHfMn.JournalEntryPage.Gn0XGCWDb0N4zLE0]{Goblin}",
+        "automated": false
       },
       {
         "name": "Unbreakable Goblin",
-        "source": "heritage",
-        "summary": "Gain 10 HP from your ancestry instead of 6, and halve falling damage.",
+        "source": "Pathfinder Player Core",
+        "summary": "You're able to bounce back from injuries easily due to an exceptionally thick skull, cartilaginous bones, or some other mixed blessing. You gain 10 Hit Points from your ancestry instead of 6. When you fall, reduce the falling damage you take as though you had fallen half the distance.",
+        "automated": false
+      }
+    ],
+    "background": [
+      {
+        "name": "Bandit",
+        "source": "Pathfinder Player Core",
+        "summary": "Your past includes no small amount of rural banditry, robbing travelers on the road and scraping by. Whether your robbery was sanctioned by a local noble or you did so of your own accord, you eventually got caught up in the adventuring life.\n\nChoose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.\n\nYou're trained in the Intimidation skill and a Lore skill related to the terrain you worked in (such as Desert Lore or Plains Lore). You gain the @UUID[Compendium.pf2e.feats-srd.Item.gUqvezs2zzoTXFAI]{Group Coercion} skill feat.",
         "automated": false
       }
     ],
@@ -184,33 +245,36 @@
       {
         "name": "Gunslinger's Way",
         "level": 1,
-        "summary": "Way of the Pistolero: hold the line at ten paces and talk while you reload.",
-        "notes": "Way skill is Deception or Intimidation."
+        "source": "Pathfinder Guns & Gears",
+        "summary": "All gunslingers have a particular way they follow, a combination of philosophy and combat style that defines both how they fight and the weapons they excel with. At 1st level, your way grants you an initial deed, a unique reload action called a slinger's reload, and proficiency with a particular skill. You also gain advanced and greater deeds at later levels, as well as access to way-specific feats.\n\n@UUID[Compendium.pf2e.classfeatures.Item.a3pSIKkDVTvvNSRO]{Way of the Drifter} You wander across the battlefield, equally at home in and out of the fray.\n\n@UUID[Compendium.pf2e.classfeatures.Item.qRLRrHf0kzaJ7xt0]{Way of the Pistolero} You carefully maintain your distance at a duelist's 10 paces with pistol in hand.\n\n@UUID[Compendium.pf2e.classfeatures.Item.QWXvksGJhOjXbBqi]{Way of the Sniper} You practice a methodical style of shooting, striking from far cover.\n\n@UUID[Compendium.pf2e.classfeatures.Item.vB0yVFxJVZwalt2g]{Way of the Vanguard} You rely on a brutal combat style that uses heavy weapons and explosive attacks.\n\n@UUID[Compendium.pf2e.classfeatures.Item.YryaWAGcHeaRnXzS]{Way of the Triggerbrand} You prefer firearms that work well as weapons in both melee and ranged combat",
+        "automated": false
+      },
+      {
+        "name": "Way of the Pistolero",
+        "level": 1,
+        "source": "Pathfinder Guns & Gears",
+        "summary": "Whether you're a professional duelist or a pistol-twirling entertainer, you have quick feet and quicker hands that never seem to let you down, and an equally sharp wit and tongue that jab your foes. You might leave a hand free or cultivate the ambidexterity for twin weapons. Either way, you stay close enough to your enemies to leverage your superior reflexes while leaving enough space to safely fire.\n\nSlinger's Reload @UUID[Compendium.pf2e.actionspf2e.Item.RADNqsvAt4gP9FOX]{Raconteur's Reload}\n\nDeeds Initial @UUID[Compendium.pf2e.actionspf2e.Item.EeM0Czaep7G5ZSh5]{Ten Paces}; Advanced @UUID[Compendium.pf2e.actionspf2e.Item.bCDMuu3tE4d6KHrJ]{Pistolero's Retort}; Greater @UUID[Compendium.pf2e.actionspf2e.Item.rI2MSXR1MQzgQUO7]{Grim Swagger}\n\nWay Skill choose Deception or Intimidation",
+        "automated": false
       },
       {
         "name": "Slinger's Precision",
         "level": 1,
-        "summary": "+2 precision damage with non-repeating crossbows and an extra 1d4 precision damage on Strikes with non-repeating firearms.",
-        "automated": false
-      },
-      {
-        "name": "Singular Expertise",
-        "level": 1,
-        "summary": "+1 circumstance bonus to damage rolls with firearms and crossbows. Caps proficiency with other weapons and unarmed attacks.",
+        "source": "Pathfinder Guns & Gears",
+        "summary": "You deal an extra +2 precision damage with Strikes made using non-repeating crossbows and you deal an extra 1d4 precision damage on Strikes using non-repeating firearms.\n\nIf you have gunslinging legend, you instead deal +3 additional precision damage with Strikes using non-repeating crossbows and an additional 1d6 precision damage with Strikes using non-repeating firearms.\n\nIf you are using a combination weapon whose ranged form is a firearm or crossbow, you use your proficiency with firearms and crossbows for attacks made with the melee configuration of that weapon.",
         "automated": false
       },
       {
         "name": "Stubborn",
         "level": 3,
-        "summary": "Your proficiency rank for Will saves increases to expert.",
-        "notes": "Also lets you retry a failed, non-critical Will save against being controlled.",
+        "source": "Pathfinder Guns & Gears",
+        "summary": "You don't like being told what to do, and you don't give up. Your proficiency rank for Will saves increases to expert. When you fail, but don't critically fail, a Will save against an effect that would give you the controlled condition, you can attempt a second save against the effect at the start of your next turn. On a successful second save, the controlled condition ends, though any other effects remain. As normal, failing this second save doesn't allow you to attempt a third save on the subsequent turn.",
         "automated": false
       },
       {
         "name": "Gunslinger Weapon Mastery",
         "level": 5,
-        "summary": "Master with simple and martial firearms and crossbows; expert with advanced firearms and crossbows, simple and martial weapons, and unarmed attacks.",
-        "notes": "Unlocks critical specialization for firearms and crossbows.",
+        "source": "Pathfinder Guns & Gears",
+        "summary": "You fully understand the best way to utilize your unique weapons. Your proficiency rank increases to master with simple and martial firearms and crossbows. Your proficiency rank for advanced firearms and crossbows, simple weapons, martial weapons, and unarmed attacks increases to expert. You gain access to the critical specialization effects for firearms and crossbows.",
         "automated": false
       }
     ],
@@ -218,14 +282,15 @@
       {
         "name": "Bouncy Goblin",
         "level": 1,
-        "summary": "Trained proficiency in Acrobatics and a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.",
-        "notes": "Requires the Unbreakable Goblin heritage.",
+        "source": "Pathfinder Lost Omens Character Guide",
+        "summary": "You have a particular elasticity that makes it easy for you to bounce and squish. You gain the trained proficiency rank in Acrobatics (or another skill of your choice, if you were already trained in Acrobatics). You also gain a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.",
         "automated": false
       },
       {
         "name": "Vandal",
         "level": 5,
-        "summary": "You become trained in Thievery.",
+        "source": "Pathfinder Player Core",
+        "summary": "You have a knack for breaking and dismantling things. Putting them back together is the boring part, so you largely don't bother with that. You become trained in Thievery. If you would automatically become trained in Thievery (from your background or class, for example), you instead become trained in a skill of your choice.\n\nIn addition, whenever you hit with a Strike against a trap or an unattended object, you ignore the first 5 points of the object's Hardness.",
         "automated": false
       }
     ],
@@ -233,19 +298,22 @@
       {
         "name": "Dual-Weapon Reload",
         "level": 1,
-        "summary": "Reload a one-handed ranged weapon without needing a free hand while wielding two one-handed weapons.",
-        "automated": false
-      },
-      {
-        "name": "Quick Draw",
-        "level": 2,
-        "summary": "Draw a weapon as a free action when you roll initiative.",
+        "source": "Pathfinder Guns & Gears",
+        "summary": "You carry your ammunition in a way that allows you to reload while holding two weapons. While you're wielding two one-handed weapons, each in a different hand, you don't need a free hand to reload a one-handed ranged weapon you're wielding.",
         "automated": false
       },
       {
         "name": "Alchemical Shot",
         "level": 4,
-        "summary": "Soak ammunition in an alchemical bomb for bonus damage and persistent damage on a failed shot.",
+        "source": "Pathfinder Guns & Gears",
+        "summary": "Requirements You have an alchemical bomb worn or in one hand, and are wielding a firearm or crossbow.\nYou've practiced a technique for mixing alchemical bombs with your loaded shot. You Interact to retrieve the bomb (if it's not already in your hand) and pour its contents onto your ammunition, consuming the bomb, then resume your grip on the required weapon. Next, Strike with your firearm. The Strike deals damage of the same type as the bomb (for instance, fire damage for alchemist's fire), and it deals an additional 1d6 persistent damage of the same type as the bomb. If the Strike is a failure, you take 1d6 damage of the same type as the bomb you used, and the firearm misfires.\n\nThe persistent damage increases to 2d6 if the bomb is 11th level or higher, or 3d6 if it's 17th level or higher.",
+        "automated": false
+      },
+      {
+        "name": "Munitions Crafter",
+        "level": 1,
+        "source": "Pathfinder Guns & Gears",
+        "summary": "Bullets and bombs can be scarce in some parts, so you've learned to make your own. You become trained in Crafting and gain the advanced alchemy benefits. You can use the advanced alchemy benefits to create a number of daily consumables equal to 4 + half your level (rounded up); these consumables must be bombs or alchemical ammunition.\n\nYou gain a formula book that includes the formula for black powder and four 1st-level types of common or uncommon alchemical ammunition or bombs of your choice.\n\nWhen crafting alchemical ammunition, including black powder in doses or rounds, using advanced alchemy, you create the ammunition in batches of 4 (meaning that if you were 4th level and used all of your advanced alchemy consumables to create alchemical ammunition, you could create a maximum of 24 rounds). You cannot use advanced alchemy to Craft horns or kegs of black powder.",
         "automated": false
       }
     ],
@@ -253,29 +321,29 @@
       {
         "name": "Rogue Dedication",
         "level": 2,
-        "summary": "Take the Rogue archetype at 2nd level.",
-        "notes": "Adds the Rogue class DC and the Surprise Attack feat.",
+        "source": "Pathfinder Player Core",
+        "summary": "You gain a skill feat and the rogue's @UUID[Compendium.pf2e.classfeatures.Item.w6rMqmGzhUahdnA7]{Surprise Attack} class feature. You become trained in light armor. In addition, you become trained in Stealth or Thievery plus one skill of your choice; if you are already trained in both Stealth and Thievery, you become trained in an additional skill of your choice. You become trained in rogue class DC.\n\n@UUID[Compendium.pf2e.journals.JournalEntry.vx5FGEG34AxI2dow.JournalEntryPage.kVC4kgYKbhqPsaDt]{Rogue}",
         "automated": false
       },
       {
         "name": "Surprise Attack",
-        "level": 2,
-        "source": "archetype",
-        "summary": "Exploit a target's distracted state.",
+        "level": 1,
+        "source": "Pathfinder Player Core",
+        "summary": "You spring into combat faster than foes can react. On the first round of combat, if you roll Deception or Stealth for initiative, creatures that haven't acted are @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} to you.",
         "automated": false
       },
       {
-        "name": "Assurance (Intimidation)",
-        "level": 2,
-        "source": "archetype",
-        "summary": "Intimidation checks that fail but do not critically fail may be retried.",
-        "automated": false
-      },
-      {
-        "name": "Mobility",
+        "name": "Basic Trickery",
         "level": 4,
-        "source": "archetype",
-        "summary": "Improved mobility in close quarters.",
+        "source": "Pathfinder Player Core",
+        "summary": "You gain a 1st- or 2nd-level rogue feat.",
+        "automated": false
+      },
+      {
+        "name": "Quick Draw",
+        "level": 2,
+        "source": "Pathfinder Player Core",
+        "summary": "You draw your weapon and attack with the same motion. You Interact to draw a weapon, then Strike with that weapon.",
         "automated": false
       }
     ],
@@ -283,20 +351,36 @@
       {
         "name": "Group Coercion",
         "level": 1,
-        "source": "background",
-        "summary": "Coerce a group instead of a single target.",
+        "source": "Pathfinder Player Core",
+        "summary": "You can strong-arm people effectively, even when you don't have them isolated. When you @UUID[Compendium.pf2e.actionspf2e.Item.tHCqgwjtQtzNqVvd]{Coerce}, you can compare your Intimidation check result to the Will DCs of up to five targets instead of one.\n\nIt's possible to get a different degree of success for each target. The number of targets you can Coerce in a single action increases to 10 if you're an expert, 25 if you're a master, and 50 if you're legendary.",
         "automated": false
       },
       {
         "name": "Pickpocket",
-        "level": 2,
-        "summary": "Pickpocket with less fuss.",
+        "level": 1,
+        "source": "Pathfinder Player Core",
+        "summary": "You can @UUID[Compendium.pf2e.actionspf2e.Item.RDXXE7wMrSPCLv5k]{Steal} or @UUID[Compendium.pf2e.actionspf2e.Item.ijZ0DDFpMkWqaShd]{Palm an Object} that's closely guarded, such as in a pocket, without taking the –5 penalty. You can't steal objects that would be extremely noticeable or time consuming to remove (like worn shoes or armor or actively wielded objects). If you're a master in Thievery, you can attempt to Steal from a creature in combat or otherwise on guard. When doing so, Stealing requires 2 actions instead of 1, and you take a –5 penalty.",
         "automated": false
       },
       {
         "name": "Subtle Theft",
-        "level": 4,
-        "summary": "Steal without drawing attention.",
+        "level": 1,
+        "source": "Pathfinder Player Core",
+        "summary": "When you successfully @UUID[Compendium.pf2e.actionspf2e.Item.RDXXE7wMrSPCLv5k]{Steal} something, observers (creatures other than the creature you stole from) take a –2 circumstance penalty to their Perception DCs to detect your theft. Additionally, if you first @UUID[Compendium.pf2e.actionspf2e.Item.GkmbTGfg8KcgynOA]{Create a Diversion} using Deception, taking a single @UUID[Compendium.pf2e.actionspf2e.Item.ijZ0DDFpMkWqaShd]{Palm an Object} or Steal action doesn't end your @UUID[Compendium.pf2e.conditionitems.Item.VRSef5y1LmL2Hkjf]{Undetected} condition.",
+        "automated": false
+      },
+      {
+        "name": "Alchemical Crafting",
+        "level": 1,
+        "source": "Pathfinder Player Core",
+        "summary": "You can use the Craft activity to create alchemical items. When you select this feat, you immediately add the formulas for four common 1st-level alchemical items to your formula book.",
+        "automated": false
+      },
+      {
+        "name": "Experienced Smuggler",
+        "level": 1,
+        "source": "Pathfinder Player Core",
+        "summary": "You often smuggle things past the authorities. When the GM rolls your Stealth check to see if a passive observer notices a small item you've concealed, the GM uses the number rolled or 10—whichever is higher—as the result of your die roll, adding it to your Stealth modifier to determine your Stealth check result. If you're a master in Stealth, the GM uses the number rolled or 15, and if you're legendary in Stealth, you automatically succeed at hiding a small concealed item from passive observers. This provides no benefits when a creature attempts a Perception check while actively searching you for hidden items.\n\n\nPFS Note This feat allows you to Earn Income with Underworld Lore with tasks of your level -1 (instead of the normal level -2).",
         "automated": false
       }
     ],
@@ -304,7 +388,8 @@
       {
         "name": "Thorough Search",
         "level": 3,
-        "summary": "Search for hidden things more effectively.",
+        "source": "Pathfinder Player Core 2",
+        "summary": "You take your time searching to ensure you find everything. When Searching, you can take twice as long to search. Normally this means you @UUID[Compendium.pf2e.actionspf2e.Item.TiNDYUGlMmxzxBYU]{Search} at up to one quarter of your Speed, to a maximum of 150 feet per minute to check everything, or 75 feet per minute to check everything before you walk into an area. If you do and the GM rolls your secret check to @UUID[Compendium.pf2e.actionspf2e.Item.BlAOM2X92SI6HMtJ]{Seek} to notice something, you gain a +2 circumstance bonus to that Perception check and if you succeed, you get a critical success instead.",
         "automated": false
       }
     ],
@@ -316,22 +401,8 @@
       {
         "name": "Raconteur's Reload",
         "actionCost": "one-action",
-        "source": "Way of the Pistolero (slinger's reload)",
-        "summary": "Interact to reload, then attempt a Deception check to Create a Diversion or an Intimidation check to Demoralize.",
-        "automated": false
-      },
-      {
-        "name": "Alchemical Shot",
-        "actionCost": "two-actions",
-        "source": "class feat",
-        "summary": "Pour an alchemical bomb onto your ammunition, then Strike.",
-        "automated": false
-      },
-      {
-        "name": "Quick Draw",
-        "actionCost": "free-action",
-        "source": "class feat",
-        "summary": "Draw a weapon when you roll initiative.",
+        "source": "Pathfinder Guns & Gears",
+        "summary": "Your rapid or forceful words draw the enemy's attention away from your hands long enough to chamber another bullet. Interact to reload and then attempt a Deception check to [[/act create-a-diversion variant=distracting-words]]{Create a Diversion} or an Intimidation check to [[/act demoralize]].",
         "automated": false
       }
     ],
@@ -339,45 +410,238 @@
     "freeActions": [
       {
         "name": "Ten Paces",
-        "actionCost": "free-action",
-        "source": "Way of the Pistolero (initial deed)",
-        "summary": "On rolling initiative, gain a +2 circumstance bonus to initiative and draw a one-handed firearm or one-handed crossbow.",
+        "source": "Pathfinder Guns & Gears",
+        "summary": "Trigger You roll initiative.\n\n\nYou react to trouble with lightning speed, positioning yourself just right. You gain a +2 circumstance bonus to your initiative roll, and you can Interact to draw a one-handed firearm or one-handed crossbow. As your first action on your first turn, you can Step up to 10 feet as a free action.",
         "automated": false
       }
     ]
   },
   "inventory": [
     {
+      "id": "IDsg4tTGQOxUxDrI",
+      "name": "Leather Armor",
+      "type": "armor",
+      "quantity": 1,
+      "bulk": 1,
+      "equipped": true,
+      "level": 0,
+      "price": 2,
+      "traits": [],
+      "category": "light",
+      "acBonus": 1,
+      "dexCap": 4,
+      "checkPenalty": -1,
+      "group": "leather",
+      "baseItem": "leather-armor",
+      "carryType": "worn",
+      "handsHeld": 0,
+      "runes": {
+        "potency": 0,
+        "striking": 0,
+        "resilient": 0,
+        "property": []
+      },
+      "notes": "A mix of flexible and molded boiled leather, a suit of this type of armor provides some protection with maximum flexibility."
+    },
+    {
+      "id": "jRvPv41sc34HyCLW",
       "name": "Dueling Pistol",
       "type": "weapon",
+      "quantity": 1,
+      "bulk": 0.1,
+      "equipped": true,
+      "level": 1,
+      "price": 12,
+      "traits": [
+        "concealable",
+        "concussive",
+        "fatal-d10"
+      ],
+      "category": "martial",
+      "group": "firearm",
+      "range": 60,
+      "reload": "1",
+      "baseItem": "dueling-pistol",
+      "carryType": "held",
+      "handsHeld": 1,
+      "runes": {
+        "potency": 1,
+        "striking": 1,
+        "resilient": 0,
+        "property": []
+      },
+      "damage": {
+        "dice": 1,
+        "die": "d6",
+        "damageType": "piercing"
+      },
+      "notes": "Made for settling disputes when diplomacy fails, dueling pistols are finely crafted and made to fit easily into a holster or pocket. Noble and wealthy merchants in both Alkenstar and Dongun Hold often own matching pairs of dueling pistols in case they're called upon to address a challenge-though this practice has become increasingly rare in the modern age."
+    },
+    {
+      "id": "qW5oOy85yyzKWl6H",
+      "name": "Dueling Pistol",
+      "type": "weapon",
+      "quantity": 1,
+      "bulk": 0.1,
+      "equipped": true,
+      "level": 1,
+      "price": 12,
+      "traits": [
+        "concealable",
+        "concussive",
+        "fatal-d10"
+      ],
+      "category": "martial",
+      "group": "firearm",
+      "range": 60,
+      "reload": "1",
+      "baseItem": "dueling-pistol",
+      "carryType": "held",
+      "handsHeld": 1,
+      "runes": {
+        "potency": 1,
+        "striking": 1,
+        "resilient": 0,
+        "property": []
+      },
+      "damage": {
+        "dice": 1,
+        "die": "d6",
+        "damageType": "piercing"
+      },
+      "notes": "Made for settling disputes when diplomacy fails, dueling pistols are finely crafted and made to fit easily into a holster or pocket. Noble and wealthy merchants in both Alkenstar and Dongun Hold often own matching pairs of dueling pistols in case they're called upon to address a challenge-though this practice has become increasingly rare in the modern age."
+    },
+    {
+      "id": "0invLUmA38AKRsds",
+      "name": "Rounds (Dueling Pistol)",
+      "type": "ammunition",
+      "quantity": 50,
+      "bulk": 0.1,
+      "equipped": true,
+      "level": 0,
+      "price": 0.1,
+      "traits": [
+        "alchemical",
+        "consumable"
+      ],
+      "baseItem": "rounds-dueling-pistol",
+      "carryType": "worn",
+      "notes": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the @UUID[Compendium.pf2e.feats-srd.Item.is3Oz9wt11lNq62K]{Alchemical Crafting} skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+    },
+    {
+      "id": "TJmwXV0f5cvto2qG",
+      "name": "Saddlebags",
+      "type": "backpack",
+      "quantity": 1,
+      "bulk": 0.1,
+      "equipped": true,
+      "level": 0,
+      "price": 0.2,
+      "traits": [],
+      "carryType": "worn",
+      "notes": "Saddlebags come in a pair. Each can hold up to 3 Bulk of items, and the first 1 Bulk of items in each doesn't count against your mount's Bulk limit. The Bulk value given is for saddlebags worn by a mount. If you are carrying or stowing saddlebags, they count as 1 Bulk instead of light Bulk."
+    },
+    {
+      "id": "LpJGa9ky28WaVDJ9",
+      "name": "Rations",
+      "type": "consumable",
       "quantity": 2,
       "bulk": 0.1,
       "equipped": true,
-      "level": 2,
-      "price": 2,
-      "traits": ["simple", "firearm", "one-handed", "pistol"],
-      "damage": { "dice": 1, "die": "d6", "damageType": "piercing" },
-      "notes": "One in each hand. 10 ft range increment (10/20/30/40/50), reload 1."
+      "level": 0,
+      "price": 0.4,
+      "traits": [],
+      "category": "other",
+      "carryType": "worn"
     },
     {
-      "name": "Breastplate",
-      "type": "armor",
+      "id": "w2aEKkyxFEd0jtpp",
+      "name": "Rope",
+      "type": "equipment",
       "quantity": 1,
-      "bulk": 2,
-      "equipped": true,
-      "price": 10,
-      "traits": ["light", "armor"],
-      "notes": "+3 AC, Dex cap +5, no check penalty."
+      "bulk": 0.1,
+      "equipped": false,
+      "level": 0,
+      "price": 0.5,
+      "traits": [],
+      "carryType": "stowed",
+      "notes": "50 feet of rope."
     },
     {
-      "name": "Rounds (Dueling Pistol)",
-      "type": "ammunition",
-      "quantity": 30,
-      "bulk": 3,
+      "id": "uvzpExByylc9CSqe",
+      "name": "Waterskin",
+      "type": "equipment",
+      "quantity": 1,
+      "bulk": 0.1,
       "equipped": false,
-      "price": 0.1,
-      "traits": ["ammunition"],
-      "notes": "10 rounds per bulk."
+      "level": 0,
+      "price": 0.05,
+      "traits": [],
+      "carryType": "stowed",
+      "notes": "When it's full, a waterskin contains roughly 1 day's worth of water for a Small or Medium creature."
+    },
+    {
+      "id": "ePk9fnuleOf8sAaE",
+      "name": "Healing Potion (Minor)",
+      "type": "consumable",
+      "quantity": 1,
+      "bulk": 0.1,
+      "equipped": true,
+      "level": 1,
+      "price": 4,
+      "traits": [
+        "consumable",
+        "healing",
+        "magical",
+        "potion",
+        "vitality"
+      ],
+      "category": "potion",
+      "carryType": "worn",
+      "damage": {
+        "dice": 1,
+        "die": "d6",
+        "damageType": "untyped"
+      },
+      "notes": "Activate A (manipulate)\nA healing potion is a vial of a ruby-red liquid that imparts a tingling sensation as the drinker's wounds heal rapidly. When you drink a healing potion, you regain @Damage[1d8[healing]] Hit Points."
+    },
+    {
+      "id": "rFJNeKbndSd3wqSE",
+      "name": "Healing Potion (Lesser)",
+      "type": "consumable",
+      "quantity": 1,
+      "bulk": 0.1,
+      "equipped": true,
+      "level": 3,
+      "price": 12,
+      "traits": [
+        "consumable",
+        "healing",
+        "magical",
+        "potion",
+        "vitality"
+      ],
+      "category": "potion",
+      "carryType": "worn",
+      "damage": {
+        "dice": 1,
+        "die": "d6",
+        "damageType": "untyped"
+      },
+      "notes": "Activate A (manipulate)\nA healing potion is a vial of a ruby-red liquid that imparts a tingling sensation as the drinker's wounds heal rapidly. When you drink a healing potion, you regain @Damage[(2d8+5)[healing]] Hit Points."
+    },
+    {
+      "id": "rX1PJKFabSeH5gfb",
+      "name": "Thieves' Toolkit",
+      "type": "equipment",
+      "quantity": 1,
+      "bulk": 0.1,
+      "equipped": false,
+      "level": 0,
+      "price": 3,
+      "traits": [],
+      "carryType": "stowed",
+      "notes": "You need a thieves' toolkit to @UUID[Compendium.pf2e.actionspf2e.Item.2EE4aF4SZpYf0R6H]{Pick Locks} or @UUID[Compendium.pf2e.actionspf2e.Item.cYdz2grcOcRt4jk6]{Disable Devices} (of some types) using the Thievery skill.\n\nIf your thieves' toolkit is broken, you can repair it by replacing the lock picks with @UUID[Compendium.pf2e.equipment-srd.Item.Sw7MBLASN3xK4Y44]{Replacement Picks} appropriate to your toolkit; this doesn't require using the Repair action. If you wear your thieves' toolkit, you can draw and replace it as part of the action that uses it."
     }
   ],
   "currency": {
@@ -436,9 +700,27 @@
       "thievery": 9
     },
     "attacks": {
-      "dueling-pistol": { "strike": 15, "map": [-5, -10] },
-      "dueling-pistol-2": { "strike": 15, "map": [-5, -10] },
-      "unarmed-attack": { "strike": 13, "map": [-4, -8] }
+      "dueling-pistol": {
+        "strike": 15,
+        "map": [
+          -5,
+          -10
+        ]
+      },
+      "dueling-pistol-2": {
+        "strike": 15,
+        "map": [
+          -5,
+          -10
+        ]
+      },
+      "unarmed-attack": {
+        "strike": 13,
+        "map": [
+          -4,
+          -8
+        ]
+      }
     },
     "bulk": 2,
     "heroPoints": {
@@ -457,8 +739,8 @@
       },
       {
         "id": "dexterity-skills-minus-2",
-        "question": "Why do Acrobatics, Stealth and Thievery read 2 lower than the other trained skills?",
-        "why": "All three are trained Dexterity skills, as are none of the others, and all three sit 2 below the trained-skill baseline. Either there is a -2 penalty on Dexterity-based skill checks, or their proficiency ranks differ from the badges shown.",
+        "question": "Why do the recorded Stealth and Thievery sheet values differ from the imported expert ranks?",
+        "why": "The native export records both ranks as expert, while the older sheet screenshots show values two points lower. Rescan the current sheet to distinguish an unrecorded penalty from stale observed values.",
         "status": "open"
       },
       {
@@ -471,7 +753,8 @@
         "id": "initiative-minus-2",
         "question": "Why does initiative read +11 when Perception (+9) plus Dexterity (+4) is +13?",
         "why": "The Ten Paces deed adds a +2 circumstance bonus to initiative, so the sheet may be showing a value from before the deed was picked up, or before some other effect was applied.",
-        "status": "open"
+        "status": "resolved",
+        "answer": "Foundry records stealth as the initiative statistic; the imported build now uses that statistic."
       },
       {
         "id": "athletics-minus-2",
@@ -488,14 +771,21 @@
       },
       {
         "id": "attribute-boost-allocation",
-        "question": "Which boosts went where? The build assumes base scores of Str 10, Dex 18, Con 14, Int 14, Wis 10, Cha 18.",
-        "why": "Dexterity +4 and Charisma +4 are pinned by the sheet, but 24 points of boosts at 5th level is more than the Remaster progression allows, so some of the scores likely come from somewhere the sheet does not show. The Foundry export stores the real allocation.",
-        "status": "open"
+        "question": "Which base ability scores and ancestry/background boosts were selected before the recorded level boosts?",
+        "why": "The Foundry export preserves the level 1 and level 5 boost choices, but its resolved ability scores are null. Keep this open until those underlying choices can be confirmed.",
+        "status": "resolved",
+        "answer": "The native export's ancestry, background, class, and level boost selections resolve to Str 10, Dex 19, Con 14, Int 14, Wis 10, Cha 18."
       },
       {
         "id": "armor-magic",
-        "question": "Is the Breastplate a magic item, and does it carry runes?",
-        "why": "A plain breastplate is +3 AC. The sheet shows AC 22, of which 7 is covered by the unattributed bonuses above.",
+        "question": "Why does the recorded Armor Class 22 differ from the imported equipped Leather Armor (+1)?",
+        "why": "The Foundry export identifies the current equipped armor and its base AC bonus, but does not contain a resolved Armor Class. Compare its runes and other active modifiers with the sheet before closing this out.",
+        "status": "open"
+      },
+      {
+        "id": "ten-paces-initiative-toggle",
+        "question": "Is Ten Paces's +2 initiative option active on this character?",
+        "why": "The native export records this modifier behind a toggleable roll option. The editor preserves the full native export, but the curated build does not assume a conditional bonus is always enabled.",
         "status": "open"
       }
     ],

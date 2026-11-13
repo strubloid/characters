@@ -106,15 +106,19 @@ async function describeError(response) {
   return `Big Pickle request failed (HTTP ${response.status})${detail ? `: ${detail}` : ""}`;
 }
 
-function requestInit({ apiKey, chatUrl, messages, model, stream, signal }) {
+function requestInit({ apiKey, chatUrl, messages, model, stream, signal, sessionId, plan }) {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+    "User-Agent": "foundry-characters/1.0",
+  };
+  if (plan === "go" && sessionId) headers["x-opencode-session"] = sessionId;
+
   return [
     chatUrl,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
+      headers,
       body: JSON.stringify(buildChatBody(messages, { model, stream })),
       signal,
     },
@@ -172,6 +176,7 @@ export async function streamChatCompletion({
   messages,
   model,
   signal,
+  sessionId,
   onDelta,
   env = process.env,
   fetchImpl = fetch,
@@ -187,6 +192,7 @@ export async function streamChatCompletion({
     model: model ?? config.model,
     stream: true,
     signal,
+    sessionId,
   });
 
   const response = await fetchImpl(url, init);
@@ -220,7 +226,7 @@ export async function streamChatCompletion({
 }
 
 /** Single-shot completion, used when a caller does not want to stream. */
-export async function chatCompletion({ messages, model, signal, env = process.env, fetchImpl = fetch }) {
+export async function chatCompletion({ messages, model, signal, sessionId, env = process.env, fetchImpl = fetch }) {
   const config = bigpickleConfig(env);
   if (!config.apiKey) {
     throw new Error("OPENCODE_ZEN_API_KEY is not set. Add it to .env (see .env.example).");
@@ -232,6 +238,7 @@ export async function chatCompletion({ messages, model, signal, env = process.en
     model: model ?? config.model,
     stream: false,
     signal,
+    sessionId,
   });
 
   const response = await fetchImpl(url, init);

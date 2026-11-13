@@ -181,7 +181,11 @@ describe("streamChatCompletion", () => {
   it("authenticates and asks for a stream", async () => {
     let seen;
     handler = (request, response, body) => {
-      seen = { auth: request.headers.authorization, body: JSON.parse(body) };
+      seen = {
+        auth: request.headers.authorization,
+        userAgent: request.headers["user-agent"],
+        body: JSON.parse(body),
+      };
       response.writeHead(200, { "Content-Type": "text/event-stream" });
       response.end(sse([token("ok")]));
     };
@@ -192,6 +196,24 @@ describe("streamChatCompletion", () => {
     assert.equal(seen.body.stream, true);
     assert.equal(seen.body.model, "big-pickle");
     assert.deepEqual(seen.body.messages, [{ role: "user", content: "hi" }]);
+    assert.equal(seen.userAgent, "foundry-characters/1.0");
+  });
+
+  it("sends a stable session header for OpenCode Go conversations", async () => {
+    let sessionHeader;
+    handler = (request, response) => {
+      sessionHeader = request.headers["x-opencode-session"];
+      response.writeHead(200, { "Content-Type": "text/event-stream" });
+      response.end(sse([token("ok")]));
+    };
+
+    await streamChatCompletion({
+      messages: [{ role: "user", content: "hi" }],
+      sessionId: "f1c06f39-a937-4d6b-96a8-43303b908e34",
+      env: { ...env(), OPENCODE_ZEN_BASE_URL: `${baseUrl}/go` },
+    });
+
+    assert.equal(sessionHeader, "f1c06f39-a937-4d6b-96a8-43303b908e34");
   });
 
   it("surfaces the upstream error message", async () => {

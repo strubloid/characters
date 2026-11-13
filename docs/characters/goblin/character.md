@@ -1,4 +1,4 @@
-# Rafa
+# Zé Cangapé
 
 A fifteen-year-old Alkenstar goblin who talks his way through most fights and shoots the rest. Bandit by trade, gunslinger by training, and quietly devout under Desna.
 
@@ -20,14 +20,14 @@ A fifteen-year-old Alkenstar goblin who talks his way through most fights and sh
 | Gender / pronouns | Ele |
 | Ethnicity | Alkenstar Goblin |
 | Nationality | Nex |
-| Languages | Common (Taldane), Dwarven, Goblin, Kelsh |
+| Languages | Dwarven, Kelish |
 
 ## Numbers
 
 | Ability | Score | Mod |
 | --- | --- | --- |
 | STR | 10 | +0 |
-| DEX | 18 | +4 |
+| DEX | 19 | +4 |
 | CON | 14 | +2 |
 | INT | 14 | +2 |
 | WIS | 10 | +0 |
@@ -35,7 +35,7 @@ A fifteen-year-old Alkenstar goblin who talks his way through most fights and sh
 
 | Statistic | Build | Sheet |
 | --- | --- | --- |
-| Armor class | +22 | +22 |
+| Armor class | +20 | +22 |
 | Fortitude | +11 | +11 |
 | Reflex | +13 | +13 |
 | Will | +9 | +9 |
@@ -45,7 +45,7 @@ A fifteen-year-old Alkenstar goblin who talks his way through most fights and sh
 | gunslinger class DC | +21 | +21 |
 | rogue class DC | +21 | +21 |
 
-Speed 20 ft. darkvision 60 ft
+Speed 20 ft. darkvision
 
 ## Skills
 
@@ -64,13 +64,13 @@ Speed 20 ft. darkvision 60 ft
 | performance | untrained | +0 | +4 | +4 |
 | religion | untrained | +0 | +0 | +0 |
 | society | untrained | +0 | +2 | +2 |
-| stealth | trained | +2 | +9 | +9 |
+| stealth | expert | +4 | +11 | +9 |
 | survival | untrained | +0 | +0 | +0 |
-| thievery | trained | +2 | +9 | +9 |
+| thievery | expert | +4 | +11 | +9 |
 
 | Lore | Rank |
 | --- | --- |
-| spellscar-desert | trained |
+| spellscar-desert-lore | trained |
 
 ## Proficiencies
 
@@ -82,75 +82,142 @@ Speed 20 ft. darkvision 60 ft
 | simple-weapons | expert |
 | martial-weapons | expert |
 | unarmed-attacks | expert |
+| simple | trained |
+| martial | trained |
+| advanced | untrained |
+| unarmed | trained |
+| simple-firearms-martial-firearms | expert |
+| advanced-firearms-crossbows | expert |
 
 | Defenses | Rank |
 | --- | --- |
 | light-armor | trained |
 | medium-armor | trained |
 | unarmored-defense | trained |
+| unarmored | trained |
+| light | trained |
+| medium | trained |
+| heavy | untrained |
 
 ## Features
 
 ### Ancestry
 
-- **Goblin** - Small humanoid with darkvision.
-- **Unbreakable Goblin** - Gain 10 HP from your ancestry instead of 6, and halve falling damage.
+- **Goblin** - The convoluted histories other people cling to don't interest goblins. These small folk live in the moment, and they prefer tall tales over factual records. The wars of a few decades ago might as well be from the ancient past. Misunderstood by other people, goblins are happy how they are. Goblin virtues are about being present, creative, and honest. They strive to lead fulfilled lives, rather than worrying about how their journeys will end. To tell stories, not nitpick the facts. To be small, but dream big.
+
+@UUID[Compendium.pf2e.journals.JournalEntry.45SK8rdbbxvEHfMn.JournalEntryPage.Gn0XGCWDb0N4zLE0]{Goblin}
+- **Unbreakable Goblin** - You're able to bounce back from injuries easily due to an exceptionally thick skull, cartilaginous bones, or some other mixed blessing. You gain 10 Hit Points from your ancestry instead of 6. When you fall, reduce the falling damage you take as though you had fallen half the distance.
+
+### Background
+
+- **Bandit** - Your past includes no small amount of rural banditry, robbing travelers on the road and scraping by. Whether your robbery was sanctioned by a local noble or you did so of your own accord, you eventually got caught up in the adventuring life.
+
+Choose two attribute boosts. One must be to Dexterity or Charisma, and one is a free attribute boost.
+
+You're trained in the Intimidation skill and a Lore skill related to the terrain you worked in (such as Desert Lore or Plains Lore). You gain the @UUID[Compendium.pf2e.feats-srd.Item.gUqvezs2zzoTXFAI]{Group Coercion} skill feat.
 
 ### Class
 
-- **Gunslinger's Way** (level 1) - Way of the Pistolero: hold the line at ten paces and talk while you reload.
-- **Slinger's Precision** (level 1) - +2 precision damage with non-repeating crossbows and an extra 1d4 precision damage on Strikes with non-repeating firearms.
-- **Singular Expertise** (level 1) - +1 circumstance bonus to damage rolls with firearms and crossbows. Caps proficiency with other weapons and unarmed attacks.
-- **Stubborn** (level 3) - Your proficiency rank for Will saves increases to expert.
-- **Gunslinger Weapon Mastery** (level 5) - Master with simple and martial firearms and crossbows; expert with advanced firearms and crossbows, simple and martial weapons, and unarmed attacks.
+- **Gunslinger's Way** (level 1) - All gunslingers have a particular way they follow, a combination of philosophy and combat style that defines both how they fight and the weapons they excel with. At 1st level, your way grants you an initial deed, a unique reload action called a slinger's reload, and proficiency with a particular skill. You also gain advanced and greater deeds at later levels, as well as access to way-specific feats.
+
+@UUID[Compendium.pf2e.classfeatures.Item.a3pSIKkDVTvvNSRO]{Way of the Drifter} You wander across the battlefield, equally at home in and out of the fray.
+
+@UUID[Compendium.pf2e.classfeatures.Item.qRLRrHf0kzaJ7xt0]{Way of the Pistolero} You carefully maintain your distance at a duelist's 10 paces with pistol in hand.
+
+@UUID[Compendium.pf2e.classfeatures.Item.QWXvksGJhOjXbBqi]{Way of the Sniper} You practice a methodical style of shooting, striking from far cover.
+
+@UUID[Compendium.pf2e.classfeatures.Item.vB0yVFxJVZwalt2g]{Way of the Vanguard} You rely on a brutal combat style that uses heavy weapons and explosive attacks.
+
+@UUID[Compendium.pf2e.classfeatures.Item.YryaWAGcHeaRnXzS]{Way of the Triggerbrand} You prefer firearms that work well as weapons in both melee and ranged combat
+- **Way of the Pistolero** (level 1) - Whether you're a professional duelist or a pistol-twirling entertainer, you have quick feet and quicker hands that never seem to let you down, and an equally sharp wit and tongue that jab your foes. You might leave a hand free or cultivate the ambidexterity for twin weapons. Either way, you stay close enough to your enemies to leverage your superior reflexes while leaving enough space to safely fire.
+
+Slinger's Reload @UUID[Compendium.pf2e.actionspf2e.Item.RADNqsvAt4gP9FOX]{Raconteur's Reload}
+
+Deeds Initial @UUID[Compendium.pf2e.actionspf2e.Item.EeM0Czaep7G5ZSh5]{Ten Paces}; Advanced @UUID[Compendium.pf2e.actionspf2e.Item.bCDMuu3tE4d6KHrJ]{Pistolero's Retort}; Greater @UUID[Compendium.pf2e.actionspf2e.Item.rI2MSXR1MQzgQUO7]{Grim Swagger}
+
+Way Skill choose Deception or Intimidation
+- **Slinger's Precision** (level 1) - You deal an extra +2 precision damage with Strikes made using non-repeating crossbows and you deal an extra 1d4 precision damage on Strikes using non-repeating firearms.
+
+If you have gunslinging legend, you instead deal +3 additional precision damage with Strikes using non-repeating crossbows and an additional 1d6 precision damage with Strikes using non-repeating firearms.
+
+If you are using a combination weapon whose ranged form is a firearm or crossbow, you use your proficiency with firearms and crossbows for attacks made with the melee configuration of that weapon.
+- **Stubborn** (level 3) - You don't like being told what to do, and you don't give up. Your proficiency rank for Will saves increases to expert. When you fail, but don't critically fail, a Will save against an effect that would give you the controlled condition, you can attempt a second save against the effect at the start of your next turn. On a successful second save, the controlled condition ends, though any other effects remain. As normal, failing this second save doesn't allow you to attempt a third save on the subsequent turn.
+- **Gunslinger Weapon Mastery** (level 5) - You fully understand the best way to utilize your unique weapons. Your proficiency rank increases to master with simple and martial firearms and crossbows. Your proficiency rank for advanced firearms and crossbows, simple weapons, martial weapons, and unarmed attacks increases to expert. You gain access to the critical specialization effects for firearms and crossbows.
 
 ### Ancestry feats
 
-- **Bouncy Goblin** (level 1) - Trained proficiency in Acrobatics and a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.
-- **Vandal** (level 5) - You become trained in Thievery.
+- **Bouncy Goblin** (level 1) - You have a particular elasticity that makes it easy for you to bounce and squish. You gain the trained proficiency rank in Acrobatics (or another skill of your choice, if you were already trained in Acrobatics). You also gain a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.
+- **Vandal** (level 5) - You have a knack for breaking and dismantling things. Putting them back together is the boring part, so you largely don't bother with that. You become trained in Thievery. If you would automatically become trained in Thievery (from your background or class, for example), you instead become trained in a skill of your choice.
+
+In addition, whenever you hit with a Strike against a trap or an unattended object, you ignore the first 5 points of the object's Hardness.
 
 ### Class feats
 
-- **Dual-Weapon Reload** (level 1) - Reload a one-handed ranged weapon without needing a free hand while wielding two one-handed weapons.
-- **Quick Draw** (level 2) - Draw a weapon as a free action when you roll initiative.
-- **Alchemical Shot** (level 4) - Soak ammunition in an alchemical bomb for bonus damage and persistent damage on a failed shot.
+- **Dual-Weapon Reload** (level 1) - You carry your ammunition in a way that allows you to reload while holding two weapons. While you're wielding two one-handed weapons, each in a different hand, you don't need a free hand to reload a one-handed ranged weapon you're wielding.
+- **Alchemical Shot** (level 4) - Requirements You have an alchemical bomb worn or in one hand, and are wielding a firearm or crossbow.
+You've practiced a technique for mixing alchemical bombs with your loaded shot. You Interact to retrieve the bomb (if it's not already in your hand) and pour its contents onto your ammunition, consuming the bomb, then resume your grip on the required weapon. Next, Strike with your firearm. The Strike deals damage of the same type as the bomb (for instance, fire damage for alchemist's fire), and it deals an additional 1d6 persistent damage of the same type as the bomb. If the Strike is a failure, you take 1d6 damage of the same type as the bomb you used, and the firearm misfires.
+
+The persistent damage increases to 2d6 if the bomb is 11th level or higher, or 3d6 if it's 17th level or higher.
+- **Munitions Crafter** (level 1) - Bullets and bombs can be scarce in some parts, so you've learned to make your own. You become trained in Crafting and gain the advanced alchemy benefits. You can use the advanced alchemy benefits to create a number of daily consumables equal to 4 + half your level (rounded up); these consumables must be bombs or alchemical ammunition.
+
+You gain a formula book that includes the formula for black powder and four 1st-level types of common or uncommon alchemical ammunition or bombs of your choice.
+
+When crafting alchemical ammunition, including black powder in doses or rounds, using advanced alchemy, you create the ammunition in batches of 4 (meaning that if you were 4th level and used all of your advanced alchemy consumables to create alchemical ammunition, you could create a maximum of 24 rounds). You cannot use advanced alchemy to Craft horns or kegs of black powder.
 
 ### Archetype feats
 
-- **Rogue Dedication** (level 2) - Take the Rogue archetype at 2nd level.
-- **Surprise Attack** (level 2) - Exploit a target's distracted state.
-- **Assurance (Intimidation)** (level 2) - Intimidation checks that fail but do not critically fail may be retried.
-- **Mobility** (level 4) - Improved mobility in close quarters.
+- **Rogue Dedication** (level 2) - You gain a skill feat and the rogue's @UUID[Compendium.pf2e.classfeatures.Item.w6rMqmGzhUahdnA7]{Surprise Attack} class feature. You become trained in light armor. In addition, you become trained in Stealth or Thievery plus one skill of your choice; if you are already trained in both Stealth and Thievery, you become trained in an additional skill of your choice. You become trained in rogue class DC.
+
+@UUID[Compendium.pf2e.journals.JournalEntry.vx5FGEG34AxI2dow.JournalEntryPage.kVC4kgYKbhqPsaDt]{Rogue}
+- **Surprise Attack** (level 1) - You spring into combat faster than foes can react. On the first round of combat, if you roll Deception or Stealth for initiative, creatures that haven't acted are @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} to you.
+- **Basic Trickery** (level 4) - You gain a 1st- or 2nd-level rogue feat.
+- **Quick Draw** (level 2) - You draw your weapon and attack with the same motion. You Interact to draw a weapon, then Strike with that weapon.
 
 ### Skill feats
 
-- **Group Coercion** (level 1) - Coerce a group instead of a single target.
-- **Pickpocket** (level 2) - Pickpocket with less fuss.
-- **Subtle Theft** (level 4) - Steal without drawing attention.
+- **Group Coercion** (level 1) - You can strong-arm people effectively, even when you don't have them isolated. When you @UUID[Compendium.pf2e.actionspf2e.Item.tHCqgwjtQtzNqVvd]{Coerce}, you can compare your Intimidation check result to the Will DCs of up to five targets instead of one.
+
+It's possible to get a different degree of success for each target. The number of targets you can Coerce in a single action increases to 10 if you're an expert, 25 if you're a master, and 50 if you're legendary.
+- **Pickpocket** (level 1) - You can @UUID[Compendium.pf2e.actionspf2e.Item.RDXXE7wMrSPCLv5k]{Steal} or @UUID[Compendium.pf2e.actionspf2e.Item.ijZ0DDFpMkWqaShd]{Palm an Object} that's closely guarded, such as in a pocket, without taking the –5 penalty. You can't steal objects that would be extremely noticeable or time consuming to remove (like worn shoes or armor or actively wielded objects). If you're a master in Thievery, you can attempt to Steal from a creature in combat or otherwise on guard. When doing so, Stealing requires 2 actions instead of 1, and you take a –5 penalty.
+- **Subtle Theft** (level 1) - When you successfully @UUID[Compendium.pf2e.actionspf2e.Item.RDXXE7wMrSPCLv5k]{Steal} something, observers (creatures other than the creature you stole from) take a –2 circumstance penalty to their Perception DCs to detect your theft. Additionally, if you first @UUID[Compendium.pf2e.actionspf2e.Item.GkmbTGfg8KcgynOA]{Create a Diversion} using Deception, taking a single @UUID[Compendium.pf2e.actionspf2e.Item.ijZ0DDFpMkWqaShd]{Palm an Object} or Steal action doesn't end your @UUID[Compendium.pf2e.conditionitems.Item.VRSef5y1LmL2Hkjf]{Undetected} condition.
+- **Alchemical Crafting** (level 1) - You can use the Craft activity to create alchemical items. When you select this feat, you immediately add the formulas for four common 1st-level alchemical items to your formula book.
+- **Experienced Smuggler** (level 1) - You often smuggle things past the authorities. When the GM rolls your Stealth check to see if a passive observer notices a small item you've concealed, the GM uses the number rolled or 10—whichever is higher—as the result of your die roll, adding it to your Stealth modifier to determine your Stealth check result. If you're a master in Stealth, the GM uses the number rolled or 15, and if you're legendary in Stealth, you automatically succeed at hiding a small concealed item from passive observers. This provides no benefits when a creature attempts a Perception check while actively searching you for hidden items.
+
+
+PFS Note This feat allows you to Earn Income with Underworld Lore with tasks of your level -1 (instead of the normal level -2).
 
 ### General feats
 
-- **Thorough Search** (level 3) - Search for hidden things more effectively.
+- **Thorough Search** (level 3) - You take your time searching to ensure you find everything. When Searching, you can take twice as long to search. Normally this means you @UUID[Compendium.pf2e.actionspf2e.Item.TiNDYUGlMmxzxBYU]{Search} at up to one quarter of your Speed, to a maximum of 150 feet per minute to check everything, or 75 feet per minute to check everything before you walk into an area. If you do and the GM rolls your secret check to @UUID[Compendium.pf2e.actionspf2e.Item.BlAOM2X92SI6HMtJ]{Seek} to notice something, you gain a +2 circumstance bonus to that Perception check and if you succeed, you get a critical success instead.
 
 ## Actions
 
 ### Actions
 
-- **Raconteur's Reload** (one-action) - Interact to reload, then attempt a Deception check to Create a Diversion or an Intimidation check to Demoralize.
-- **Alchemical Shot** (two-actions) - Pour an alchemical bomb onto your ammunition, then Strike.
-- **Quick Draw** (free-action) - Draw a weapon when you roll initiative.
+- **Raconteur's Reload** (one-action) - Your rapid or forceful words draw the enemy's attention away from your hands long enough to chamber another bullet. Interact to reload and then attempt a Deception check to [[/act create-a-diversion variant=distracting-words]]{Create a Diversion} or an Intimidation check to [[/act demoralize]].
 
 ### Free actions
 
-- **Ten Paces** (free-action) - On rolling initiative, gain a +2 circumstance bonus to initiative and draw a one-handed firearm or one-handed crossbow.
+- **Ten Paces** - Trigger You roll initiative.
+
+
+You react to trouble with lightning speed, positioning yourself just right. You gain a +2 circumstance bonus to your initiative roll, and you can Interact to draw a one-handed firearm or one-handed crossbow. As your first action on your first turn, you can Step up to 10 feet as a free action.
 
 ## Inventory
 
 | Item | Type | Qty | Bulk | Equipped |
 | --- | --- | --- | --- | --- |
-| Dueling Pistol | weapon | 2 | 0.1 | yes |
-| Breastplate | armor | 1 | 2 | yes |
-| Rounds (Dueling Pistol) | ammunition | 30 | 3 | no |
+| Leather Armor | armor | 1 | 1 | yes |
+| Dueling Pistol | weapon | 1 | 0.1 | yes |
+| Dueling Pistol | weapon | 1 | 0.1 | yes |
+| Rounds (Dueling Pistol) | ammunition | 50 | 0.1 | yes |
+| Saddlebags | backpack | 1 | 0.1 | yes |
+| Rations | consumable | 2 | 0.1 | yes |
+| Rope | equipment | 1 | 0.1 | no |
+| Waterskin | equipment | 1 | 0.1 | no |
+| Healing Potion (Minor) | consumable | 1 | 0.1 | yes |
+| Healing Potion (Lesser) | consumable | 1 | 0.1 | yes |
+| Thieves' Toolkit | equipment | 1 | 0.1 | no |
 
 Currency 0 pp, 0 gp, 0 sp, 0 cp. Total wealth 32.3 gp.
 
