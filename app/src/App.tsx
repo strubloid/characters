@@ -3,7 +3,7 @@ import { Bot } from "@/components/animate-ui/icons/bot";
 import { CircleCheck } from "@/components/animate-ui/icons/circle-check";
 import { LoaderCircle } from "@/components/animate-ui/icons/loader-circle";
 import { TriangleAlert } from "@/components/animate-ui/icons/triangle-alert";
-import { ScrollText } from "lucide-react";
+import { MessagesSquare, ScrollText } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,6 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { CharacterSheet } from "@/features/character/character-sheet";
 import { AskPanel } from "@/features/ask/ask-panel";
+import { ChatPanel } from "@/features/chat/chat-panel";
 import { RunPanel } from "@/features/runs/run-panel";
 
 import {
@@ -231,6 +232,10 @@ export default function App() {
                   <Bot />
                   Ask
                 </TabsTrigger>
+                <TabsTrigger value="chat">
+                  <MessagesSquare />
+                  Chat
+                </TabsTrigger>
                 <TabsTrigger value="markdown">Markdown</TabsTrigger>
                 <TabsTrigger value="bonuses">Bonuses</TabsTrigger>
                 <TabsTrigger value="audit">Audit</TabsTrigger>
@@ -242,6 +247,10 @@ export default function App() {
 
               <TabsContent value="ask" className="mt-4">
                 <AskPanel slug={slug} />
+              </TabsContent>
+
+              <TabsContent value="chat" className="mt-4">
+                <ChatPanel />
               </TabsContent>
 
               <TabsContent value="markdown" className="mt-4">

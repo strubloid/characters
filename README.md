@@ -47,6 +47,15 @@ The app talks to a small Express server (`app/server.mjs`) that reads the
 character files and shells out to `tools/foundry.mjs`. Only the five commands
 above can be run; anything else is rejected.
 
+### Chat with OpenCode Zen
+
+The **Chat** tab talks to OpenCode Zen through the same Express server, which
+proxies the request so the API key never reaches the browser, and loads the
+model list into a picker. Copy `.env.example` to `.env`, add an
+`OPENCODE_ZEN_API_KEY`, set `OPENCODE_ZEN_PLAN=go` for a Go subscription (or
+leave it for pay-as-you-go), and restart the dev server. `docs/big-pickle.md`
+covers the verified endpoints, the streaming round trip and the limits.
+
 ## How a character is modelled
 
 `character.json` holds two separate things on purpose.

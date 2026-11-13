@@ -14,6 +14,19 @@ import path from "node:path";
 
 const DEFAULT_AGENT = "bigpickle";
 const DEFAULT_TIMEOUT_MS = 300_000;
+// `opencode run` is supposed to exit when the session goes idle. If it ever
+// stalls after the answer has landed, finalize once a finished step has been
+// quiet for this long so the caller is never left waiting on a dead process.
+const QUIET_FINALIZE_MS = 3_000;
+
+function errorText(error) {
+  if (!error) return "";
+  if (typeof error === "string") return error;
+  if (error.data?.message) return String(error.data.message);
+  if (error.message) return String(error.message);
+  if (error.name) return String(error.name);
+  return "";
+}
 
 export function agentName() {
   return process.env.OPENCODE_AGENT ?? DEFAULT_AGENT;
@@ -63,15 +76,33 @@ export function askAgent({ prompt, cwd, onText, onStatus, agent = agentName() })
     const child = spawn(
       binary,
       ["run", "--agent", agent, "--format", "json", prompt],
-      { cwd, env: process.env, stdin: "ignore" },
+      // opencode reads stdin when it is not a TTY. Give it /dev/null rather than
+      // a pipe: an open pipe makes `opencode run` wait for EOF forever, so it
+      // never sends the prompt. (Note `stdin` is not a real spawn option - the
+      // stdio array is.)
+      { cwd, env: process.env, stdio: ["ignore", "pipe", "pipe"] },
     );
 
     const parts = new Map();
     let answer = "";
     let stderr = "";
+    let streamError = "";
     let settled = false;
+    let quietTimer;
+
+    const clearQuiet = () => clearTimeout(quietTimer);
+    const armQuiet = () => {
+      clearQuiet();
+      quietTimer = setTimeout(() => {
+        if (settled || !answer) return;
+        settled = true;
+        child.kill("SIGTERM");
+        resolve(answer);
+      }, QUIET_FINALIZE_MS);
+    };
 
     const timer = setTimeout(() => {
+      clearQuiet();
       child.kill("SIGTERM");
       if (!settled) {
         settled = true;
@@ -81,6 +112,7 @@ export function askAgent({ prompt, cwd, onText, onStatus, agent = agentName() })
 
     child.stdout.setEncoding("utf8");
     child.stdout.on("data", (chunk) => {
+      clearQuiet();
       for (const line of chunk.split("\n")) {
         if (!line.trim()) continue;
         let event;
@@ -93,11 +125,12 @@ export function askAgent({ prompt, cwd, onText, onStatus, agent = agentName() })
           parts.set(event.part.id, event.part.text);
           answer = [...parts.values()].join("\n\n");
           onText?.(answer);
-        } else if (event.type === "tool" || event.type === "tool_start") {
-          const state = event.part?.state?.status;
-          if (state === "running") {
-            onStatus?.(event.part?.tool ?? "working");
-          }
+        } else if (event.type === "tool_use") {
+          onStatus?.(event.part?.tool ?? "working");
+        } else if (event.type === "step_finish") {
+          if (answer) armQuiet();
+        } else if (event.type === "error") {
+          streamError = errorText(event.error) || streamError;
         }
       }
     });
@@ -108,6 +141,7 @@ export function askAgent({ prompt, cwd, onText, onStatus, agent = agentName() })
     });
 
     child.on("error", (error) => {
+      clearQuiet();
       clearTimeout(timer);
       if (settled) return;
       settled = true;
@@ -119,11 +153,12 @@ export function askAgent({ prompt, cwd, onText, onStatus, agent = agentName() })
     });
 
     child.on("close", (code) => {
+      clearQuiet();
       clearTimeout(timer);
       if (settled) return;
       settled = true;
-      if (code !== 0 && !answer) {
-        reject(new Error(stderr.trim() || `The agent exited with code ${code}.`));
+      if (!answer && (code !== 0 || streamError)) {
+        reject(new Error(streamError || stderr.trim() || `The agent exited with code ${code}.`));
         return;
       }
       resolve(answer);

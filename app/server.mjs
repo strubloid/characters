@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import express from "express";
 
 import { buildAudit } from "../tools/lib/audit.mjs";
+import { bigpickleConfig, fetchModels, streamChatCompletion } from "./server/bigpickle.mjs";
 import { agentName, askAgent, buildPrompt } from "./server/opencode.mjs";
 import { appendQuestion, readQuestions } from "./server/questions.mjs";
 
@@ -14,6 +16,20 @@ const repoRoot = path.resolve(appDir, "..");
 const charactersDir = path.join(repoRoot, "characters");
 const toolsDir = path.join(repoRoot, "tools");
 const distDir = path.join(appDir, "dist");
+
+// Minimal .env reader: the key lives on the server, never in the bundle.
+function loadEnvFile(file) {
+  if (!existsSync(file)) return;
+  for (const line of readFileSync(file, "utf8").split("\n")) {
+    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/);
+    if (!match) continue;
+    const [, key, raw] = match;
+    if (process.env[key] !== undefined) continue;
+    process.env[key] = raw.replace(/^["']|["']$/g, "");
+  }
+}
+
+loadEnvFile(path.join(repoRoot, ".env"));
 
 const COMMANDS = ["validate", "audit", "render", "build", "check"];
 
@@ -175,6 +191,79 @@ app.post("/api/characters/:slug/ask", async (request, response) => {
   }
 });
 
+const CHAT_ROLES = new Set(["system", "user", "assistant"]);
+
+let modelsCache = { at: 0, plan: null, models: [] };
+const MODELS_TTL_MS = 5 * 60 * 1000;
+
+app.get("/api/chat/status", (_request, response) => {
+  const { apiKey, model, plan, inferenceUrl } = bigpickleConfig();
+  response.json({ configured: Boolean(apiKey), model, plan, baseUrl: inferenceUrl });
+});
+
+app.get("/api/chat/models", async (_request, response) => {
+  const { plan } = bigpickleConfig();
+  try {
+    if (Date.now() - modelsCache.at < MODELS_TTL_MS && modelsCache.plan === plan) {
+      response.json({ plan, models: modelsCache.models });
+      return;
+    }
+    const models = await fetchModels();
+    modelsCache = { at: Date.now(), plan, models };
+    response.json({ plan, models });
+  } catch (error) {
+    response.status(502).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+app.post("/api/chat", async (request, response) => {
+  const { messages, model } = request.body ?? {};
+  const history = Array.isArray(messages)
+    ? messages
+        .filter((entry) => entry && CHAT_ROLES.has(entry.role) && typeof entry.content === "string")
+        .map((entry) => ({ role: entry.role, content: entry.content }))
+    : [];
+
+  if (history.length === 0) {
+    response.status(400).json({ error: "Send at least one message." });
+    return;
+  }
+
+  response.setHeader("Content-Type", "text/event-stream");
+  response.setHeader("Cache-Control", "no-cache");
+  response.setHeader("Connection", "keep-alive");
+  response.flushHeaders?.();
+
+  const send = (event, data) => {
+    response.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
+  };
+
+  const controller = new AbortController();
+  // The request stream closes as soon as its body is read, which is well before
+  // we are done. Only abort when the response itself goes away unfinished.
+  response.on("close", () => {
+    if (!response.writableEnded) controller.abort();
+  });
+
+  try {
+    send("status", { message: "Asking Big Pickle…" });
+
+    const answer = await streamChatCompletion({
+      messages: history,
+      model: typeof model === "string" && model.trim() ? model.trim() : undefined,
+      signal: controller.signal,
+      onDelta: (delta, text) => send("delta", { delta, text }),
+    });
+
+    send("done", { text: answer });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    send("error", { message });
+  } finally {
+    response.end();
+  }
+});
+
 app.get("/api/images/:slug/:file", async (request, response) => {
   const file = path.join(charactersDir, request.params.slug, "images", path.basename(request.params.file));
   try {
@@ -194,7 +283,6 @@ const port = Number(process.env.PORT ?? 5173);
 const isProduction = process.env.NODE_ENV === "production";
 
 if (isProduction) {
-  const { existsSync } = await import("node:fs");
   if (!existsSync(path.join(distDir, "index.html"))) {
     console.error("dist/ is missing. Run `npm run build` first.");
     process.exit(1);

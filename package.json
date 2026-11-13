@@ -10,6 +10,7 @@
     "app:build": "npm --prefix app run build",
     "app:lint": "npm --prefix app run lint",
     "app:typecheck": "npm --prefix app run typecheck",
+    "app:test": "npm --prefix app run test",
     "build": "node tools/foundry.mjs build",
     "validate": "node tools/foundry.mjs validate",
     "render": "node tools/foundry.mjs render",

@@ -186,28 +186,7 @@ export function fetchQuestions(slug: string): Promise<{ questions: CharacterQues
   return request<{ questions: CharacterQuestion[] }>(`/api/characters/${slug}/questions`);
 }
 
-export type AskEvent =
-  | { type: "status"; message: string }
-  | { type: "text"; text: string }
-  | { type: "done"; question: CharacterQuestion }
-  | { type: "error"; message: string; question?: CharacterQuestion };
-
-/**
- * Ask the opencode agent about a character, streaming the answer as it lands.
- */
-export async function askCharacter(
-  slug: string,
-  question: string,
-  onEvent: (event: AskEvent) => void,
-  signal?: AbortSignal,
-): Promise<void> {
-  const response = await fetch(`/api/characters/${slug}/ask`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question }),
-    signal,
-  });
-
+async function readSse<T>(response: Response, onEvent: (event: T) => void): Promise<void> {
   if (!response.ok || !response.body) {
     throw new Error(`${response.status} ${response.statusText}`);
   }
@@ -233,10 +212,95 @@ export async function askCharacter(
         else if (line.startsWith("data:")) data.push(line.slice(5).trim());
       }
       if (data.length > 0) {
-        onEvent({ type: name, ...JSON.parse(data.join("\n")) } as AskEvent);
+        onEvent({ type: name, ...JSON.parse(data.join("\n")) } as T);
       }
 
       boundary = buffer.indexOf("\n\n");
     }
   }
+}
+
+export type AskEvent =
+  | { type: "status"; message: string }
+  | { type: "text"; text: string }
+  | { type: "done"; question: CharacterQuestion }
+  | { type: "error"; message: string; question?: CharacterQuestion };
+
+/**
+ * Ask the opencode agent about a character, streaming the answer as it lands.
+ */
+export async function askCharacter(
+  slug: string,
+  question: string,
+  onEvent: (event: AskEvent) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  const response = await fetch(`/api/characters/${slug}/ask`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question }),
+    signal,
+  });
+
+  await readSse<AskEvent>(response, onEvent);
+}
+
+export type ChatRole = "system" | "user" | "assistant";
+
+export interface ChatMessage {
+  role: ChatRole;
+  content: string;
+}
+
+export interface ChatStatus {
+  configured: boolean;
+  model: string;
+  plan: "go" | "payg";
+  baseUrl: string;
+}
+
+export interface ModelInfo {
+  id: string;
+  name: string;
+  description: string;
+  context: number | null;
+  maxOutput: number | null;
+  modalities: string[];
+  reasoning: boolean;
+  free: boolean;
+  inputPrice: number;
+  outputPrice: number;
+}
+
+export type ChatEvent =
+  | { type: "status"; message: string }
+  | { type: "delta"; delta: string; text: string }
+  | { type: "done"; text: string }
+  | { type: "error"; message: string };
+
+export function fetchChatStatus(): Promise<ChatStatus> {
+  return request<ChatStatus>("/api/chat/status");
+}
+
+export function fetchChatModels(): Promise<{ plan: "go" | "payg"; models: ModelInfo[] }> {
+  return request<{ plan: "go" | "payg"; models: ModelInfo[] }>("/api/chat/models");
+}
+
+/**
+ * Talk to Big Pickle over OpenCode Zen, streaming tokens back as they arrive.
+ */
+export async function streamChat(
+  messages: ChatMessage[],
+  model: string | undefined,
+  onEvent: (event: ChatEvent) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages, model }),
+    signal,
+  });
+
+  await readSse<ChatEvent>(response, onEvent);
 }
