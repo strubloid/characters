@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 import express from "express";
 
 import { buildAudit } from "../tools/lib/audit.mjs";
+import { agentName, askAgent, buildPrompt } from "./server/opencode.mjs";
+import { appendQuestion, readQuestions } from "./server/questions.mjs";
 
 const appDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(appDir, "..");
@@ -107,6 +109,72 @@ app.post("/api/characters/:slug/run", async (request, response) => {
   response.json(await runTool(command, request.params.slug));
 });
 
+app.get("/api/characters/:slug/questions", async (request, response) => {
+  response.json({ questions: await readQuestions(charactersDir, request.params.slug) });
+});
+
+app.post("/api/characters/:slug/ask", async (request, response) => {
+  const { question } = request.body ?? {};
+  if (!question || typeof question !== "string" || !question.trim()) {
+    response.status(400).json({ error: "Ask a question first." });
+    return;
+  }
+
+  const slug = request.params.slug;
+  const character = await loadCharacter(slug);
+  const audit = buildAudit(character);
+
+  response.setHeader("Content-Type", "text/event-stream");
+  response.setHeader("Cache-Control", "no-cache");
+  response.setHeader("Connection", "keep-alive");
+  response.flushHeaders?.();
+
+  const send = (event, data) => {
+    response.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
+  };
+
+  const askedAt = new Date().toISOString();
+  const startedAt = Date.now();
+
+  try {
+    send("status", { message: `Asking ${agentName()}…` });
+
+    const answer = await askAgent({
+      prompt: buildPrompt({ character, audit, question: question.trim() }),
+      cwd: repoRoot,
+      onText: (text) => send("text", { text }),
+      onStatus: (tool) => send("status", { message: `${agentName()} is using ${tool}…` }),
+    });
+
+    const entry = await appendQuestion(charactersDir, slug, {
+      id: `q-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+      question: question.trim(),
+      answer,
+      askedAt,
+      agent: agentName(),
+      status: "answered",
+      durationMs: Date.now() - startedAt,
+    });
+
+    send("done", { question: entry });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const entry = await appendQuestion(charactersDir, slug, {
+      id: `q-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+      question: question.trim(),
+      answer: "",
+      askedAt,
+      agent: agentName(),
+      status: "error",
+      error: message,
+      durationMs: Date.now() - startedAt,
+    });
+    send("error", { message, question: entry });
+  } finally {
+    response.end();
+  }
+});
+
 app.get("/api/images/:slug/:file", async (request, response) => {
   const file = path.join(charactersDir, request.params.slug, "images", path.basename(request.params.file));
   try {
@@ -114,6 +182,12 @@ app.get("/api/images/:slug/:file", async (request, response) => {
   } catch (error) {
     response.status(404).json({ error: error.message });
   }
+});
+
+// Anything under /api that reached this point is unknown. Answer with JSON so
+// the client never tries to parse the SPA shell as data.
+app.use("/api", (_request, response) => {
+  response.status(404).json({ error: "Unknown endpoint." });
 });
 
 const port = Number(process.env.PORT ?? 5173);

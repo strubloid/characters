@@ -1,4 +1,7 @@
-import { CheckCircle2, CircleDashed, Clock, Terminal } from "lucide-react";
+import { CircleCheck } from "@/components/animate-ui/icons/circle-check";
+import { LoaderCircle } from "@/components/animate-ui/icons/loader-circle";
+import { Terminal } from "@/components/animate-ui/icons/terminal";
+import { Timer } from "@/components/animate-ui/icons/timer";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -33,9 +36,9 @@ export function ActionBar({
           title={hint}
         >
           {running === command ? (
-            <CircleDashed className="animate-spin" />
+            <LoaderCircle className="size-4" />
           ) : (
-            command === "check" && <CheckCircle2 />
+            command === "check" && <CircleCheck className="size-4" />
           )}
           {label}
         </Button>
@@ -63,7 +66,7 @@ function RunEntry({ run }: { run: ToolRun }) {
           <Badge variant="outline">exit {run.exitCode}</Badge>
         )}
         <span className="text-muted-foreground ml-auto flex items-center gap-1 text-xs tabular-nums">
-          <Clock className="size-3" />
+          <Timer className="size-3" />
           {duration(run.durationMs)}
         </span>
       </div>

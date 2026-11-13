@@ -143,6 +143,17 @@ export interface ToolRun {
   finishedAt: string;
 }
 
+export interface CharacterQuestion {
+  id: string;
+  question: string;
+  answer: string;
+  askedAt: string;
+  agent: string;
+  status: "answered" | "error";
+  error?: string;
+  durationMs: number;
+}
+
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, init);
   if (!response.ok) {
@@ -169,4 +180,63 @@ export function runTool(slug: string, command: ToolCommand): Promise<ToolRun> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ command }),
   });
+}
+
+export function fetchQuestions(slug: string): Promise<{ questions: CharacterQuestion[] }> {
+  return request<{ questions: CharacterQuestion[] }>(`/api/characters/${slug}/questions`);
+}
+
+export type AskEvent =
+  | { type: "status"; message: string }
+  | { type: "text"; text: string }
+  | { type: "done"; question: CharacterQuestion }
+  | { type: "error"; message: string; question?: CharacterQuestion };
+
+/**
+ * Ask the opencode agent about a character, streaming the answer as it lands.
+ */
+export async function askCharacter(
+  slug: string,
+  question: string,
+  onEvent: (event: AskEvent) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  const response = await fetch(`/api/characters/${slug}/ask`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question }),
+    signal,
+  });
+
+  if (!response.ok || !response.body) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    let boundary = buffer.indexOf("\n\n");
+    while (boundary !== -1) {
+      const chunk = buffer.slice(0, boundary);
+      buffer = buffer.slice(boundary + 2);
+
+      let name = "message";
+      const data: string[] = [];
+      for (const line of chunk.split("\n")) {
+        if (line.startsWith("event:")) name = line.slice(6).trim();
+        else if (line.startsWith("data:")) data.push(line.slice(5).trim());
+      }
+      if (data.length > 0) {
+        onEvent({ type: name, ...JSON.parse(data.join("\n")) } as AskEvent);
+      }
+
+      boundary = buffer.indexOf("\n\n");
+    }
+  }
 }

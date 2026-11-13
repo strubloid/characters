@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { AlertTriangle, CheckCircle2, Loader2, ScrollText } from "lucide-react";
+import { Bot } from "@/components/animate-ui/icons/bot";
+import { CircleCheck } from "@/components/animate-ui/icons/circle-check";
+import { LoaderCircle } from "@/components/animate-ui/icons/loader-circle";
+import { TriangleAlert } from "@/components/animate-ui/icons/triangle-alert";
+import { ScrollText } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +17,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { CharacterSheet } from "@/features/character/character-sheet";
+import { AskPanel } from "@/features/ask/ask-panel";
 import { RunPanel } from "@/features/runs/run-panel";
 
 import {
@@ -34,7 +39,11 @@ function AuditSummary({ audit }: { audit: Audit }) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          {clean ? <CheckCircle2 className="text-emerald-500" /> : <AlertTriangle className="text-amber-500" />}
+          {clean ? (
+            <CircleCheck className="text-emerald-500 size-5" />
+          ) : (
+            <TriangleAlert className="text-amber-500 size-5" />
+          )}
           Audit
         </CardTitle>
       </CardHeader>
@@ -146,7 +155,7 @@ export default function App() {
           {error && (
             <Card className="border-destructive mb-4">
               <CardContent className="text-destructive flex items-center gap-2 text-sm">
-                <AlertTriangle className="size-4" />
+                <TriangleAlert className="size-4" />
                 {error}
               </CardContent>
             </Card>
@@ -154,7 +163,7 @@ export default function App() {
 
           {running && (
             <div className="text-muted-foreground mb-4 flex items-center gap-2 text-sm">
-              <Loader2 className="size-4 animate-spin" />
+              <LoaderCircle className="size-4" />
               Running {running}…
             </div>
           )}
@@ -172,12 +181,20 @@ export default function App() {
                   <ScrollText />
                   Sheet
                 </TabsTrigger>
+                <TabsTrigger value="ask">
+                  <Bot />
+                  Ask
+                </TabsTrigger>
                 <TabsTrigger value="markdown">Markdown</TabsTrigger>
                 <TabsTrigger value="bonuses">Bonuses</TabsTrigger>
               </TabsList>
 
               <TabsContent value="sheet" className="mt-4">
                 <CharacterSheet character={character} audit={audit} />
+              </TabsContent>
+
+              <TabsContent value="ask" className="mt-4">
+                <AskPanel slug={slug} />
               </TabsContent>
 
               <TabsContent value="markdown" className="mt-4">
