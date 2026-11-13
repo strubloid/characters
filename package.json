@@ -1,0 +1,17 @@
+{
+  "name": "foundry-characters",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Foundry VTT characters as reviewable source files.",
+  "scripts": {
+    "build": "node tools/foundry.mjs build",
+    "validate": "node tools/foundry.mjs validate",
+    "render": "node tools/foundry.mjs render",
+    "audit": "node tools/foundry.mjs audit",
+    "check": "node tools/foundry.mjs check"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

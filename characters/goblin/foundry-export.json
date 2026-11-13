@@ -1,0 +1,1191 @@
+{
+  "id": "rafa",
+  "type": "Actor",
+  "name": "Rafa",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "abilities": {
+      "str": {
+        "base": 10,
+        "mod": 0
+      },
+      "dex": {
+        "base": 18,
+        "mod": 4
+      },
+      "con": {
+        "base": 14,
+        "mod": 2
+      },
+      "int": {
+        "base": 14,
+        "mod": 2
+      },
+      "wis": {
+        "base": 10,
+        "mod": 0
+      },
+      "cha": {
+        "base": 18,
+        "mod": 4
+      }
+    },
+    "attributes": {
+      "hp": {
+        "value": 60,
+        "temp": 0,
+        "max": 60
+      },
+      "speed": {
+        "value": 20,
+        "otherSpeeds": []
+      },
+      "keyability": {
+        "value": "dex"
+      }
+    },
+    "details": {
+      "level": {
+        "value": 5
+      },
+      "xp": {
+        "value": 0,
+        "min": 0,
+        "max": 1000,
+        "pct": 0
+      },
+      "languages": {
+        "value": [
+          "common",
+          "dwarven",
+          "goblin",
+          "kelsh"
+        ],
+        "details": ""
+      },
+      "keyability": {
+        "value": "dex"
+      },
+      "age": {
+        "value": "15"
+      },
+      "height": {
+        "value": ""
+      },
+      "weight": {
+        "value": ""
+      },
+      "gender": {
+        "value": "Ele"
+      },
+      "ethnicity": {
+        "value": "Alkenstar Goblin"
+      },
+      "nationality": {
+        "value": "Nex"
+      },
+      "biography": {
+        "appearance": "",
+        "backstory": "",
+        "birthPlace": "",
+        "attitude": "",
+        "beliefs": "",
+        "edicts": [],
+        "anathema": [],
+        "likes": "",
+        "dislikes": "",
+        "catchphrases": "",
+        "campaignNotes": "",
+        "allies": "",
+        "enemies": "",
+        "organizations": "",
+        "visibility": {
+          "appearance": true,
+          "backstory": false,
+          "personality": false,
+          "campaign": false
+        }
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "rank": 1
+      },
+      "arcana": {
+        "rank": 0
+      },
+      "athletics": {
+        "rank": 0
+      },
+      "crafting": {
+        "rank": 1
+      },
+      "deception": {
+        "rank": 1
+      },
+      "diplomacy": {
+        "rank": 1
+      },
+      "intimidation": {
+        "rank": 1
+      },
+      "medicine": {
+        "rank": 0
+      },
+      "nature": {
+        "rank": 0
+      },
+      "occultism": {
+        "rank": 0
+      },
+      "performance": {
+        "rank": 0
+      },
+      "religion": {
+        "rank": 0
+      },
+      "society": {
+        "rank": 0
+      },
+      "stealth": {
+        "rank": 1
+      },
+      "survival": {
+        "rank": 0
+      },
+      "thievery": {
+        "rank": 1
+      },
+      "spellscar-desert": {
+        "rank": 1
+      }
+    },
+    "resources": {
+      "heroPoints": {
+        "value": 1,
+        "max": 3
+      }
+    },
+    "build": {
+      "attributes": {
+        "manual": true,
+        "boosts": {
+          "0": {
+            "value": []
+          },
+          "1": {
+            "value": []
+          },
+          "2": {
+            "value": []
+          },
+          "5": {
+            "value": []
+          },
+          "10": {
+            "value": []
+          },
+          "15": {
+            "value": []
+          },
+          "20": {
+            "value": []
+          }
+        }
+      }
+    },
+    "pfs": {
+      "playerNumber": null,
+      "characterNumber": null,
+      "levelBump": false,
+      "currentFaction": "EA",
+      "school": null,
+      "reputation": {
+        "EA": null,
+        "GA": null,
+        "HH": null,
+        "VS": null,
+        "RO": null,
+        "VW": null
+      }
+    },
+    "exploration": []
+  },
+  "items": [
+    {
+      "name": "Goblin",
+      "type": "ancestry",
+      "img": "icons/svg/mystery-man.svg",
+      "system": {
+        "description": {
+          "value": "",
+          "gm": ""
+        },
+        "slug": "goblin",
+        "traits": {
+          "value": [
+            "goblin",
+            "humanoid"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "hp": 6,
+        "size": "sm",
+        "reach": 5,
+        "speed": 25,
+        "boosts": {
+          "0": {
+            "value": []
+          },
+          "1": {
+            "value": [
+              "dex",
+              "cha"
+            ]
+          },
+          "2": {
+            "value": []
+          }
+        },
+        "flaws": {
+          "0": {
+            "value": [
+              "wis"
+            ]
+          }
+        },
+        "languages": {
+          "value": [
+            "common",
+            "goblin"
+          ],
+          "custom": ""
+        },
+        "additionalLanguages": {
+          "count": 0,
+          "value": [],
+          "custom": ""
+        },
+        "vision": "darkvision",
+        "items": {}
+      }
+    },
+    {
+      "name": "Unbreakable Goblin",
+      "type": "heritage",
+      "img": "icons/svg/mystery-man.svg",
+      "system": {
+        "description": {
+          "value": "",
+          "gm": ""
+        },
+        "slug": "unbreakable-goblin",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "items": {}
+      }
+    },
+    {
+      "name": "Bandit",
+      "type": "background",
+      "img": "icons/svg/mystery-man.svg",
+      "system": {
+        "description": {
+          "value": "",
+          "gm": ""
+        },
+        "slug": "bandit",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "boosts": {
+          "0": {
+            "value": []
+          },
+          "1": {
+            "value": []
+          },
+          "2": {
+            "value": []
+          }
+        },
+        "trainedSkills": {
+          "value": [],
+          "lore": []
+        },
+        "items": {}
+      }
+    },
+    {
+      "name": "Gunslinger",
+      "type": "class",
+      "img": "icons/svg/mystery-man.svg",
+      "system": {
+        "description": {
+          "value": "",
+          "gm": ""
+        },
+        "slug": "gunslinger",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "keyAbility": {
+          "value": [
+            "dex"
+          ]
+        },
+        "hp": 8,
+        "trainedSkills": {
+          "value": [],
+          "additional": 0
+        },
+        "perception": 2,
+        "savingThrows": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 0
+        },
+        "attacks": {
+          "simple": 2,
+          "martial": 0,
+          "advanced": 1,
+          "unarmed": 1,
+          "other": {
+            "name": "",
+            "rank": 0
+          }
+        },
+        "defenses": {
+          "unarmored": 1,
+          "light": 1,
+          "medium": 1,
+          "heavy": 0
+        },
+        "spellcasting": 0,
+        "ancestryFeatLevels": {
+          "value": [
+            1,
+            5,
+            9,
+            13,
+            17
+          ]
+        },
+        "classFeatLevels": {
+          "value": [
+            1,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ]
+        },
+        "generalFeatLevels": {
+          "value": [
+            3,
+            7,
+            11,
+            15,
+            19
+          ]
+        },
+        "skillFeatLevels": {
+          "value": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20
+          ]
+        },
+        "skillIncreaseLevels": {
+          "value": [
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15,
+            17,
+            19
+          ]
+        },
+        "items": {}
+      }
+    },
+    {
+      "name": "Desna",
+      "type": "deity",
+      "img": "icons/svg/mystery-man.svg",
+      "system": {
+        "description": {
+          "value": "",
+          "gm": ""
+        },
+        "slug": "desna",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "items": {}
+      }
+    },
+    {
+      "name": "Gunslinger's Way",
+      "type": "action",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Way of the Pistolero: hold the line at ten paces and talk while you reload.",
+          "gm": ""
+        },
+        "slug": "gunslinger-s-way",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Slinger's Precision",
+      "type": "action",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "+2 precision damage with non-repeating crossbows and an extra 1d4 precision damage on Strikes with non-repeating firearms.",
+          "gm": ""
+        },
+        "slug": "slinger-s-precision",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Singular Expertise",
+      "type": "action",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "+1 circumstance bonus to damage rolls with firearms and crossbows. Caps proficiency with other weapons and unarmed attacks.",
+          "gm": ""
+        },
+        "slug": "singular-expertise",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Stubborn",
+      "type": "action",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Your proficiency rank for Will saves increases to expert.",
+          "gm": ""
+        },
+        "slug": "stubborn",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 3,
+        "rules": [
+          {
+            "key": "PF2E.RuleElementProficiency",
+            "rank": "expert",
+            "predicate": {
+              "in": [
+                "will"
+              ]
+            },
+            "label": "Stubborn: Will save"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Gunslinger Weapon Mastery",
+      "type": "action",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Master with simple and martial firearms and crossbows; expert with advanced firearms and crossbows, simple and martial weapons, and unarmed attacks.",
+          "gm": ""
+        },
+        "slug": "gunslinger-weapon-mastery",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 5,
+        "rules": []
+      }
+    },
+    {
+      "name": "Bouncy Goblin",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Trained proficiency in Acrobatics and a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.",
+          "gm": ""
+        },
+        "slug": "bouncy-goblin",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Vandal",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "You become trained in Thievery.",
+          "gm": ""
+        },
+        "slug": "vandal",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 5,
+        "rules": [
+          {
+            "key": "PF2E.RuleElementProficiency",
+            "rank": "trained",
+            "predicate": {
+              "in": [
+                "thievery"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dual-Weapon Reload",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Reload a one-handed ranged weapon without needing a free hand while wielding two one-handed weapons.",
+          "gm": ""
+        },
+        "slug": "dual-weapon-reload",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Quick Draw",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Draw a weapon as a free action when you roll initiative.",
+          "gm": ""
+        },
+        "slug": "quick-draw",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 2,
+        "rules": []
+      }
+    },
+    {
+      "name": "Alchemical Shot",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Soak ammunition in an alchemical bomb for bonus damage and persistent damage on a failed shot.",
+          "gm": ""
+        },
+        "slug": "alchemical-shot",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 4,
+        "rules": []
+      }
+    },
+    {
+      "name": "Rogue Dedication",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Take the Rogue archetype at 2nd level.",
+          "gm": ""
+        },
+        "slug": "rogue-dedication",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 2,
+        "rules": []
+      }
+    },
+    {
+      "name": "Surprise Attack",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Exploit a target's distracted state.",
+          "gm": ""
+        },
+        "slug": "surprise-attack",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 2,
+        "rules": []
+      }
+    },
+    {
+      "name": "Assurance (Intimidation)",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Intimidation checks that fail but do not critically fail may be retried.",
+          "gm": ""
+        },
+        "slug": "assurance-intimidation",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 2,
+        "rules": []
+      }
+    },
+    {
+      "name": "Mobility",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Improved mobility in close quarters.",
+          "gm": ""
+        },
+        "slug": "mobility",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 4,
+        "rules": []
+      }
+    },
+    {
+      "name": "Group Coercion",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Coerce a group instead of a single target.",
+          "gm": ""
+        },
+        "slug": "group-coercion",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "rules": []
+      }
+    },
+    {
+      "name": "Pickpocket",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Pickpocket with less fuss.",
+          "gm": ""
+        },
+        "slug": "pickpocket",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 2,
+        "rules": []
+      }
+    },
+    {
+      "name": "Subtle Theft",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Steal without drawing attention.",
+          "gm": ""
+        },
+        "slug": "subtle-theft",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 4,
+        "rules": []
+      }
+    },
+    {
+      "name": "Thorough Search",
+      "type": "feat",
+      "img": "icons/svg/item-bag.svg",
+      "system": {
+        "description": {
+          "value": "Search for hidden things more effectively.",
+          "gm": ""
+        },
+        "slug": "thorough-search",
+        "traits": {
+          "value": []
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 3,
+        "rules": []
+      }
+    },
+    {
+      "name": "Dueling Pistol",
+      "type": "weapon",
+      "img": "icons/svg/weapon.svg",
+      "system": {
+        "description": {
+          "value": "One in each hand. 10 ft range increment (10/20/30/40/50), reload 1.",
+          "gm": ""
+        },
+        "slug": "dueling-pistol",
+        "traits": {
+          "value": [
+            "simple",
+            "firearm",
+            "one-handed",
+            "pistol"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 2,
+        "quantity": 2,
+        "bulk": {
+          "value": 0.1
+        },
+        "price": {
+          "value": {
+            "gp": 2
+          }
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "size": "med",
+        "material": {
+          "type": null,
+          "grade": null
+        },
+        "equipped": {
+          "carryType": "worn",
+          "handsHeld": 1,
+          "invested": null
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          },
+          "misidentified": {}
+        },
+        "category": "simple",
+        "group": "firearm",
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "bonus": {
+          "value": 0
+        },
+        "bonusDamage": {
+          "value": 0
+        },
+        "splashDamage": {
+          "value": 0
+        },
+        "range": null,
+        "reload": {
+          "value": 1
+        },
+        "runes": {
+          "potency": 0,
+          "striking": 0,
+          "property": []
+        },
+        "specific": null,
+        "subitems": [],
+        "damage": {
+          "dice": 1,
+          "die": "d6",
+          "damageType": "piercing",
+          "persistent": null
+        },
+        "property1": {
+          "value": "",
+          "dice": 0,
+          "die": "",
+          "damageType": "",
+          "critDice": 0,
+          "critDie": "",
+          "critDamage": "",
+          "critDamageType": ""
+        }
+      }
+    },
+    {
+      "name": "Breastplate",
+      "type": "armor",
+      "img": "icons/svg/armor.svg",
+      "system": {
+        "description": {
+          "value": "+3 AC, Dex cap +5, no check penalty.",
+          "gm": ""
+        },
+        "slug": "breastplate",
+        "traits": {
+          "value": [
+            "light",
+            "armor"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "quantity": 1,
+        "bulk": {
+          "value": 2
+        },
+        "price": {
+          "value": {
+            "gp": 10
+          }
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "size": "med",
+        "material": {
+          "type": null,
+          "grade": null
+        },
+        "equipped": {
+          "carryType": "worn",
+          "invested": null
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          },
+          "misidentified": {}
+        },
+        "category": "light",
+        "group": null,
+        "acBonus": 3,
+        "strength": 0,
+        "dexCap": 5,
+        "checkPenalty": 0,
+        "speedPenalty": 0,
+        "runes": {
+          "potency": 0,
+          "resilient": 0,
+          "property": []
+        },
+        "subitems": []
+      }
+    },
+    {
+      "name": "Rounds (Dueling Pistol)",
+      "type": "consumable",
+      "img": "icons/svg/ammo.svg",
+      "system": {
+        "description": {
+          "value": "10 rounds per bulk.",
+          "gm": ""
+        },
+        "slug": "rounds-dueling-pistol",
+        "traits": {
+          "value": [
+            "ammunition"
+          ]
+        },
+        "publication": {
+          "title": "",
+          "authors": "",
+          "license": "OGL",
+          "remaster": false
+        },
+        "level": 1,
+        "quantity": 30,
+        "bulk": {
+          "value": 3
+        },
+        "price": {
+          "value": {
+            "gp": 0.1
+          }
+        },
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "hardness": 0,
+        "size": "med",
+        "material": {
+          "type": null,
+          "grade": null
+        },
+        "equipped": {
+          "carryType": "worn"
+        },
+        "containerId": null,
+        "identification": {
+          "status": "identified",
+          "unidentified": {
+            "name": "",
+            "img": "",
+            "data": {
+              "description": {
+                "value": ""
+              }
+            }
+          },
+          "misidentified": {}
+        },
+        "category": "ammunition",
+        "stackGroup": "ammunition-dueling-pistol",
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "autoDestroy": false
+        },
+        "damage": null,
+        "usage": {
+          "value": "held-in-one-hand"
+        },
+        "rules": []
+      }
+    }
+  ],
+  "effects": [],
+  "flags": {},
+  "prototypeToken": {
+    "name": "Rafa",
+    "texture": {
+      "scaleX": 0.5,
+      "scaleY": 0.5,
+      "src": "icons/svg/mystery-man.svg"
+    },
+    "bar1": {
+      "attribute": "attributes.hp"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "displayName": 3,
+    "disposition": 1,
+    "displayBars": 3,
+    "actorLink": true,
+    "appendNumber": false,
+    "lockRotation": true,
+    "flags": {
+      "pf2e": {
+        "linkToActorSize": true,
+        "autoscale": true
+      }
+    }
+  }
+}

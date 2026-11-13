@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/strubloid/characters/schema/character.schema.json",
+  "title": "Foundry character sheet",
+  "description": "Source of truth for a Foundry VTT character. Deliberately domain-oriented: it holds the build (ability scores, proficiency ranks, gear, features) and the modifiers the character actually has, so a Foundry actor export can be generated from it and the numbers can be audited against the sheet.",
+  "type": "object",
+  "required": [
+    "formatVersion",
+    "id",
+    "name",
+    "system",
+    "identity",
+    "build",
+    "proficiencies",
+    "features",
+    "inventory"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "formatVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semver of this document format, not of the character."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Stable slug. The character folder is named after it."
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "kind": {
+      "type": "string",
+      "enum": ["player-character", "npc", "creature"],
+      "default": "player-character"
+    },
+    "system": {
+      "type": "object",
+      "required": ["id", "ruleset"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Foundry game system id, e.g. pf2e, dnd5e."
+        },
+        "ruleset": {
+          "type": "string",
+          "description": "Rules revision, e.g. remaster, 5e-2014."
+        },
+        "foundryVersion": { "type": "string" },
+        "systemVersion": {
+          "type": "string",
+          "description": "Minimum game-system version the export targets."
+        }
+      }
+    },
+    "player": { "type": "string" },
+    "summary": {
+      "type": "string",
+      "description": "One-paragraph character pitch."
+    },
+    "art": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "portrait": { "type": ["string", "null"] },
+        "token": { "type": ["string", "null"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "required": ["ancestry", "class", "level"],
+      "additionalProperties": false,
+      "properties": {
+        "ancestry": { "type": "string" },
+        "heritage": { "type": ["string", "null"] },
+        "background": { "type": ["string", "null"] },
+        "class": { "type": "string" },
+        "archetype": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string" },
+            "level": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "deity": { "type": ["string", "null"] },
+        "level": { "type": "integer", "minimum": 0 },
+        "xp": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "age": { "type": "string" },
+        "gender": { "type": "string" },
+        "ethnicity": { "type": "string" },
+        "nationality": { "type": "string" },
+        "height": { "type": "string" },
+        "weight": { "type": "string" },
+        "languages": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Language names as shown on the sheet."
+        }
+      }
+    },
+    "build": {
+      "type": "object",
+      "required": ["keyAbility", "abilities"],
+      "additionalProperties": false,
+      "properties": {
+        "keyAbility": {
+          "type": "string",
+          "enum": ["str", "dex", "con", "int", "wis", "cha"]
+        },
+        "abilities": {
+          "type": "object",
+          "required": ["str", "dex", "con", "int", "wis", "cha"],
+          "additionalProperties": false,
+          "properties": {
+            "str": { "$ref": "#/$defs/ability" },
+            "dex": { "$ref": "#/$defs/ability" },
+            "con": { "$ref": "#/$defs/ability" },
+            "int": { "$ref": "#/$defs/ability" },
+            "wis": { "$ref": "#/$defs/ability" },
+            "cha": { "$ref": "#/$defs/ability" }
+          }
+        },
+        "hp": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max": { "type": "integer", "minimum": 0 },
+            "temp": { "type": "integer" },
+            "value": { "type": "integer", "minimum": 0 },
+            "note": { "type": "string" }
+          }
+        },
+        "armor": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "category": { "type": "string" },
+            "acBonus": { "type": "integer" },
+            "dexCap": { "type": ["integer", "null"] },
+            "checkPenalty": { "type": "integer" }
+          }
+        },
+        "speed": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "land": { "type": "integer" },
+            "swim": { "type": ["integer", "null"] },
+            "climb": { "type": ["integer", "null"] },
+            "fly": { "type": ["integer", "null"] },
+            "burrow": { "type": ["integer", "null"] }
+          }
+        },
+        "senses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "range": { "type": ["integer", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "proficiencies": {
+      "type": "object",
+      "required": ["saves", "skills", "attacks", "defenses"],
+      "additionalProperties": false,
+      "properties": {
+        "saves": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fortitude": { "$ref": "#/$defs/rank" },
+            "reflex": { "$ref": "#/$defs/rank" },
+            "will": { "$ref": "#/$defs/rank" }
+          }
+        },
+        "perception": { "$ref": "#/$defs/rank" },
+        "classDC": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/rank" }
+        },
+        "skills": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "acrobatics": { "$ref": "#/$defs/rank" },
+            "arcana": { "$ref": "#/$defs/rank" },
+            "athletics": { "$ref": "#/$defs/rank" },
+            "crafting": { "$ref": "#/$defs/rank" },
+            "deception": { "$ref": "#/$defs/rank" },
+            "diplomacy": { "$ref": "#/$defs/rank" },
+            "intimidation": { "$ref": "#/$defs/rank" },
+            "medicine": { "$ref": "#/$defs/rank" },
+            "nature": { "$ref": "#/$defs/rank" },
+            "occultism": { "$ref": "#/$defs/rank" },
+            "performance": { "$ref": "#/$defs/rank" },
+            "religion": { "$ref": "#/$defs/rank" },
+            "society": { "$ref": "#/$defs/rank" },
+            "stealth": { "$ref": "#/$defs/rank" },
+            "survival": { "$ref": "#/$defs/rank" },
+            "thievery": { "$ref": "#/$defs/rank" },
+            "lore": {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/$defs/rank" }
+            }
+          }
+        },
+        "attacks": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/rank" }
+        },
+        "defenses": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/rank" }
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Pool-based resources the character carries.",
+      "additionalProperties": false,
+      "properties": {
+        "heroPoints": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "bonuses": {
+      "type": "array",
+      "description": "Declared modifiers the character carries beyond its build. Every entry must name a source, even if the source is 'unattributed'.",
+      "items": {
+        "type": "object",
+        "required": ["id", "value", "appliesTo"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "source": { "type": "string" },
+          "note": { "type": "string" },
+          "value": { "type": "number" },
+          "requiresRank": {
+            "type": "boolean",
+            "description": "When true, the bonus only applies to statistics that are trained or better."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["circumstance", "item", "feat", "ancestry", "class", "heritage", "archetype", "unarmored", "status", "unattributed"]
+          },
+          "appliesTo": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Target key: ac, saves, perception, classDC, attacks, skills, or skill:<slug>."
+            }
+          }
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "description": "Feats and class features, grouped by where the character takes them.",
+      "additionalProperties": false,
+      "properties": {
+        "ancestry": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "class": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "ancestryFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "classFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "archetypeFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "skillFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "generalFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "bonusFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "backgroundFeats": { "type": "array", "items": { "$ref": "#/$defs/feature" } }
+      }
+    },
+    "actions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actions": { "type": "array", "items": { "$ref": "#/$defs/action" } },
+        "reactions": { "type": "array", "items": { "$ref": "#/$defs/action" } },
+        "freeActions": { "type": "array", "items": { "$ref": "#/$defs/action" } }
+      }
+    },
+    "inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "quantity": { "type": "integer", "minimum": 0 },
+          "bulk": { "type": "number" },
+          "equipped": { "type": "boolean" },
+          "level": { "type": "integer" },
+          "price": { "type": "number" },
+          "traits": { "type": "array", "items": { "type": "string" } },
+          "damage": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "dice": { "type": "integer" },
+              "die": { "type": "string" },
+              "damageType": { "type": "string" }
+            }
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "currency": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pp": { "type": "number" },
+        "gp": { "type": "number" },
+        "sp": { "type": "number" },
+        "cp": { "type": "number" },
+        "totalWealthGp": { "type": "number" }
+      }
+    },
+    "biography": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "appearance": { "type": "string" },
+        "backstory": { "type": "string" },
+        "birthPlace": { "type": "string" },
+        "attitude": { "type": "string" },
+        "beliefs": { "type": "string" },
+        "edicts": { "type": "array", "items": { "type": "string" } },
+        "anathema": { "type": "array", "items": { "type": "string" } },
+        "likes": { "type": "string" },
+        "dislikes": { "type": "string" },
+        "catchphrases": { "type": "string" },
+        "campaignNotes": { "type": "string" },
+        "allies": { "type": "string" },
+        "enemies": { "type": "string" },
+        "organizations": { "type": "string" }
+      }
+    },
+    "observed": {
+      "type": "object",
+      "description": "Values read off the Foundry sheet, kept verbatim so the build can be audited against them.",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Where these numbers came from, e.g. 'foundry sheet screenshots 2026-11-13'."
+        },
+        "ac": { "type": "integer" },
+        "hitPoints": { "type": "integer" },
+        "tempHitPoints": { "type": "integer" },
+        "initiative": { "type": "integer" },
+        "perception": { "type": "integer" },
+        "fortitude": { "type": "integer" },
+        "reflex": { "type": "integer" },
+        "will": { "type": "integer" },
+        "classDC": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "skills": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "attacks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "strike": { "type": "integer" },
+              "map": { "type": "array", "items": { "type": "integer" } }
+            }
+          }
+        },
+        "bulk": { "type": "number" },
+        "heroPoints": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "description": "Open questions about this character. The audit command reports anything here that it can still close out.",
+      "additionalProperties": false,
+      "properties": {
+        "openQuestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "question"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "question": { "type": "string" },
+              "why": { "type": "string" },
+              "status": { "type": "string", "enum": ["open", "resolved", "wontfix"] },
+              "answer": { "type": "string" }
+            }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "ability": {
+      "type": "object",
+      "required": ["score"],
+      "additionalProperties": false,
+      "properties": {
+        "score": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "mod": {
+          "type": "integer",
+          "description": "Optional. Derived from score when omitted."
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "rank": {
+      "type": "string",
+      "enum": ["untrained", "trained", "expert", "master", "legendary"]
+    },
+    "feature": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "level": { "type": "integer", "minimum": 0 },
+        "source": { "type": "string" },
+        "summary": { "type": "string" },
+        "notes": { "type": "string" },
+        "automated": {
+          "type": "boolean",
+          "description": "True when the Foundry export carries working rule elements for it."
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "actionCost": { "type": "string" },
+        "source": { "type": "string" },
+        "summary": { "type": "string" },
+        "notes": { "type": "string" },
+        "automated": {
+          "type": "boolean",
+          "description": "True when the Foundry export carries working rule elements for it."
+        }
+      }
+    }
+  }
+}

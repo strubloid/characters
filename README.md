@@ -1,0 +1,76 @@
+# Characters
+
+Foundry VTT characters kept as reviewable source files. Each character is a
+folder with a curated JSON file, a generated export you can import straight
+into Foundry, and a generated readable sheet under `docs/`.
+
+```
+characters/goblin/
+  character.json        source of truth, hand edited
+  foundry-export.json   generated, import this into Foundry
+  images/               the sheet screenshots it was transcribed from
+docs/characters/goblin/
+  character.md          generated readable sheet
+docs/skills/foundry-character/
+  SKILL.md              the workflow used to build these files
+  references/
+```
+
+## Commands
+
+No dependencies to install. Node 18 or newer.
+
+```bash
+npm run validate -- goblin   # check character.json against the schema
+npm run render   -- goblin   # regenerate docs/characters/goblin/character.md
+npm run build    -- goblin   # regenerate foundry-export.json
+npm run audit    -- goblin   # compare the build against the sheet
+npm run check    -- goblin   # validate + audit
+```
+
+## How a character is modelled
+
+`character.json` holds two separate things on purpose.
+
+**The structure.** Ability scores, proficiency ranks, feats, gear, and the
+bonuses the character carries. This is what the Foundry export is generated
+from.
+
+**The observed sheet.** The numbers as they actually read on the Foundry
+sheet. This is the ground truth.
+
+`npm run audit` recomputes every statistic from the structure and prints the
+difference against the observed sheet:
+
+```
+statistic               expected    sheet   residual
+----------------------------------------------------
+Armor Class                   22       22          0
+acrobatics                     9        9          0
+...
+```
+
+A residual of zero means the build explains the sheet. A non-zero residual
+means something is missing, and the audit is where you find out what.
+
+Anything that cannot be explained becomes an entry in `audit.openQuestions`,
+which is rendered at the bottom of the Markdown sheet so the outstanding
+questions are always visible.
+
+## Importing into Foundry
+
+Right-click the actor in the Actors sidebar, choose "Import Data", and pick
+`foundry-export.json`.
+
+The generated export carries the build, not the full automation. For the
+authoritative version, export the actor from Foundry and save it as
+`characters/goblin/foundry-native.json`; the round-trip procedure is in
+`docs/skills/foundry-character/references/foundry-roundtrip.md`.
+
+## The skill
+
+`docs/skills/foundry-character/` holds the workflow used to build these
+files: the `character.json` contract, the audit loop, the rules that trip
+people up, and the Foundry import and export procedure. `opencode.json` points
+opencode at that folder, and it is symlinked into the global skills directory
+so it is available in any project.

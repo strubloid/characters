@@ -1,0 +1,504 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "formatVersion": "1.0.0",
+  "id": "rafa",
+  "name": "Rafa",
+  "kind": "player-character",
+  "system": {
+    "id": "pf2e",
+    "ruleset": "remaster",
+    "foundryVersion": "13",
+    "systemVersion": "6.0.0"
+  },
+  "player": "",
+  "summary": "A fifteen-year-old Alkenstar goblin who talks his way through most fights and shoots the rest. Bandit by trade, gunslinger by training, and quietly devout under Desna.",
+  "art": {
+    "portrait": null,
+    "token": null,
+    "notes": "There is no portrait yet. The files in images/ are screenshots of the Foundry sheet, not artwork."
+  },
+  "identity": {
+    "ancestry": "Goblin",
+    "heritage": "Unbreakable Goblin",
+    "background": "Bandit",
+    "class": "Gunslinger",
+    "archetype": {
+      "name": "Rogue Dedication",
+      "level": 2
+    },
+    "deity": "Desna",
+    "level": 5,
+    "xp": {
+      "value": 0,
+      "max": 1000
+    },
+    "age": "15",
+    "gender": "Ele",
+    "ethnicity": "Alkenstar Goblin",
+    "nationality": "Nex",
+    "height": "",
+    "weight": "",
+    "languages": ["Common (Taldane)", "Dwarven", "Goblin", "Kelsh"]
+  },
+  "build": {
+    "keyAbility": "dex",
+    "abilities": {
+      "str": { "score": 10 },
+      "dex": { "score": 18 },
+      "con": { "score": 14 },
+      "int": { "score": 14 },
+      "wis": { "score": 10 },
+      "cha": { "score": 18 }
+    },
+    "hp": {
+      "max": 60,
+      "temp": 0,
+      "value": 60,
+      "note": "Unbreakable Goblin heritage grants 10 ancestry HP instead of 6. Gunslinger is 8 HP per level plus Constitution: (8 + 2) x 5 + 10 ancestry = 60."
+    },
+    "armor": {
+      "category": "light",
+      "acBonus": 3,
+      "dexCap": 5,
+      "checkPenalty": 0
+    },
+    "speed": {
+      "land": 20,
+      "swim": null,
+      "climb": null,
+      "fly": null,
+      "burrow": null
+    },
+    "senses": [{ "name": "darkvision", "range": 60 }]
+  },
+  "proficiencies": {
+    "saves": {
+      "fortitude": "expert",
+      "reflex": "expert",
+      "will": "expert"
+    },
+    "perception": "expert",
+    "classDC": {
+      "gunslinger": "trained",
+      "rogue": "trained"
+    },
+    "skills": {
+      "acrobatics": "trained",
+      "arcana": "untrained",
+      "athletics": "untrained",
+      "crafting": "trained",
+      "deception": "trained",
+      "diplomacy": "trained",
+      "intimidation": "trained",
+      "medicine": "untrained",
+      "nature": "untrained",
+      "occultism": "untrained",
+      "performance": "untrained",
+      "religion": "untrained",
+      "society": "untrained",
+      "stealth": "trained",
+      "survival": "untrained",
+      "thievery": "trained",
+      "lore": {
+        "spellscar-desert": "trained"
+      }
+    },
+    "attacks": {
+      "simple-firearms-and-crossbows": "master",
+      "martial-firearms-and-crossbows": "master",
+      "advanced-firearms-and-crossbows": "expert",
+      "simple-weapons": "expert",
+      "martial-weapons": "expert",
+      "unarmed-attacks": "expert"
+    },
+    "defenses": {
+      "light-armor": "trained",
+      "medium-armor": "trained",
+      "unarmored-defense": "trained"
+    }
+  },
+  "resources": {
+    "heroPoints": {
+      "value": 1,
+      "max": 3
+    }
+  },
+  "bonuses": [
+    {
+      "id": "unattributed-plus-5",
+      "source": "unattributed",
+      "note": "Every statistic on the sheet that carries a proficiency rank reads exactly +5 above what this build produces, while untrained skills read no bonus at all. That pattern matches no published feat, ancestry trait or class feature for this build, so the source is still unknown. It is declared here so the rest of the build stays auditable; replace the source once it is identified.",
+      "value": 5,
+      "type": "unattributed",
+      "requiresRank": true,
+      "appliesTo": ["ac", "saves", "perception", "classDC", "attacks", "skills"]
+    },
+    {
+      "id": "unattributed-dexterity-skills-minus-2",
+      "source": "unattributed",
+      "note": "Acrobatics, Stealth and Thievery read 2 lower than the other trained skills, even though all three are trained Dexterity skills. The other trained skills (Deception, Diplomacy, Intimidation, Crafting) sit on the full +5.",
+      "value": -2,
+      "type": "unattributed",
+      "appliesTo": ["skill:acrobatics", "skill:stealth", "skill:thievery"]
+    },
+    {
+      "id": "unattributed-nature-religion-minus-2",
+      "source": "unattributed",
+      "note": "Nature and Religion read 0 while the other untrained Intelligence skills (Arcana, Occultism, Society) read +2, which is what an Intelligence modifier of +2 gives. Something is taking 2 off these two skills.",
+      "value": -2,
+      "type": "unattributed",
+      "appliesTo": ["skill:nature", "skill:religion"]
+    },
+    {
+      "id": "unattributed-athletics-minus-2",
+      "source": "unattributed",
+      "note": "Athletics reads -2 with a Strength modifier of +0. The Remaster Goblin ancestry lists no Athletics penalty, so this may be a house rule, a condition, or a mistake on the sheet.",
+      "value": -2,
+      "type": "unattributed",
+      "appliesTo": ["skill:athletics"]
+    },
+    {
+      "id": "unattributed-initiative-minus-2",
+      "source": "unattributed",
+      "note": "Initiative reads +11, but Perception (+9) plus Dexterity (+4) is +13. The Ten Paces deed adds a +2 circumstance bonus to initiative, so the sheet may be showing the value before that deed is applied, or before some other effect.",
+      "value": -2,
+      "type": "unattributed",
+      "appliesTo": ["initiative"]
+    }
+  ],
+  "features": {
+    "ancestry": [
+      {
+        "name": "Goblin",
+        "summary": "Small humanoid with darkvision.",
+        "notes": "Remaster ancestry: 6 HP, Small, 25 ft Speed, boosts Dexterity and Charisma, Wisdom flaw, Common and Goblin. The Remaster ancestry has no Goblin Sneak and no Athletics penalty."
+      },
+      {
+        "name": "Unbreakable Goblin",
+        "source": "heritage",
+        "summary": "Gain 10 HP from your ancestry instead of 6, and halve falling damage.",
+        "automated": false
+      }
+    ],
+    "class": [
+      {
+        "name": "Gunslinger's Way",
+        "level": 1,
+        "summary": "Way of the Pistolero: hold the line at ten paces and talk while you reload.",
+        "notes": "Way skill is Deception or Intimidation."
+      },
+      {
+        "name": "Slinger's Precision",
+        "level": 1,
+        "summary": "+2 precision damage with non-repeating crossbows and an extra 1d4 precision damage on Strikes with non-repeating firearms.",
+        "automated": false
+      },
+      {
+        "name": "Singular Expertise",
+        "level": 1,
+        "summary": "+1 circumstance bonus to damage rolls with firearms and crossbows. Caps proficiency with other weapons and unarmed attacks.",
+        "automated": false
+      },
+      {
+        "name": "Stubborn",
+        "level": 3,
+        "summary": "Your proficiency rank for Will saves increases to expert.",
+        "notes": "Also lets you retry a failed, non-critical Will save against being controlled.",
+        "automated": false
+      },
+      {
+        "name": "Gunslinger Weapon Mastery",
+        "level": 5,
+        "summary": "Master with simple and martial firearms and crossbows; expert with advanced firearms and crossbows, simple and martial weapons, and unarmed attacks.",
+        "notes": "Unlocks critical specialization for firearms and crossbows.",
+        "automated": false
+      }
+    ],
+    "ancestryFeats": [
+      {
+        "name": "Bouncy Goblin",
+        "level": 1,
+        "summary": "Trained proficiency in Acrobatics and a +2 circumstance bonus to Acrobatics checks to Tumble Through a foe's space.",
+        "notes": "Requires the Unbreakable Goblin heritage.",
+        "automated": false
+      },
+      {
+        "name": "Vandal",
+        "level": 5,
+        "summary": "You become trained in Thievery.",
+        "automated": false
+      }
+    ],
+    "classFeats": [
+      {
+        "name": "Dual-Weapon Reload",
+        "level": 1,
+        "summary": "Reload a one-handed ranged weapon without needing a free hand while wielding two one-handed weapons.",
+        "automated": false
+      },
+      {
+        "name": "Quick Draw",
+        "level": 2,
+        "summary": "Draw a weapon as a free action when you roll initiative.",
+        "automated": false
+      },
+      {
+        "name": "Alchemical Shot",
+        "level": 4,
+        "summary": "Soak ammunition in an alchemical bomb for bonus damage and persistent damage on a failed shot.",
+        "automated": false
+      }
+    ],
+    "archetypeFeats": [
+      {
+        "name": "Rogue Dedication",
+        "level": 2,
+        "summary": "Take the Rogue archetype at 2nd level.",
+        "notes": "Adds the Rogue class DC and the Surprise Attack feat.",
+        "automated": false
+      },
+      {
+        "name": "Surprise Attack",
+        "level": 2,
+        "source": "archetype",
+        "summary": "Exploit a target's distracted state.",
+        "automated": false
+      },
+      {
+        "name": "Assurance (Intimidation)",
+        "level": 2,
+        "source": "archetype",
+        "summary": "Intimidation checks that fail but do not critically fail may be retried.",
+        "automated": false
+      },
+      {
+        "name": "Mobility",
+        "level": 4,
+        "source": "archetype",
+        "summary": "Improved mobility in close quarters.",
+        "automated": false
+      }
+    ],
+    "skillFeats": [
+      {
+        "name": "Group Coercion",
+        "level": 1,
+        "source": "background",
+        "summary": "Coerce a group instead of a single target.",
+        "automated": false
+      },
+      {
+        "name": "Pickpocket",
+        "level": 2,
+        "summary": "Pickpocket with less fuss.",
+        "automated": false
+      },
+      {
+        "name": "Subtle Theft",
+        "level": 4,
+        "summary": "Steal without drawing attention.",
+        "automated": false
+      }
+    ],
+    "generalFeats": [
+      {
+        "name": "Thorough Search",
+        "level": 3,
+        "summary": "Search for hidden things more effectively.",
+        "automated": false
+      }
+    ],
+    "bonusFeats": [],
+    "backgroundFeats": []
+  },
+  "actions": {
+    "actions": [
+      {
+        "name": "Raconteur's Reload",
+        "actionCost": "one-action",
+        "source": "Way of the Pistolero (slinger's reload)",
+        "summary": "Interact to reload, then attempt a Deception check to Create a Diversion or an Intimidation check to Demoralize.",
+        "automated": false
+      },
+      {
+        "name": "Alchemical Shot",
+        "actionCost": "two-actions",
+        "source": "class feat",
+        "summary": "Pour an alchemical bomb onto your ammunition, then Strike.",
+        "automated": false
+      },
+      {
+        "name": "Quick Draw",
+        "actionCost": "free-action",
+        "source": "class feat",
+        "summary": "Draw a weapon when you roll initiative.",
+        "automated": false
+      }
+    ],
+    "reactions": [],
+    "freeActions": [
+      {
+        "name": "Ten Paces",
+        "actionCost": "free-action",
+        "source": "Way of the Pistolero (initial deed)",
+        "summary": "On rolling initiative, gain a +2 circumstance bonus to initiative and draw a one-handed firearm or one-handed crossbow.",
+        "automated": false
+      }
+    ]
+  },
+  "inventory": [
+    {
+      "name": "Dueling Pistol",
+      "type": "weapon",
+      "quantity": 2,
+      "bulk": 0.1,
+      "equipped": true,
+      "level": 2,
+      "price": 2,
+      "traits": ["simple", "firearm", "one-handed", "pistol"],
+      "damage": { "dice": 1, "die": "d6", "damageType": "piercing" },
+      "notes": "One in each hand. 10 ft range increment (10/20/30/40/50), reload 1."
+    },
+    {
+      "name": "Breastplate",
+      "type": "armor",
+      "quantity": 1,
+      "bulk": 2,
+      "equipped": true,
+      "price": 10,
+      "traits": ["light", "armor"],
+      "notes": "+3 AC, Dex cap +5, no check penalty."
+    },
+    {
+      "name": "Rounds (Dueling Pistol)",
+      "type": "ammunition",
+      "quantity": 30,
+      "bulk": 3,
+      "equipped": false,
+      "price": 0.1,
+      "traits": ["ammunition"],
+      "notes": "10 rounds per bulk."
+    }
+  ],
+  "currency": {
+    "pp": 0,
+    "gp": 0,
+    "sp": 0,
+    "cp": 0,
+    "totalWealthGp": 32.3
+  },
+  "biography": {
+    "appearance": "",
+    "backstory": "",
+    "birthPlace": "",
+    "attitude": "",
+    "beliefs": "",
+    "edicts": [],
+    "anathema": [],
+    "likes": "",
+    "dislikes": "",
+    "catchphrases": "",
+    "campaignNotes": "",
+    "allies": "",
+    "enemies": "",
+    "organizations": ""
+  },
+  "observed": {
+    "source": "Foundry sheet screenshots in images/*.jpeg, read 2026-11-13",
+    "ac": 22,
+    "hitPoints": 60,
+    "tempHitPoints": 0,
+    "initiative": 11,
+    "perception": 9,
+    "fortitude": 11,
+    "reflex": 13,
+    "will": 9,
+    "classDC": {
+      "gunslinger": 21,
+      "rogue": 21
+    },
+    "skills": {
+      "acrobatics": 9,
+      "arcana": 2,
+      "athletics": -2,
+      "crafting": 9,
+      "deception": 11,
+      "diplomacy": 11,
+      "intimidation": 11,
+      "medicine": 0,
+      "nature": 0,
+      "occultism": 2,
+      "performance": 4,
+      "religion": 0,
+      "society": 2,
+      "stealth": 9,
+      "survival": 0,
+      "thievery": 9
+    },
+    "attacks": {
+      "dueling-pistol": { "strike": 15, "map": [-5, -10] },
+      "dueling-pistol-2": { "strike": 15, "map": [-5, -10] },
+      "unarmed-attack": { "strike": 13, "map": [-4, -8] }
+    },
+    "bulk": 2,
+    "heroPoints": {
+      "value": 1,
+      "max": 3
+    },
+    "notes": "The sheet shows one of three hero point pips filled. No shield is equipped, and the speed row shows land 20 ft with swim and climb explicitly set to none."
+  },
+  "audit": {
+    "openQuestions": [
+      {
+        "id": "global-plus-5",
+        "question": "What grants the +5 that sits on armor class, all three saves, Perception, both class DCs, every trained skill and every attack roll, while untrained skills stay at the bare ability modifier?",
+        "why": "It does not match any published feat, ancestry trait, or class feature for this build. A campaign boon, a homebrew item, or a Foundry world setting are the likely candidates. Until it is explained, the build cannot tell a real character from a hand-edited sheet.",
+        "status": "open"
+      },
+      {
+        "id": "dexterity-skills-minus-2",
+        "question": "Why do Acrobatics, Stealth and Thievery read 2 lower than the other trained skills?",
+        "why": "All three are trained Dexterity skills, as are none of the others, and all three sit 2 below the trained-skill baseline. Either there is a -2 penalty on Dexterity-based skill checks, or their proficiency ranks differ from the badges shown.",
+        "status": "open"
+      },
+      {
+        "id": "nature-religion-minus-2",
+        "question": "Why do Nature and Religion read 0 while Arcana, Occultism and Society read +2?",
+        "why": "All five are untrained Intelligence skills, so they should all show the same modifier.",
+        "status": "open"
+      },
+      {
+        "id": "initiative-minus-2",
+        "question": "Why does initiative read +11 when Perception (+9) plus Dexterity (+4) is +13?",
+        "why": "The Ten Paces deed adds a +2 circumstance bonus to initiative, so the sheet may be showing a value from before the deed was picked up, or before some other effect was applied.",
+        "status": "open"
+      },
+      {
+        "id": "athletics-minus-2",
+        "question": "Where does the -2 on Athletics come from?",
+        "why": "The Remaster Goblin ancestry lists no Athletics penalty, so this is a house rule, a condition, or an error on the sheet.",
+        "status": "open"
+      },
+      {
+        "id": "hero-points",
+        "question": "How many hero points does Rafa have available at level 5?",
+        "why": "The pip row in the screenshots is not legible enough to count filled pips.",
+        "status": "resolved",
+        "answer": "The sheet shows one of three pips filled, so resources.heroPoints is 1 of 3."
+      },
+      {
+        "id": "attribute-boost-allocation",
+        "question": "Which boosts went where? The build assumes base scores of Str 10, Dex 18, Con 14, Int 14, Wis 10, Cha 18.",
+        "why": "Dexterity +4 and Charisma +4 are pinned by the sheet, but 24 points of boosts at 5th level is more than the Remaster progression allows, so some of the scores likely come from somewhere the sheet does not show. The Foundry export stores the real allocation.",
+        "status": "open"
+      },
+      {
+        "id": "armor-magic",
+        "question": "Is the Breastplate a magic item, and does it carry runes?",
+        "why": "A plain breastplate is +3 AC. The sheet shows AC 22, of which 7 is covered by the unattributed bonuses above.",
+        "status": "open"
+      }
+    ],
+    "notes": "Run `npm run audit -- characters/goblin` to see which of these the build can still close out on its own."
+  }
+}
